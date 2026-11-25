@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- TrioLingo · Industrial Edition Pro Max · L1 v0.1 · généré le 2026-11-25
+<!-- TrioLingo · Industrial Edition Pro Max · L2 v0.2 · généré le 2026-11-25
      100 % local : aucun traceur, aucun cookie, aucun compte, aucune police ni script externe.
      Toutes les données restent dans ce téléphone (stockage local). Aucune donnée personnelle dans ce code.
      Seule exception future (lot 4), et seulement si l'utilisateur répond Oui : la reconnaissance vocale
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TrioLingo"><meta name="theme-color" content="#120c24">
-<title>TrioLingo L1 v0.1</title>
+<title>TrioLingo L2 v0.2</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
 <style>
 :root{--a:#ff7a2f;--b:#7c5cff;--hz:#ffc21a;--ok:#5fd38d;--bad:#ff6b6b;--bg:#0d0a1a;--fg:#f4f1ff;--mut:#a9a3c4;--pn:rgba(18,12,36,.92);--bd:rgba(255,255,255,.16)}
@@ -90,6 +90,21 @@ canvas.ps2{width:100%;aspect-ratio:16/9;image-rendering:pixelated;image-renderin
 .flow div{flex:1;padding:8px 4px;border-radius:8px;background:#241c42;border:1px solid var(--bd)}
 .flow .x{flex:none;background:none;border:0;padding:0;color:var(--mut)}
 svg{display:block}
+/* L2 · Lire & apprendre */
+.flash{padding:16px}.word{font:900 2rem/1.15 system-ui,sans-serif;margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fr{font:700 1.15rem system-ui,sans-serif;color:var(--hz);margin-top:4px}.uk{font-size:.8rem;color:var(--mut);margin-top:6px}
+.ex{margin-top:12px;font-size:.98rem;font-style:italic}.ex b{color:var(--a);font-style:normal}
+.qp{font:700 1.1rem/1.45 system-ui,sans-serif;margin-top:4px}.gap{color:var(--hz);letter-spacing:.08em}.en{color:var(--hz)}
+.spk{border:0;background:#2c2450;color:#fff;border-radius:50%;width:38px;height:38px;font-size:1rem;cursor:pointer;vertical-align:middle;flex:none;font-style:normal}
+.w{border-bottom:2px dotted var(--hz);cursor:pointer}
+.lw{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--bd);font-size:.9rem}.lw:first-child{border-top:0}
+.dots{color:var(--a);font-size:.68rem;letter-spacing:1px;flex:none}
+.btn .grow{flex:1;min-width:0}.mini{display:block;height:5px;border-radius:3px;background:rgba(0,0,0,.35);margin-top:6px;overflow:hidden}.mini i{display:block;height:100%;background:var(--hz)}
+.boxes{display:flex;gap:6px;margin-top:8px;text-align:center}.boxes>div{flex:1;font-size:.72rem;color:var(--mut)}
+.boxes .bar{height:60px;background:#1a1330;border-radius:6px;display:flex;align-items:flex-end;overflow:hidden}.boxes .bar i{display:block;width:100%;background:linear-gradient(#ffd36b,#ff7a2f);min-height:2px}
+.boxes b{display:block;color:var(--fg);font-size:.95rem;margin-top:3px}.boxes small{display:block}
+.rule p{font-size:.95rem}.exl{margin-top:6px;display:flex;align-items:center;gap:6px;justify-content:space-between;font-weight:600}
+details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);font-size:.85rem;padding:6px 0}
 </style></head>
 <body><div id="app">
 
@@ -100,7 +115,7 @@ svg{display:block}
   <div class="pb"><i id="bI"></i></div>
   <div class="pbl"><span id="bL">Démarrage…</span><span id="bP">0 %</span></div>
   <button class="btn" id="bgo" style="justify-content:center;display:none">Touche pour commencer</button>
-  <p class="mut" style="text-align:center;font-size:.7rem">L1 v0.1 · 2026-11-25 · 100 % local, 0 traceur</p>
+  <p class="mut" style="text-align:center;font-size:.7rem">L2 v0.2 · 2026-11-25 · 100 % local, 0 traceur</p>
 </section>
 
 <!-- Profil (création ou modification) -->
@@ -109,6 +124,9 @@ svg{display:block}
 <section id="test" class="scr notab"></section>
 <!-- Résultat du test -->
 <section id="res" class="scr notab"></section>
+<!-- L2 : Lire & apprendre + lanceur de séance -->
+<section id="learn" class="scr notab"></section>
+<section id="run" class="scr notab"></section>
 <!-- Onglets -->
 <section id="home" class="scr"></section>
 <section id="prog" class="scr"></section>
@@ -128,8 +146,8 @@ svg{display:block}
 
 <script>
 'use strict';
-/* ============ TrioLingo · L1 v0.1 · 2026-11-25 · socle ============ */
-const VERSION = 'L1 v0.1', BUILD = '2026-11-25', KEY = 'tl_save_v1';
+/* ============ TrioLingo · L2 v0.2 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) ============ */
+const VERSION = 'L2 v0.2', BUILD = '2026-11-25', KEY = 'tl_save_v1';
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -155,7 +173,8 @@ function def() {
   return {
     v: 1, app: 'TrioLingo', created: today(), name: '', avatar: { h: 0, s: 1 }, xp: 0,
     skills: Object.fromEntries(SK.map(k => [k.id, 0])), placed: false, tested: {}, days: {},
-    settings: { sfx: true, vib: true, ui: 'auto', sr: null }, lastExport: null, installHintOff: false
+    settings: { sfx: true, vib: true, ui: 'auto', sr: null }, lastExport: null, installHintOff: false,
+    cards: {}, rules: {}, reads: {}, focus: 'saf'
   };
 }
 function merge(o) {
@@ -165,6 +184,8 @@ function merge(o) {
   r.avatar = Object.assign(def().avatar, o.avatar || {});
   r.days = o.days && typeof o.days === 'object' ? o.days : {};
   r.tested = o.tested && typeof o.tested === 'object' ? o.tested : {};
+  ['cards', 'rules', 'reads'].forEach(k => { r[k] = o[k] && typeof o[k] === 'object' ? o[k] : {}; });
+  if (!['saf', 'mec', 'ele', 'aut', 'flu', 'too', 'pro', 'tra'].includes(r.focus)) r.focus = 'saf';
   for (const k in r.skills) r.skills[k] = Math.max(0, Math.min(1000, +r.skills[k] || 0));
   r.xp = Math.max(0, +r.xp || 0); r.name = String(r.name || '').slice(0, 20);
   return r;
@@ -188,10 +209,10 @@ function save() {
 }
 const avg = () => { const ids = SK.filter(k => k.id !== 'oral' || S.tested.oral).map(k => k.id); return ids.reduce((a, k) => a + S.skills[k], 0) / ids.length; };
 const lvl = () => 1 + Math.floor(S.xp / XP_LVL);
-function addXP(skill, n) {
+function addXP(skill, n, pts = n) { // n = XP gagnée · pts = progression du niveau de la compétence
   const before = lvl();
-  if (skill) S.skills[skill] = Math.min(1000, (S.skills[skill] || 0) + n);
-  S.xp += n; S.days[today()] = (S.days[today()] || 0) + n; save();
+  if (skill) S.skills[skill] = Math.min(1000, Math.round(((S.skills[skill] || 0) + pts) * 10) / 10);
+  S.xp += n; if (RUN) RUN.g.xp += n; S.days[today()] = (S.days[today()] || 0) + n; save();
   if (lvl() > before) { sfx('lvl'); buzz([30, 40, 30]); toast('⭐ ' + T('lvlUp') + ' ' + lvl() + ' !'); }
 }
 
@@ -314,6 +335,621 @@ function show(id) {
 }
 $$('#tabs button').forEach(b => b.onclick = () => { sfx('tap'); show(b.dataset.t); });
 
+/* ================= L2 · Contenu : 240 mots métier, 30 règles, 10 documents (anglais américain, notes UK) ================= */
+/* Format d'un mot : anglais | français | exemple (contient le mot) | niveau 1-3 | note UK (facultative) */
+const THEMES = {
+  saf: ['🦺', 'Sécurité', 'Safety', `
+safety glasses|lunettes de sécurité|Put on your safety glasses before you start.|1
+hard hat|casque de chantier|Wear a hard hat in this area.|1
+gloves|gants|Use cut-resistant gloves to handle the blades.|1
+earplugs|bouchons d’oreilles|The press is loud, so wear earplugs.|1
+safety shoes|chaussures de sécurité|Safety shoes are mandatory on the shop floor.|1
+high-visibility vest|gilet haute visibilité|Wear a high-visibility vest near the forklifts.|2
+padlock|cadenas|Put your padlock on the main switch.|1
+lockout|consignation|Lockout is required before any repair.|2
+tag|étiquette (de consignation)|Write your name on the tag.|1
+emergency stop|arrêt d’urgence|Press the emergency stop if someone is in danger.|1
+hazard|danger, risque|Report every hazard to your supervisor.|2
+warning|avertissement|Read the warning on the label.|1
+fire extinguisher|extincteur|The fire extinguisher is next to the door.|1
+first aid kit|trousse de secours|Where is the first aid kit?|1
+injury|blessure|Report any injury, even a small one.|2
+near miss|presque-accident|We record every near miss in the logbook.|3
+guard|carter de protection|Never remove the guard while the machine is running.|2
+forklift|chariot élévateur|The forklift has priority in the aisle.|1
+aisle|allée|Keep the aisle clear.|2
+spill|déversement, flaque|Clean up the oil spill right away.|2
+slippery|glissant|Be careful, the floor is slippery.|2
+harness|harnais|Wear a harness when you work at height.|2
+ladder|échelle|Check the ladder before you climb it.|1
+confined space|espace confiné|You need a permit to enter a confined space.|3
+permit|permis (de travail)|The hot work permit is valid for one shift.|3
+PPE|EPI (équipement de protection individuelle)|Check your PPE at the start of the shift.|2
+assembly point|point de rassemblement|Go to the assembly point when the alarm sounds.|2
+evacuate|évacuer|Evacuate the building now!|2
+sharp|coupant, tranchant|Careful, the edges are sharp.|1
+hot surface|surface chaude|Do not touch the hot surface.|1`],
+  mec: ['⚙️', 'Mécanique', 'Mechanics', `
+bearing|roulement|The bearing is making a strange noise.|1
+shaft|arbre (de transmission)|The shaft is bent.|2
+gear|engrenage, pignon|One tooth of the gear is broken.|1
+gearbox|réducteur, boîte de vitesses|Check the oil level in the gearbox.|1
+belt|courroie|The belt is too loose.|1
+chain|chaîne|Lubricate the chain every week.|1
+pulley|poulie|Align the pulley with the motor.|2
+coupling|accouplement|The coupling connects the motor to the pump.|2
+bolt|boulon|Tighten the bolt to 40 N·m.|1
+nut|écrou|The nut is missing.|1
+washer|rondelle|Put a washer under the nut.|1
+screw|vis|Remove the screw on the cover.|1
+spring|ressort|The spring is worn out.|2
+seal|joint (d’étanchéité)|Replace the seal to stop the leak.|2
+gasket|joint plat|The gasket between the two flanges is damaged.|3
+lubricate|lubrifier|Lubricate the bearings once a month.|2
+grease|graisse|Add some grease to the fitting.|1
+wear|usure|There is a lot of wear on this part.|2
+vibration|vibration|The vibration is too high on motor 2.|1
+misalignment|désalignement|Misalignment destroys bearings quickly.|3
+tighten|serrer|Tighten the nut by hand first.|1
+loosen|desserrer|Loosen the bolts before you remove the cover.|1
+spare part|pièce de rechange|Order a spare part from the supplier.|1
+conveyor|convoyeur|The conveyor stopped at 6 a.m.|1
+roller|rouleau|One roller on the conveyor is stuck.|1
+key|clavette|The key keeps the pulley on the shaft.|3|attention, « key » veut aussi dire « clé » (de porte)
+weld|soudure, souder|The frame needs a new weld.|2
+crack|fissure|I found a crack in the housing.|2
+housing|carter, boîtier|The bearing housing is hot.|3
+torque|couple (de serrage)|Check the torque on every bolt.|2`],
+  ele: ['⚡', 'Électricité', 'Electrical', `
+wire|fil électrique|This wire is damaged.|1
+cable|câble|Pull the cable through the conduit.|1
+plug|fiche, prise mâle|Pull the plug out of the outlet.|1
+outlet|prise de courant|The outlet near the door is dead.|1|socket
+switch|interrupteur|Turn off the switch.|1
+fuse|fusible|The fuse has blown.|1
+circuit breaker|disjoncteur|The circuit breaker tripped twice today.|2
+voltage|tension (électrique)|Measure the voltage between the two phases.|2
+current|courant (électrique)|The current is too high on this motor.|2
+ground|terre (électrique)|Check the ground connection.|2|earth
+short circuit|court-circuit|A short circuit burned the cable.|2
+power supply|alimentation|The power supply is 24 V DC.|2
+motor|moteur|The motor is overheating.|1
+terminal|borne|Tighten the screw on terminal 3.|2
+control panel|armoire électrique, pupitre|The control panel is locked.|2
+contactor|contacteur|The contactor does not close.|3
+relay|relais|Replace the relay in slot 4.|2
+multimeter|multimètre|Use a multimeter to check the fuse.|1
+live|sous tension|Warning: these wires are live.|2
+de-energize|mettre hors tension|De-energize the machine before you open the panel.|3
+insulation|isolation, isolant|The insulation on this cable is cracked.|2
+connector|connecteur|The connector is loose.|1
+lighting|éclairage|The lighting in aisle 4 is off.|1
+overload|surcharge|The motor stopped because of an overload.|2
+phase|phase|One phase is missing.|2
+transformer|transformateur|The transformer is in the next room.|2
+battery|batterie, pile|The battery of the forklift is low.|1
+flashlight|lampe de poche|Bring a flashlight, it’s dark inside.|1|torch
+wiring diagram|schéma électrique|Follow the wiring diagram.|2
+reset|réarmer, réinitialiser|Reset the breaker after the repair.|1`],
+  aut: ['🤖', 'Automatisme', 'Automation', `
+PLC|automate (API)|The PLC is in stop mode.|2
+sensor|capteur|The sensor does not detect the box.|1
+proximity sensor|détecteur de proximité|Adjust the proximity sensor by 2 mm.|2
+limit switch|fin de course|The limit switch is damaged.|2
+encoder|codeur|The encoder sends the position to the PLC.|3
+actuator|actionneur|The actuator does not move.|2
+robot arm|bras robotisé|The robot arm stopped in the middle of the cycle.|1
+input|entrée|Input 12 is always on.|2
+output|sortie|Check output 5 on the PLC.|2
+signal|signal|There is no signal from the sensor.|1
+alarm|alarme|What does this alarm mean?|1
+fault|défaut, panne|The screen shows a fault on station 3.|1
+HMI|IHM (écran opérateur)|Read the message on the HMI.|3
+cycle time|temps de cycle|The cycle time is 45 seconds.|2
+setpoint|consigne (valeur)|Change the setpoint to 80 degrees.|3
+program|programme|Do not change the program without approval.|1
+software|logiciel|Update the software on the HMI.|1
+variable speed drive|variateur de vitesse|The variable speed drive shows error F07.|3
+servo motor|servomoteur|The servo motor lost its position.|3
+photocell|cellule photoélectrique|Clean the photocell, it is dirty.|2
+light curtain|barrière immatérielle|The light curtain stops the robot when you enter.|3
+interlock|verrouillage de sécurité|The door interlock is broken.|3
+manual mode|mode manuel|Switch to manual mode.|1
+automatic mode|mode automatique|Restart the line in automatic mode.|1
+home position|position d’origine|Send the robot to home position.|2
+calibrate|étalonner|Calibrate the sensor every month.|2
+troubleshoot|dépanner, diagnostiquer|Can you help me troubleshoot this fault?|2
+upload|charger, téléverser|Upload the new program to the PLC.|2
+backup|sauvegarde|Make a backup of the program first.|1
+camera|caméra|The camera checks every label.|1`],
+  flu: ['💧', 'Hydraulique & pneumatique', 'Fluid power', `
+pump|pompe|The pump is running dry.|1
+valve|vanne, distributeur|Close the valve before you open the filter.|1
+cylinder|vérin|The cylinder is leaking.|1
+hose|flexible|This hose is cracked.|1
+pipe|tuyau (rigide)|The pipe is blocked.|1
+fitting|raccord|Tighten the fitting a little.|2
+leak|fuite|Where is the leak?|1
+pressure|pression|The pressure is too low.|1
+pressure gauge|manomètre|The pressure gauge reads 6 bar.|2
+compressed air|air comprimé|We have no compressed air on line 2.|1
+compressor|compresseur|The compressor starts every ten minutes.|2
+filter|filtre|Change the filter every 500 hours.|1
+tank|réservoir|Fill the tank to the top mark.|1
+oil level|niveau d’huile|Check the oil level every morning.|1
+flow|débit|The flow is too low.|2
+solenoid valve|électrovanne|The solenoid valve is stuck closed.|3
+check valve|clapet anti-retour|The check valve is installed backwards.|3
+accumulator|accumulateur|Release the pressure in the accumulator.|3
+regulator|régulateur, détendeur|Set the regulator to 4 bar.|2
+bleed|purger|Bleed the air from the system.|3
+O-ring|joint torique|Replace the O-ring with a new one.|2
+nozzle|buse|The nozzle is clogged.|2
+clogged|bouché, colmaté|The filter is clogged.|2
+temperature|température|The oil temperature is 70 degrees.|1
+cooler|refroidisseur|Clean the oil cooler.|2
+drain|vidanger, purger (l’eau)|Drain the water from the air tank.|2
+vacuum|vide, aspiration|The vacuum cup does not hold the part.|3
+overheat|surchauffer|The hydraulic unit can overheat in summer.|2
+contamination|pollution (de l’huile)|Oil contamination damages the pump.|3
+quick coupling|raccord rapide|Disconnect the quick coupling.|2`],
+  too: ['🧰', 'Outils & mesure', 'Tools & measuring', `
+wrench|clé (outil)|Hand me the wrench, please.|1|spanner
+socket|douille|I need a 13 mm socket.|1|attention, au UK « socket » veut aussi dire « prise de courant »
+ratchet|cliquet|Use the ratchet, it’s faster.|1
+screwdriver|tournevis|Pass me the flat screwdriver.|1
+pliers|pince|Use the pliers to hold the wire.|1
+hammer|marteau|Don’t use a hammer on the bearing.|1
+torque wrench|clé dynamométrique|Set the torque wrench to 25 N·m.|2
+Allen key|clé Allen (six pans)|I need a 5 mm Allen key.|2|aussi : hex key
+tape measure|mètre ruban|Check the length with a tape measure.|1
+caliper|pied à coulisse|Measure the shaft with a caliper.|2
+micrometer|micromètre (palmer)|Use a micrometer for the bearing seat.|3
+level|niveau à bulle|Use a level to check the base.|2
+drill|perceuse|Use the drill with a 6 mm bit.|1
+file|lime|Use a file to remove the burr.|2
+grinder|meuleuse|Wear a face shield with the grinder.|2
+toolbox|caisse à outils|My 13 mm socket is not in my toolbox!|1
+feeler gauge|jauge d’épaisseur|Check the gap with a feeler gauge.|3
+thermometer|thermomètre|The infrared thermometer shows 85 °C.|2
+inch|pouce (2,54 cm)|This bolt is half an inch.|2
+millimeter|millimètre|The gap must be one millimeter.|1|millimetre
+measure|mesurer|Measure the length twice.|1
+tolerance|tolérance|The tolerance is plus or minus 0.1 mm.|3
+gap|jeu, écart|The gap is too big.|2
+diameter|diamètre|What is the diameter of the shaft?|2
+flat|plat|The surface must be flat.|2
+workbench|établi|Put the motor on the workbench.|1
+vise|étau|Hold the part in the vise.|2|vice
+tool crib|magasin d’outils|Ask for the tool at the tool crib.|2
+borrow|emprunter|Can I borrow your ratchet?|1
+return|rendre|Please return the tools by 5 p.m.|1`],
+  pro: ['🏭', 'Production & qualité', 'Production & quality', `
+production line|ligne de production|The production line runs 24 hours a day.|1
+shift|poste, équipe|I work the night shift this week.|1
+operator|opérateur|Ask the operator what happened.|1
+supervisor|chef d’équipe|Call your supervisor.|1
+downtime|temps d’arrêt|We had two hours of downtime yesterday.|2
+breakdown|panne|The breakdown happened at 3 a.m.|1
+preventive maintenance|maintenance préventive|Preventive maintenance is planned for Friday.|2
+work order|bon de travail|Open a work order in the system.|2
+root cause|cause racine|We need to find the root cause.|3
+throughput|cadence, débit de production|The throughput dropped after the changeover.|3
+scrap|rebut|Put the bad parts in the scrap bin.|2
+defect|défaut (qualité)|This defect comes from station 4.|2
+inspection|contrôle, inspection|Inspection is done every two hours.|1
+standard|norme, standard|Follow the standard for this machine.|2
+procedure|procédure, mode opératoire|Read the procedure before you start.|1
+checklist|liste de contrôle|Fill in the checklist at the end of the shift.|1
+handover|passation de consignes|The shift handover is at 2 p.m.|3
+target|objectif|Our target is 500 parts per hour.|2
+batch|lot|This batch is blocked for quality.|2
+changeover|changement de série|The changeover takes 20 minutes.|3
+warehouse|entrepôt|The pallets are in the warehouse.|1
+pallet|palette|Put the boxes on the pallet.|1
+stock|stock|We have no stock of this belt.|2
+continuous improvement|amélioration continue|Share your idea for continuous improvement.|3
+availability|disponibilité|Machine availability was 92% last month.|3
+efficiency|efficacité, rendement|The efficiency of line 1 is low.|2
+deadline|date limite|The deadline is Monday.|2
+meeting|réunion|The meeting starts at 8 a.m.|1
+schedule|planning|Check the maintenance schedule.|2
+priority|priorité|This repair is a top priority.|1`],
+  tra: ['✈️', 'Déplacement & rapports', 'Travel & reports', `
+reservation|réservation|I have a reservation for three nights.|1
+check in|s’enregistrer (hôtel)|Can I check in now?|1
+check out|libérer la chambre|Check out is at 11 a.m.|1
+receipt|reçu, ticket de caisse|Can I have a receipt, please?|1
+invoice|facture|Send the invoice to the accounting department.|2
+flight|vol (avion)|My flight is delayed.|1
+delayed|retardé|The train is delayed by 30 minutes.|1
+platform|quai|The train leaves from platform 4.|1
+ticket|billet|I lost my ticket.|1
+directions|indications (chemin)|Can you give me directions to the factory?|1
+rental car|voiture de location|I picked up the rental car at the airport.|2|hire car
+parking lot|parking|Park in the visitor parking lot.|1|car park
+badge|badge|You need a visitor badge.|1
+reception|accueil, réception|Wait at reception, please.|1
+expense report|note de frais|Attach your receipts to the expense report.|3
+report|rapport|Write a report after each repair.|1
+summary|résumé|Here is a short summary of the problem.|2
+findings|constatations|My findings are in the attached file.|3
+action taken|action réalisée|Action taken: bearing replaced.|2
+recommendation|recommandation|My recommendation is to replace the belt.|2
+attach|joindre (un fichier)|Attach the photos to the report.|2
+schedule a call|planifier un appel|Can we schedule a call tomorrow?|2
+available|disponible|Are you available on Monday?|1
+on-site|sur site|I will be on-site from Tuesday.|2
+customer|client|The customer is happy with the repair.|1
+contractor|prestataire, sous-traitant|The contractor arrives at 9 a.m.|2
+email|e-mail|I will send you an email tonight.|1
+phone call|appel téléphonique|Sorry, I missed your phone call.|1
+lost|perdu|I’m lost. Where is building C?|1
+timesheet|feuille de temps|Fill in your timesheet every Friday.|2`]
+};
+const THEME_IDS = Object.keys(THEMES), CARDS = [], CARD = {};
+THEME_IDS.forEach(th => THEMES[th][3].trim().split('\n').forEach(l => {
+  const [en, fr, ex, lv, uk] = l.split('|').map(s => (s || '').trim());
+  const c = { key: th + ':' + en, th, en, fr, ex, lvl: +lv || 1, uk: uk || '' }; CARDS.push(c); CARD[c.key] = c;
+}));
+
+/* Règles : 10 par compétence. q = [phrase (avec ___) ou consigne, bonne réponse, faux, faux] */
+const RULES = [
+  { id: 'g1', k: 'gram', t: 'a / an / the', x: '<b>a</b> devant un son consonne (a pump), <b>an</b> devant un son voyelle (an alarm, an hour). <b>the</b> = la chose précise dont on parle.', e: ['I need a wrench.', 'There is an alarm on the screen.', 'The alarm is on station 3.'],
+    q: [['There is ___ oil leak under the pump.', 'an', 'a', 'these'], ['I need ___ new filter for this pump.', 'a', 'an', 'these'], ['Where is ___ toolbox I gave you yesterday?', 'the', 'a', 'an']] },
+  { id: 'g2', k: 'gram', t: 'Le pluriel', x: 'On ajoute <b>-s</b> (one bolt → two bolts). <b>-es</b> après s, x, ch, sh (box → boxes). Quelques irréguliers : man → men, person → people.', e: ['We need two new belts.', 'Put the boxes on the pallet.', 'Three people work on this line.'],
+    q: [['We need four new ___.', 'bearings', 'bearing', 'bearinges'], ['There are two ___ on the pallet.', 'boxes', 'boxs', 'box'], ['Three ___ work on the night shift.', 'people', 'peoples', 'person']] },
+  { id: 'g3', k: 'gram', t: 'There is / there are', x: '<b>There is</b> + singulier, <b>There are</b> + pluriel (= il y a). Question : Is there…? / Are there…?', e: ['There is a crack in the housing.', 'There are three alarms.', 'Are there any spare filters?'],
+    q: [['There ___ a crack in the housing.', 'is', 'are', 'be'], ['There ___ three alarms on the screen.', 'are', 'is', 'has'], ['___ there any spare filters?', 'Are', 'Is', 'Do']] },
+  { id: 'g4', k: 'gram', t: 'must / have to / mustn’t', x: '<b>must</b> / <b>have to</b> = obligation. <b>mustn’t</b> = interdit. <b>don’t have to</b> = pas obligatoire (mais permis).', e: ['You must lock out the machine.', 'You mustn’t enter without a permit.', 'You don’t have to wear gloves here.'],
+    q: [['You ___ enter without a permit. It’s forbidden.', 'mustn’t', 'don’t have to', 'must'], ['You ___ lock out the machine before the repair.', 'must', 'mustn’t', 'don’t have to'], ['You ___ wear gloves in the office. It’s optional.', 'don’t have to', 'mustn’t', 'must']] },
+  { id: 'g5', k: 'gram', t: 'can / could', x: '<b>can</b> = pouvoir, savoir faire (I can weld). <b>could</b> = demande polie (Could you help me?) ou passé (I couldn’t open it).', e: ['I can read a wiring diagram.', 'Could you help me, please?', 'I couldn’t open the panel.'],
+    q: [['___ you help me with this cylinder, please?', 'Could', 'Must', 'Should'], ['I ___ read a wiring diagram.', 'can', 'can to', 'cans'], ['Yesterday I ___ open the panel. It was locked.', 'couldn’t', 'can’t', 'mustn’t']] },
+  { id: 'g6', k: 'gram', t: 'should (conseil)', x: '<b>should</b> = tu devrais (conseil). <b>shouldn’t</b> = tu ne devrais pas. Pas de « to » après should.', e: ['You should replace the belt.', 'You shouldn’t use a hammer.', 'What should I do?'],
+    q: [['The belt is worn. You ___ replace it soon.', 'should', 'shouldn’t', 'should to'], ['You ___ use a hammer on a bearing.', 'shouldn’t', 'should', 'shoulds'], ['What ___ I do if the alarm comes back?', 'should', 'shall to', 'do should']] },
+  { id: 'g7', k: 'gram', t: 'Comparer (-er, more, the most)', x: 'Mot court : <b>-er / the -est</b> (long → longer → the longest). Mot long : <b>more / the most</b> (more accurate). Irréguliers : good → better → the best, bad → worse → the worst.', e: ['This bolt is longer.', 'The new sensor is more accurate.', 'This is the oldest machine.'],
+    q: [['This bolt is ___ than that one.', 'longer', 'more long', 'longest'], ['The new sensor is ___ than the old one.', 'more accurate', 'accurater', 'most accurate'], ['This is the ___ machine in the plant.', 'oldest', 'older', 'most old']] },
+  { id: 'g8', k: 'gram', t: 'some / any', x: '<b>some</b> : phrases affirmatives (I need some grease). <b>any</b> : questions et négations (Do you have any gloves? There isn’t any oil).', e: ['I need some grease.', 'Do you have any fuses?', 'There isn’t any oil.'],
+    q: [['I need ___ grease for the chain.', 'some', 'any', 'a'], ['Do you have ___ spare fuses?', 'any', 'some of', 'a'], ['There isn’t ___ oil in the tank.', 'any', 'some', 'no']] },
+  { id: 'g9', k: 'gram', t: 'Où ? (in, on, under, next to…)', x: '<b>in</b> dans · <b>on</b> sur · <b>under</b> sous · <b>next to</b> à côté de · <b>behind</b> derrière · <b>between</b> entre.', e: ['The filter is in the tank.', 'The manual is on the table.', 'The extinguisher is next to the door.'],
+    q: [['The fire extinguisher is ___ the door. (à côté de)', 'next to', 'under', 'in'], ['The filter is ___ the tank. (dans)', 'in', 'on', 'between'], ['The cable runs ___ the floor. (sous)', 'under', 'on', 'next']] },
+  { id: 'g10', k: 'gram', t: 'much / many / a lot of', x: '<b>many</b> + pluriel (many bolts), <b>much</b> + indénombrable (much oil), surtout en question et négation. <b>a lot of</b> = les deux.', e: ['How many bolts?', 'How much oil?', 'We have a lot of work.'],
+    q: [['How ___ bolts do we need?', 'many', 'much', 'lot'], ['How ___ oil is left in the tank?', 'much', 'many', 'lot of'], ['We have ___ work today.', 'a lot of', 'many', 'a lot']] },
+
+  { id: 'c1', k: 'conj', t: 'Présent simple', x: 'Habitudes, faits, horaires. 3e personne : <b>+s</b> (he checks, it runs). Négation : <b>don’t / doesn’t</b> + verbe.', e: ['The line starts at 6 a.m.', 'She checks the filters every Monday.', 'It doesn’t work.'],
+    q: [['The line ___ at 6 a.m. every day.', 'starts', 'start', 'starting'], ['She ___ the filters every Monday.', 'changes', 'change', 'changing'], ['The pump ___ work at night.', 'doesn’t', 'don’t', 'isn’t']] },
+  { id: 'c2', k: 'conj', t: 'Présent continu (en ce moment)', x: 'Action en cours : <b>am / is / are + verbe-ing</b> (The motor is overheating).', e: ['The motor is overheating.', 'We are working on line 3.', 'Is the pump running?'],
+    q: [['Listen! The bearing ___ a noise.', 'is making', 'makes', 'make'], ['We ___ on line 3 right now.', 'are working', 'work', 'works'], ['The gearbox ___ oil at the moment.', 'is leaking', 'leaks', 'leaked']] },
+  { id: 'c3', k: 'conj', t: 'Prétérit régulier (-ed)', x: 'Action terminée : verbe + <b>-ed</b> (check → checked, stop → stopped). Négation : <b>didn’t</b> + verbe.', e: ['We replaced the belt.', 'The robot stopped.', 'I didn’t check the oil.'],
+    q: [['Yesterday we ___ the belt.', 'replaced', 'replace', 'replacing'], ['The robot ___ at 3 a.m.', 'stopped', 'stoped', 'stops'], ['I ___ check the oil last week.', 'didn’t', 'don’t', 'wasn’t']] },
+  { id: 'c4', k: 'conj', t: 'Prétérit irrégulier', x: 'À apprendre par cœur : break → <b>broke</b>, find → <b>found</b>, take → <b>took</b>, go → <b>went</b>, have → <b>had</b>, see → <b>saw</b>.', e: ['The shaft broke.', 'I found the leak.', 'It took two hours.'],
+    q: [['The shaft ___ during the night shift.', 'broke', 'breaked', 'broken'], ['I ___ the leak under the pump.', 'found', 'finded', 'find'], ['We ___ two hours to fix it.', 'took', 'taked', 'take']] },
+  { id: 'c5', k: 'conj', t: 'Present perfect', x: '<b>have / has + participe passé</b> : résultat visible maintenant, sans date (I have replaced the seal). Avec une date passée → prétérit (I replaced it yesterday).', e: ['I have replaced the seal.', 'The motor has stopped.', 'We changed it yesterday.'],
+    q: [['I ___ already ___ the seal.', 'have … replaced', 'has … replaced', 'did … replaced'], ['The motor ___ stopped. Can you come?', 'has', 'have', 'is'], ['We ___ the filter yesterday.', 'changed', 'have changed', 'has changed']] },
+  { id: 'c6', k: 'conj', t: 'Futur : will / going to', x: '<b>will</b> = décision sur le moment, promesse (I’ll call you back). <b>going to</b> = projet déjà prévu (We’re going to stop the line on Friday).', e: ['I’ll call the supplier.', 'We’re going to stop the line on Friday.', 'The robot will arrive on Monday.'],
+    q: [['Don’t worry, ___ call the supplier now.', 'I’ll', 'I going to', 'I will to'], ['We ___ replace the conveyor next month. It’s planned.', 'are going to', 'will to', 'going'], ['The new robot ___ arrive on Monday.', 'will', 'wills', 'is arrive']] },
+  { id: 'c7', k: 'conj', t: 'Impératif (consignes)', x: 'Verbe seul pour une consigne (<b>Close</b> the valve). Interdiction : <b>Do not / Don’t</b> + verbe.', e: ['Close the valve.', 'Don’t touch the hot surface.', 'Please wear your PPE.'],
+    q: [['___ the valve before you open the filter.', 'Close', 'Closing', 'To close'], ['___ touch the hot surface!', 'Don’t', 'Not', 'No'], ['Please ___ your PPE.', 'wear', 'wearing', 'to wear']] },
+  { id: 'c8', k: 'conj', t: 'Passif au présent', x: '<b>is / are + participe passé</b> : l’accent est sur l’objet, pas sur la personne (The filter is changed every month).', e: ['The oil is changed every 500 hours.', 'The parts are checked by a camera.', 'Safety glasses are required.'],
+    q: [['The oil ___ every 500 hours.', 'is changed', 'changes', 'is change'], ['The parts ___ by a camera.', 'are checked', 'are check', 'checks'], ['Safety glasses ___ in this area.', 'are required', 'require', 'are requiring']] },
+  { id: 'c9', k: 'conj', t: 'Passif au passé (rapports)', x: '<b>was / were + participe passé</b> : très utile dans un rapport d’intervention (The bearing was replaced).', e: ['The bearing was replaced.', 'The seals were installed.', 'The fault was caused by a loose wire.'],
+    q: [['The bearing ___ at 4 p.m.', 'was replaced', 'was replace', 'replaced was'], ['The new seals ___ installed yesterday.', 'were', 'was', 'are'], ['The fault ___ by a loose wire.', 'was caused', 'caused', 'was cause']] },
+  { id: 'c10', k: 'conj', t: 'If… will (condition)', x: '<b>If + présent, will + verbe</b> : conséquence probable (If the pressure drops, the line will stop). Jamais « will » juste après « if ».', e: ['If the pressure drops, the line will stop.', 'If you need help, call me.'],
+    q: [['If the sensor ___, the line will stop.', 'fails', 'will fail', 'failed'], ['If you press this button, the robot ___.', 'will stop', 'stops will', 'stopped'], ['If you need help, ___ me.', 'call', 'will call', 'calling']] },
+
+  { id: 's1', k: 'synt', t: 'Sujet + verbe + complément', x: 'Toujours dans cet ordre : <b>The operator</b> (sujet) <b>stopped</b> (verbe) <b>the line</b> (complément).', e: ['The operator stopped the line.', 'I check the oil every day.'],
+    q: [['Quelle phrase est correcte ?', 'The operator stopped the line.', 'Stopped the operator the line.', 'The line the operator stopped.'], ['Quelle phrase est correcte ?', 'I check the oil every day.', 'I every day check the oil.', 'Check I the oil every day.'], ['Quelle phrase est correcte ?', 'We need a new filter.', 'We a new filter need.', 'Need we a new filter.']] },
+  { id: 's2', k: 'synt', t: 'Questions avec do / does / did', x: '<b>Do / Does + sujet + verbe</b> : Do you have…? Does it work? Au passé : <b>Did</b>…?', e: ['Do you have the key?', 'Does the pump work?', 'Did you check the oil?'],
+    q: [['___ the pump make noise?', 'Does', 'Do', 'Is'], ['___ you have the key?', 'Do', 'Does', 'Are'], ['___ you check the oil yesterday?', 'Did', 'Do', 'Were']] },
+  { id: 's3', k: 'synt', t: 'Questions : where, when, how many…', x: 'Mot interrogatif d’abord : <b>Where</b> is…? <b>When</b> did…? <b>How many</b> (+ pluriel)? <b>How much</b> (+ indénombrable)?', e: ['Where is the tool crib?', 'When did the line stop?', 'How many bolts are missing?'],
+    q: [['___ is the tool crib? — Next to the office.', 'Where', 'When', 'Who'], ['___ did the line stop? — At 3 a.m.', 'When', 'Where', 'Which'], ['___ bolts are missing? — Four.', 'How many', 'How much', 'What many']] },
+  { id: 's4', k: 'synt', t: 'La négation', x: '<b>don’t / doesn’t / didn’t + verbe</b>. Avec be : <b>isn’t, aren’t, wasn’t</b>. Jamais « I not ».', e: ['The motor doesn’t start.', 'I don’t know.', 'The sensors aren’t connected.'],
+    q: [['The motor ___ start.', 'doesn’t', 'don’t', 'not'], ['I ___ know the password.', 'don’t', 'not', 'doesn’t'], ['The sensors ___ connected.', 'aren’t', 'don’t', 'isn’t']] },
+  { id: 's5', k: 'synt', t: 'L’adjectif avant le nom', x: 'L’adjectif se place <b>avant</b> le nom et ne prend <b>jamais de -s</b> : the red button, two new belts.', e: ['Press the red button.', 'We need two new belts.'],
+    q: [['Quelle phrase est correcte ?', 'Press the red button.', 'Press the button red.', 'Press the reds button.'], ['Quelle phrase est correcte ?', 'We need two new belts.', 'We need two belts new.', 'We need two news belts.'], ['Quelle phrase est correcte ?', 'It’s a dangerous area.', 'It’s an area dangerous.', 'It’s a dangerous areas.']] },
+  { id: 's6', k: 'synt', t: 'Les noms composés', x: 'Le nom principal est <b>à la fin</b>, on lit de droite à gauche : oil pressure <b>sensor</b> = capteur (de pression (d’huile)).', e: ['temperature sensor', 'oil pump', 'safety glasses'],
+    q: [['« Capteur de température » se dit…', 'temperature sensor', 'sensor temperature', 'sensor of temperature'], ['« Pompe à huile » se dit…', 'oil pump', 'pump oil', 'pump of oil'], ['« An oil pressure sensor », c’est…', 'un capteur de pression d’huile', 'une pompe à pression d’huile', 'une huile sous pression']] },
+  { id: 's7', k: 'synt', t: 'Questions indirectes', x: 'Après <b>Can you tell me / I don’t know / Do you know</b>, l’ordre redevient normal : Can you tell me where the office <b>is</b>?', e: ['Can you tell me where the office is?', 'I don’t know what the problem is.'],
+    q: [['Quelle phrase est correcte ?', 'Can you tell me where the office is?', 'Can you tell me where is the office?', 'Can you tell me where does the office is?'], ['Quelle phrase est correcte ?', 'I don’t know what the problem is.', 'I don’t know what is the problem.', 'I don’t know what the problem does.'], ['Quelle phrase est correcte ?', 'Do you know when the train leaves?', 'Do you know when does the train leave?', 'Do you know when leaves the train?']] },
+  { id: 's8', k: 'synt', t: 'who / which / that', x: '<b>who</b> pour une personne (the technician who…), <b>which / that</b> pour une chose (the part that broke).', e: ['The operator who found the leak.', 'The part that broke.'],
+    q: [['The operator ___ found the leak is here.', 'who', 'which', 'what'], ['This is the part ___ broke.', 'that', 'who', 'what'], ['The man ___ repaired the robot left early.', 'who', 'which', 'whose']] },
+  { id: 's9', k: 'synt', t: 'Relier les idées', x: '<b>because</b> parce que · <b>so</b> donc · <b>but</b> mais · <b>first</b> d’abord · <b>then</b> ensuite.', e: ['The line stopped because the sensor was dirty.', 'The belt was worn, so we replaced it.'],
+    q: [['The line stopped ___ the sensor was dirty.', 'because', 'so', 'but'], ['The belt was worn, ___ we replaced it.', 'so', 'because', 'but'], ['___, lock out the machine. Then open the guard.', 'First', 'Because', 'So']] },
+  { id: 's10', k: 'synt', t: 'always, never… (fréquence)', x: '<b>always, usually, often, sometimes, never</b> se placent <b>avant le verbe</b> (I always check), mais <b>après be</b> (It is never off).', e: ['I always wear my gloves.', 'The pump is never off.'],
+    q: [['Quelle phrase est correcte ?', 'I always wear my gloves.', 'I wear always my gloves.', 'Always I wear always my gloves.'], ['Quelle phrase est correcte ?', 'The pump is never off.', 'The pump never is off.', 'Never the pump is off.'], ['Quelle phrase est correcte ?', 'We usually start at 6 a.m.', 'We start usually at 6 a.m.', 'Usually we usually start at 6 a.m.']] }
+];
+const RULE_GROUPS = [['gram', '📐', 'Grammaire'], ['conj', '⏱', 'Conjugaison'], ['synt', '🧩', 'Syntaxe']];
+
+/* Lectures : documents du métier. q = [question, bonne réponse, faux, faux] */
+const READS = [
+  { id: 'r1', ic: '📋', t: 'Bon de travail', lv: 'A2', txt: `WORK ORDER #2207
+Machine: Conveyor C4 — Line 2
+Problem: belt slipping. The motor runs but the belt stops.
+Priority: Medium
+Requested by: operator, night shift
+Action: check belt tension and pulley alignment.`,
+    q: [['Which machine has a problem?', 'Conveyor C4 on line 2', 'Line 4', 'The motor on line 1'], ['What is the problem?', 'The belt slips.', 'The motor does not run.', 'The pulley is broken.'], ['What must the technician check?', 'Belt tension and pulley alignment', 'The oil level', 'The night shift schedule']] },
+  { id: 'r2', ic: '⚠️', t: 'Panneau de sécurité', lv: 'A2', txt: `DANGER — HIGH VOLTAGE
+Authorized personnel only.
+De-energize and lock out before opening.
+Do not work alone.
+In case of emergency, call 555 (internal).`,
+    q: [['Who can open this door?', 'Only authorized personnel', 'Everybody', 'Only visitors'], ['What must you do before opening?', 'De-energize and lock out', 'Call the supervisor', 'Wear earplugs'], ['Can you work alone here?', 'No', 'Yes', 'Only at night']] },
+  { id: 'r3', ic: '🏨', t: 'Confirmation d’hôtel', lv: 'A2', txt: `Dear guest,
+Your reservation is confirmed: 3 nights, from Monday to Thursday.
+Check-in from 3 p.m. Check-out before 11 a.m.
+Breakfast is served from 6 a.m. to 10 a.m.
+Free parking is available behind the hotel.`,
+    q: [['How many nights is the reservation?', 'Three', 'Two', 'Four'], ['When must you leave the room?', 'Before 11 a.m.', 'After 3 p.m.', 'At 6 a.m.'], ['Where is the parking?', 'Behind the hotel', 'In front of the factory', 'There is no parking.']] },
+  { id: 'r4', ic: '📧', t: 'E-mail du chef d’équipe', lv: 'A2', txt: `Hi team,
+Tomorrow the line will stop at 2 p.m. for preventive maintenance.
+Please prepare the spare parts before noon.
+The contractor will arrive at 1:30 p.m.
+Thanks,
+Shift supervisor`,
+    q: [['Why will the line stop?', 'For preventive maintenance', 'Because of a breakdown', 'For a meeting'], ['When must the spare parts be ready?', 'Before noon', 'At 2 p.m.', 'At 1:30 p.m.'], ['Who arrives at 1:30 p.m.?', 'The contractor', 'The operator', 'The customer']] },
+  { id: 'r5', ic: '🔁', t: 'Passation de consignes', lv: 'B1', txt: `SHIFT HANDOVER — Line 3 — Night → Morning
+- Robot R2: alarm "gripper fault" twice. Reset worked. Watch it.
+- Hydraulic unit: oil level OK, temperature 62 °C.
+- Waiting for a spare sensor (ordered, arrives Tuesday).
+- No injuries. One near miss: forklift in aisle 2.`,
+    q: [['What happened with robot R2?', 'It had a gripper fault twice.', 'It broke and is stopped.', 'It was replaced.'], ['When will the spare sensor arrive?', 'On Tuesday', 'Tonight', 'It is already here.'], ['What safety event happened?', 'A near miss with a forklift', 'An injury in aisle 2', 'A fire in the hydraulic unit']] },
+  { id: 'r6', ic: '🔒', t: 'Procédure de consignation', lv: 'B1', txt: `LOCKOUT / TAGOUT PROCEDURE
+1. Tell the operator you will stop the machine.
+2. Stop the machine with the normal stop button.
+3. Turn the main switch to OFF.
+4. Put your own padlock and tag on the switch.
+5. Try to start the machine to verify zero energy.
+6. Only then, start the work.`,
+    q: [['What is the first step?', 'Tell the operator.', 'Put your padlock on.', 'Turn the main switch off.'], ['Whose padlock do you use?', 'Your own padlock', 'The operator’s padlock', 'Any padlock'], ['Why do you try to start the machine?', 'To verify there is no energy', 'To test the motor', 'To finish the work']] },
+  { id: 'r7', ic: '📝', t: 'Rapport d’intervention', lv: 'B1', txt: `INTERVENTION REPORT
+Problem: pump P3 very noisy, vibration 9 mm/s.
+Root cause: worn bearing due to misalignment.
+Action taken: bearing replaced, motor and pump realigned.
+Result: vibration now 2 mm/s. Machine back in production at 10:40 a.m.`,
+    q: [['What was the root cause?', 'Misalignment wore out the bearing.', 'The motor was too old.', 'The pump had no oil.'], ['What did the technician do?', 'Replaced the bearing and realigned', 'Changed the whole pump', 'Cleaned the filter'], ['Did the repair work?', 'Yes, vibration went down to 2 mm/s.', 'No, the pump is still noisy.', 'We don’t know.']] },
+  { id: 'r8', ic: '📄', t: 'Fiche technique', lv: 'B1', txt: `TECHNICAL DATA — Gearbox GX-40
+Ratio: 1:20
+Oil: ISO VG 220, 3.5 liters
+Oil change: every 5,000 hours or once a year
+Max. temperature: 90 °C
+Weight: 42 kg`,
+    q: [['How much oil does the gearbox need?', '3.5 liters', '20 liters', '42 liters'], ['When do you change the oil?', 'Every 5,000 hours or once a year', 'Every week', 'Only when it leaks'], ['What is the maximum temperature?', '90 °C', '220 °C', '40 °C']] },
+  { id: 'r9', ic: '🚉', t: 'Annonce en gare', lv: 'A2', txt: `Attention, please.
+The 7:45 train to Riverside is delayed by 20 minutes.
+It will now leave from platform 6, not platform 2.
+We apologize for the inconvenience.`,
+    q: [['What time will the train leave now?', '8:05', '7:25', '7:45'], ['Which platform?', 'Platform 6', 'Platform 2', 'Platform 20'], ['What does “delayed” mean here?', 'Late', 'Cancelled', 'Early']] },
+  { id: 'r10', ic: '🛑', t: 'Rapport de presque-accident', lv: 'B1', txt: `NEAR MISS REPORT
+What happened: a box fell from the top shelf in the warehouse. Nobody was hurt.
+Why: the pallet was overloaded. The shelf was not designed for this weight.
+Corrective action: heavy pallets must now go on the bottom shelf only.
+Shelf labels will show the maximum load.`,
+    q: [['Was anyone injured?', 'No, nobody was hurt.', 'Yes, one worker.', 'Yes, the forklift driver.'], ['Why did the box fall?', 'The pallet was overloaded.', 'A forklift hit the shelf.', 'The box was open.'], ['Where will heavy pallets go now?', 'On the bottom shelf', 'On the top shelf', 'Outside']] }
+];
+
+/* ================= L2 · Moteur : révision espacée (Leitner), séances, règles, lectures ================= */
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const wordRx = (w, g) => new RegExp('\\b' + reEsc(w) + '\\b', g ? 'gi' : 'i');
+const thName = th => uiEN('m') ? THEMES[th][2] : THEMES[th][1];
+const INT = [0, 1, 2, 4, 8, 16], MASTER = 5; // boîte → jours avant la prochaine révision
+const dayAdd = n => { const d = new Date(); d.setDate(d.getDate() + n); return ymd(d); };
+const isNew = c => !S.cards[c.key] || S.cards[c.key].b === 0;
+const dueList = () => CARDS.filter(c => { const s = S.cards[c.key]; return s && s.b >= 1 && s.d <= today(); }).sort((a, b) => S.cards[a.key].d < S.cards[b.key].d ? -1 : 1);
+const boxCount = b => CARDS.filter(c => S.cards[c.key] && S.cards[c.key].b === b).length;
+const seenCount = th => CARDS.filter(c => (!th || c.th === th) && S.cards[c.key] && S.cards[c.key].b >= 1).length;
+const mastCount = th => CARDS.filter(c => (!th || c.th === th) && S.cards[c.key] && S.cards[c.key].b >= MASTER).length;
+const ruleDone = r => !!(S.rules[r.id] && S.rules[r.id].done);
+const readDone = r => !!(S.reads[r.id] && S.reads[r.id].done);
+const dots = b => '●'.repeat(b) + '○'.repeat(MASTER - b);
+const spk = (t, rate) => VOICE ? `<button class="spk" data-say="${esc(t)}"${rate ? ` data-rate="${rate}"` : ''} aria-label="écouter">🔊</button>` : '';
+
+function grade(c, good, kind) {
+  let s = S.cards[c.key]; if (!s) s = S.cards[c.key] = { b: 0, d: today(), n: 0 };
+  s.n = (s.n || 0) + 1;
+  if (!good) { s.b = 1; s.d = kind === 'new' ? today() : dayAdd(1); save(); return 'Pas grave : ce mot revient bientôt.'; }
+  if (kind === 'practice' && s.b >= 1) { addXP('vocab', 2, .1); return ''; } // hors date : pas de saut de boîte
+  const was = s.b; s.b = Math.min(MASTER, s.b + 1); s.d = dayAdd(was >= MASTER ? 30 : INT[s.b]);
+  addXP('vocab', 3, .2);
+  if (s.b === MASTER && was < MASTER) { addXP('vocab', 5, .6); if (RUN) RUN.g.mast++; return '🏆 Mot maîtrisé !'; }
+  return '';
+}
+function newCards(n, th) {
+  const order = th ? [th] : [S.focus, ...THEME_IDS.filter(t => t !== S.focus)], out = [];
+  for (const t of order) for (const c of CARDS.filter(c => c.th === t && isNew(c)).sort((a, b) => a.lvl - b.lvl)) { if (out.length >= n) return out; out.push(c); }
+  return out;
+}
+function nextRule() {
+  for (const k of ['gram', 'conj', 'synt'].sort((a, b) => S.skills[a] - S.skills[b])) { const r = RULES.find(r => r.k === k && !ruleDone(r)); if (r) return r; }
+  return null;
+}
+function shiftSteps() {
+  const nw = newCards(4), due = dueList().filter(c => !nw.includes(c)).slice(0, 6), r = nextRule(), st = [];
+  nw.forEach(c => st.push({ t: 'intro', c }));
+  shuffle(nw).forEach(c => st.push({ t: 'quiz', c, kind: 'new' }));
+  due.forEach(c => st.push({ t: 'quiz', c, kind: 'due' }));
+  if (r) { st.push({ t: 'rule', r }); r.q.forEach((_, i) => st.push({ t: 'ruleQ', r, i })); }
+  return st;
+}
+function themeLearnSteps(th) { const nw = newCards(5, th); return [...nw.map(c => ({ t: 'intro', c })), ...shuffle(nw).map(c => ({ t: 'quiz', c, kind: 'new' }))]; }
+function themeReviewSteps(th) {
+  const seenC = CARDS.filter(c => c.th === th && S.cards[c.key] && S.cards[c.key].b >= 1);
+  const due = seenC.filter(c => S.cards[c.key].d <= today()), rest = seenC.filter(c => !due.includes(c)).sort((a, b) => S.cards[a.key].b - S.cards[b.key].b);
+  return [...due, ...rest].slice(0, 10).map(c => ({ t: 'quiz', c, kind: due.includes(c) ? 'due' : 'practice' }));
+}
+const ruleSteps = r => [{ t: 'rule', r }, ...r.q.map((_, i) => ({ t: 'ruleQ', r, i }))];
+const readSteps = d => [{ t: 'read', d }, ...d.q.map((_, i) => ({ t: 'readQ', d, i }))];
+
+/* ---------- Glossaire : mots du lexique soulignés dans les documents (toucher = traduction) ---------- */
+let GLOSS = null;
+function glossHTML(txt) {
+  if (!GLOSS) GLOSS = CARDS.slice().sort((a, b) => b.en.length - a.en.length).map(c => [wordRx(c.en, true), c]);
+  const keep = []; let t = txt;
+  GLOSS.forEach(([rx, c]) => { t = t.replace(rx, m => { keep.push([m, c]); return '\u0001' + (keep.length - 1) + '\u0002'; }); });
+  return esc(t).replace(/\u0001(\d+)\u0002/g, (_, i) => { const [m, c] = keep[+i]; return `<span class="w" data-en="${esc(c.en)}" data-fr="${esc(c.fr)}">${esc(m)}</span>`; });
+}
+document.addEventListener('click', e => {
+  const s = e.target.closest('[data-say]'); if (s) { e.stopPropagation(); say(s.dataset.say, s.dataset.rate ? +s.dataset.rate : 1); return; }
+  const w = e.target.closest('.w'); if (w) { toast(`${w.dataset.en} = ${w.dataset.fr}`); say(w.dataset.en); }
+});
+
+/* ---------- Lanceur de séance (barre de progression, aucune pénalité) ---------- */
+let RUN = null;
+function startRun(title, steps, back) {
+  if (!steps.length) { modal({ title: '🎉 Rien à faire ici', body: '<p>Tout est à jour pour l’instant. Reviens demain, ou choisis un autre thème.</p>' }); return; }
+  RUN = { title, steps, i: 0, back: back || { v: 'hub' }, g: { xp: 0, newW: 0, mast: 0, ok: 0, tot: 0 } };
+  show('run'); renderStep();
+}
+function nextStep() { RUN.i++; if (RUN.i < RUN.steps.length) renderStep(); else endRun(); }
+function quitRun() { if ('speechSynthesis' in window) speechSynthesis.cancel(); const b = RUN.back; RUN = null; LV = b; show('learn'); }
+function choices(prompt, opts, onAnswer, extra) {
+  const o = shuffle(opts.map((t, i) => ({ t, good: i === 0 })));
+  return { html: `<div class="qp">${prompt}</div>${extra || ''}<div id="qO">${o.map((x, i) => `<button class="ch" data-i="${i}">${esc(x.t)}</button>`).join('')}<button class="ch idk" data-i="-1">🤷 Je ne sais pas</button></div><div id="qF"></div>`,
+    bind: () => { let lock = false; $$('#qO .ch').forEach(b => b.onclick = () => {
+      if (lock) return; lock = true; const i = +b.dataset.i, good = i >= 0 && o[i].good;
+      $$('#qO .ch').forEach((x, j) => { if (j < o.length && o[j].good) x.classList.add('ok'); }); if (!good && i >= 0) b.classList.add('no');
+      RUN.g.tot++; if (good) { RUN.g.ok++; sfx('ok'); buzz(15); } else sfx(i < 0 ? 'tap' : 'no');
+      const msg = onAnswer(good) || '';
+      if (good && !msg) setTimeout(nextStep, 650);
+      else { $('#qF').innerHTML = `${msg ? `<p class="card ${good ? 'ok' : ''}" style="margin-top:10px">${msg}</p>` : ''}<button class="btn" id="qN" style="justify-content:center;margin-top:10px">${T('next')}</button>`; $('#qN').onclick = () => { sfx('tap'); nextStep(); }; $('#qN').scrollIntoView({ block: 'nearest' }); }
+    }); } };
+}
+function renderStep() {
+  const st = RUN.steps[RUN.i], n = RUN.steps.length, pct = Math.round(RUN.i / n * 100);
+  let body = '', bind = null;
+  if (st.t === 'intro') {
+    const c = st.c;
+    body = `<div class="card flash"><span class="tag">${THEMES[c.th][0]} ${esc(thName(c.th))}</span><span class="tag y" style="margin-left:4px">Nouveau mot</span>
+      <div class="word">${esc(c.en)} ${spk(c.en)}</div><div class="fr">${esc(c.fr)}</div>
+      ${c.uk ? `<div class="uk">🇬🇧 UK : ${esc(c.uk)}</div>` : ''}
+      <div class="ex">« ${esc(c.ex).replace(wordRx(c.en), m => `<b>${m}</b>`)} » ${spk(c.ex, .85)}</div></div>
+      <button class="btn" id="nx" style="justify-content:center">Je retiens ✓</button>`;
+    bind = () => { if (VOICE) setTimeout(() => say(c.en), 300); $('#nx').onclick = () => { sfx('ok'); if (!S.cards[c.key]) S.cards[c.key] = { b: 0, d: today(), n: 0 }; RUN.g.newW++; addXP('vocab', 2, .4); nextStep(); }; };
+  } else if (st.t === 'quiz') {
+    const c = st.c, s = S.cards[c.key] || { b: 0 };
+    let mode = st.kind === 'practice' ? ['en2fr', 'fr2en', 'gap'][Math.floor(Math.random() * 3)] : s.b <= 1 ? 'en2fr' : s.b === 2 ? 'fr2en' : 'gap';
+    if (mode === 'gap' && !wordRx(c.en).test(c.ex)) mode = 'fr2en';
+    const others = shuffle(CARDS.filter(o => o.th === c.th && o.key !== c.key && o.fr !== c.fr && o.en.toLowerCase() !== c.en.toLowerCase())).slice(0, 2);
+    const f = mode === 'en2fr' ? (o => o.fr) : (o => o.en);
+    const prompt = mode === 'en2fr' ? `Que veut dire <b class="en">${esc(c.en)}</b> ? ${spk(c.en)}`
+      : mode === 'fr2en' ? `Comment dit-on <b>« ${esc(c.fr)} »</b> en anglais ?`
+      : `<span class="t">Complète</span><br>${esc(c.ex).replace(wordRx(c.en), '<b class="gap">_____</b>')}<div class="mut" style="margin-top:4px">(${esc(c.fr)})</div>`;
+    const tag = `<span class="tag">${THEMES[c.th][0]} ${st.kind === 'new' ? 'Nouveau' : st.kind === 'due' ? 'Révision · boîte ' + s.b : 'Entraînement'}</span>`;
+    const q = choices(prompt, [f(c), ...others.map(f)], good => {
+      const m = grade(c, good, st.kind);
+      return good ? m : `<b>${esc(c.en)}</b> = ${esc(c.fr)}<br><span class="mut">« ${esc(c.ex)} »</span><br>${m}`;
+    }, '');
+    body = tag + q.html; bind = q.bind;
+  } else if (st.t === 'rule') {
+    const r = st.r, g = RULE_GROUPS.find(x => x[0] === r.k);
+    body = `<span class="tag y">${g[1]} ${g[2]}</span><div class="card rule"><div class="big">${esc(r.t)}</div><p style="margin-top:8px">${r.x}</p>
+      <div style="margin-top:10px">${r.e.map(e => `<div class="exl">✔ ${esc(e)} ${spk(e, .85)}</div>`).join('')}</div></div>
+      <button class="btn" id="nx" style="justify-content:center">S’entraîner (3 questions)</button>`;
+    bind = () => { $('#nx').onclick = () => { sfx('tap'); nextStep(); }; };
+  } else if (st.t === 'ruleQ') {
+    const r = st.r, [p, ...o] = r.q[st.i];
+    const prompt = p.includes('___') ? esc(p).replace('___', '<b class="gap">_____</b>') : esc(p);
+    const q = choices(prompt, o, good => {
+      const rs = S.rules[r.id] = S.rules[r.id] || { ok: 0, done: false }, bit = 1 << st.i, first = !(rs.ok & bit);
+      if (good) { addXP(r.k, first ? 6 : 2, first ? 3 : 0); rs.ok |= bit; if (rs.ok === 7 && !rs.done) { rs.done = true; addXP(r.k, 10, 5); save(); return '✅ Règle validée !'; } save(); return ''; }
+      return `Bonne réponse : <b>${esc(o[0])}</b><br><span class="mut">${r.x}</span>`;
+    });
+    body = `<span class="tag y">${esc(r.t)} · ${st.i + 1}/3</span>` + q.html; bind = q.bind;
+  } else if (st.t === 'read') {
+    const d = st.d;
+    body = `<span class="tag y">${d.ic} ${esc(d.t)} · ${d.lv}</span><pre class="wo">${glossHTML(d.txt)}</pre>
+      <p class="mut">Mots soulignés = touche pour la traduction${VOICE ? ' et la prononciation' : ''}.</p>
+      <button class="btn" id="nx" style="justify-content:center">Répondre aux questions</button>`;
+    bind = () => { $('#nx').onclick = () => { sfx('tap'); nextStep(); }; };
+  } else if (st.t === 'readQ') {
+    const d = st.d, [p, ...o] = d.q[st.i];
+    const q = choices(esc(p), o, good => {
+      const rs = S.reads[d.id] = S.reads[d.id] || { ok: 0, done: false }, bit = 1 << st.i, first = !(rs.ok & bit);
+      if (good) { addXP('read', first ? 8 : 2, first ? 4 : 0); rs.ok |= bit; if (rs.ok === 7 && !rs.done) { rs.done = true; addXP('read', 10, 6); save(); return '✅ Document compris !'; } save(); return ''; }
+      return `Bonne réponse : <b>${esc(o[0])}</b>`;
+    }, `<details class="doc"><summary>📄 Revoir le document</summary><pre class="wo">${glossHTML(d.txt)}</pre></details>`);
+    body = `<span class="tag y">${d.ic} ${esc(d.t)} · ${st.i + 1}/3</span>` + q.html; bind = q.bind;
+  }
+  $('#run').innerHTML = `<div class="row"><button class="btn alt sm" id="rX" style="width:auto">✕</button><b class="grow" style="text-align:center">${esc(RUN.title)}</b><span class="tag">⭐ ${RUN.g.xp}</span></div>
+    <div class="pb"><i style="width:${pct}%"></i></div><div class="pbl"><span>Étape ${RUN.i + 1} / ${n}</span><span>${pct} %</span></div>${body}`;
+  $('#rX').onclick = () => confirmBox('Quitter la séance ?', '<p>Tout ce que tu as déjà fait est gardé.</p>', quitRun, 'Quitter', 'red');
+  if (bind) bind(); $('#run').scrollTop = 0;
+}
+function endRun() {
+  const g = RUN.g; sfx('lvl'); buzz([30, 40, 30]);
+  $('#run').innerHTML = `<div class="pb"><i style="width:100%"></i></div><div class="pbl"><span>Terminé</span><span>100 %</span></div>
+    <div style="text-align:center;font-size:3rem;margin-top:10px">🎉</div><h2 style="text-align:center">${esc(RUN.title)} : terminé</h2>
+    <div class="big" style="text-align:center;font-size:2rem;color:var(--hz)">+${g.xp} XP</div>
+    <div class="card">${g.newW ? `<div>📚 <b>${g.newW}</b> nouveau${g.newW > 1 ? 'x' : ''} mot${g.newW > 1 ? 's' : ''}</div>` : ''}${g.mast ? `<div>🏆 <b>${g.mast}</b> mot${g.mast > 1 ? 's' : ''} maîtrisé${g.mast > 1 ? 's' : ''}</div>` : ''}
+      <div>✅ <b>${g.ok} / ${g.tot}</b> bonnes réponses</div><div>🔥 Journée comptée dans ta semaine</div></div>
+    <p class="mut" style="text-align:center">${dueList().length ? `${dueList().length} mot(s) encore à réviser aujourd’hui.` : 'Prochaines révisions : demain.'}</p>
+    <div style="margin-top:auto"></div><button class="btn" id="rEnd" style="justify-content:center">Terminer</button>`;
+  $('#rEnd').onclick = () => { sfx('tap'); quitRun(); };
+}
+
+/* ---------- Écrans « Lire & apprendre » ---------- */
+let LV = { v: 'hub' };
+function lvGo(v) { sfx('tap'); LV = v; RENDER.learn(); $('#learn').scrollTop = 0; }
+RENDER.learn = () => {
+  const el = $('#learn'), back = (to, label) => `<button class="btn alt sm" id="lBack" style="width:auto">← ${label}</button>`;
+  let h = '';
+  if (LV.v === 'hub') {
+    const nw = newCards(4).length, du = dueList().length, r = nextRule();
+    const boxes = [1, 2, 3, 4, 5].map(b => boxCount(b)), mx = Math.max(1, ...boxes);
+    h = `<div class="row">${back('home', T('home'))}<h2 class="grow" style="text-align:right">📖 ${T('read')}</h2></div>
+      <button class="btn" id="lShift"><span class="ic">▶</span><span>Shift du jour<span class="sub">≈ 5 min · ${nw} nouveaux mots · ${Math.min(6, du)} à réviser${r ? ' · 1 règle' : ''}</span></span></button>
+      <button class="btn alt" data-lv="vocab"><span class="ic">🗂</span><span>Vocabulaire métier<span class="sub">${seenCount()} / ${CARDS.length} vus · ${mastCount()} maîtrisés</span></span></button>
+      <button class="btn alt" data-lv="rules"><span class="ic">📐</span><span>Règles<span class="sub">${RULES.filter(ruleDone).length} / ${RULES.length} validées · grammaire, conjugaison, syntaxe</span></span></button>
+      <button class="btn alt" data-lv="reads"><span class="ic">📖</span><span>Lecture<span class="sub">${READS.filter(readDone).length} / ${READS.length} documents · bons de travail, rapports…</span></span></button>
+      <div class="card"><div class="t">Tes boîtes de révision</div>
+        <div class="boxes">${boxes.map((n, i) => `<div><div class="bar"><i style="height:${Math.round(n / mx * 100)}%"></i></div><b>${n}</b><span>${i === 4 ? '🏆' : '📦 ' + (i + 1)}</span><small>${['1 j', '2 j', '4 j', '8 j', '16 j'][i]}</small></div>`).join('')}</div>
+        <p class="mut" style="margin-top:6px">Bonne réponse = le mot monte d’une boîte et revient plus tard. Erreur = retour en boîte 1, sans pénalité.</p></div>`;
+  } else if (LV.v === 'vocab') {
+    h = `<div class="row">${back('hub', 'Retour')}<h2 class="grow" style="text-align:right">🗂 Vocabulaire</h2></div>
+      ${THEME_IDS.map(th => { const sn = seenCount(th), ms = mastCount(th); return `<button class="btn alt" data-th="${th}"><span class="ic">${THEMES[th][0]}</span><span class="grow">${esc(thName(th))}${S.focus === th ? ' ⭐' : ''}<span class="sub">${sn} / 30 vus · ${ms} maîtrisés</span><span class="mini"><i style="width:${sn / 30 * 100}%"></i></span></span></button>`; }).join('')}
+      <p class="mut">⭐ = thème prioritaire du Shift du jour.</p>`;
+  } else if (LV.v === 'theme') {
+    const th = LV.th, list = CARDS.filter(c => c.th === th), sn = list.filter(c => S.cards[c.key] && S.cards[c.key].b >= 1);
+    const nNew = newCards(5, th).length, nRev = themeReviewSteps(th).length;
+    h = `<div class="row">${back('vocab', 'Thèmes')}<h2 class="grow" style="text-align:right">${THEMES[th][0]} ${esc(thName(th))}</h2></div>
+      <button class="btn" id="tLearn" ${nNew ? '' : 'disabled'}><span class="ic">✨</span><span>Apprendre ${nNew} nouveaux mots<span class="sub">≈ 2 min</span></span></button>
+      <button class="btn alt" id="tRev" ${nRev ? '' : 'disabled'}><span class="ic">🔁</span><span>Réviser ce thème<span class="sub">${nRev} mot(s)</span></span></button>
+      <button class="btn alt sm" id="tFocus">${S.focus === th ? '⭐ Thème prioritaire du shift' : '☆ En faire le thème prioritaire'}</button>
+      <div class="card">${sn.length ? sn.map(c => `<div class="lw"><div class="grow"><b>${esc(c.en)}</b> <span class="mut">${esc(c.fr)}</span></div><span class="dots">${dots(S.cards[c.key].b)}</span>${spk(c.en)}</div>`).join('') : '<p class="mut">Aucun mot vu pour l’instant.</p>'}
+        ${list.length - sn.length ? `<p class="mut" style="margin-top:8px">🔒 ${list.length - sn.length} mot(s) à découvrir</p>` : ''}</div>`;
+  } else if (LV.v === 'rules') {
+    h = `<div class="row">${back('hub', 'Retour')}<h2 class="grow" style="text-align:right">📐 Règles</h2></div>
+      ${RULE_GROUPS.map(([k, ic, name]) => `<h3>${ic} ${name}</h3>` + RULES.filter(r => r.k === k).map(r => { const rs = S.rules[r.id] || { ok: 0 }, n = [0, 1, 2].filter(i => rs.ok & (1 << i)).length; return `<button class="ch" data-rule="${r.id}">${ruleDone(r) ? '✅' : n ? '◐' : '○'} ${esc(r.t)} <span class="mut" style="float:right">${n}/3</span></button>`; }).join('')).join('')}`;
+  } else if (LV.v === 'reads') {
+    h = `<div class="row">${back('hub', 'Retour')}<h2 class="grow" style="text-align:right">📖 Lecture</h2></div>
+      <p class="mut">De vrais documents du métier, en anglais simple. Les mots soulignés se traduisent d’un toucher.</p>
+      ${READS.map(d => { const rs = S.reads[d.id] || { ok: 0 }, n = [0, 1, 2].filter(i => rs.ok & (1 << i)).length; return `<button class="ch" data-read="${d.id}">${readDone(d) ? '✅' : n ? '◐' : '○'} ${d.ic} ${esc(d.t)} <span class="tag" style="float:right">${d.lv}</span></button>`; }).join('')}`;
+  }
+  el.innerHTML = h;
+  const bk = $('#lBack'); if (bk) bk.onclick = () => { if (LV.v === 'hub') { sfx('tap'); show('home'); } else lvGo({ v: LV.v === 'theme' ? 'vocab' : 'hub' }); };
+  const sh = $('#lShift'); if (sh) sh.onclick = () => { sfx('ok'); startRun('Shift du jour', shiftSteps(), { v: 'hub' }); };
+  $$('[data-lv]').forEach(b => b.onclick = () => lvGo({ v: b.dataset.lv }));
+  $$('[data-th]').forEach(b => b.onclick = () => lvGo({ v: 'theme', th: b.dataset.th }));
+  $$('[data-rule]').forEach(b => b.onclick = () => { sfx('tap'); const r = RULES.find(x => x.id === b.dataset.rule); startRun(r.t, ruleSteps(r), { v: 'rules' }); });
+  $$('[data-read]').forEach(b => b.onclick = () => { sfx('tap'); const d = READS.find(x => x.id === b.dataset.read); startRun(d.t, readSteps(d), { v: 'reads' }); });
+  if (LV.v === 'theme') {
+    $('#tLearn').onclick = () => { sfx('ok'); startRun(thName(LV.th), themeLearnSteps(LV.th), { v: 'theme', th: LV.th }); };
+    $('#tRev').onclick = () => { sfx('ok'); startRun(thName(LV.th) + ' · révision', themeReviewSteps(LV.th), { v: 'theme', th: LV.th }); };
+    $('#tFocus').onclick = () => { S.focus = LV.th; save(); sfx('tap'); RENDER.learn(); };
+  }
+};
+
+/* ---------- Lexique : tous les mots déjà vus, recherche FR ou EN ---------- */
+let LQ = '';
+function lexList() {
+  const q = LQ.trim().toLowerCase(), box = $('#lexL'); if (!box) return;
+  const h = THEME_IDS.map(th => {
+    const w = CARDS.filter(c => c.th === th && S.cards[c.key] && S.cards[c.key].b >= 1 && (!q || c.en.toLowerCase().includes(q) || c.fr.toLowerCase().includes(q)));
+    return w.length ? `<h3>${THEMES[th][0]} ${esc(thName(th))} · ${w.length}</h3><div class="card">${w.map(c => `<div class="lw"><div class="grow"><b>${esc(c.en)}</b> <span class="mut">${esc(c.fr)}</span>${c.uk ? `<div class="mut" style="font-size:.72rem">🇬🇧 UK : ${esc(c.uk)}</div>` : ''}</div><span class="dots">${dots(S.cards[c.key].b)}</span>${spk(c.en)}</div>`).join('')}</div>` : '';
+  }).join('');
+  box.innerHTML = h || '<p class="mut" style="text-align:center;margin-top:20px">Aucun mot trouvé.</p>';
+}
+
 /* ================= Profil ================= */
 let EDIT = false;
 RENDER.onb = () => {
@@ -427,7 +1063,6 @@ function skRow(k) {
 
 /* ================= Accueil ================= */
 const SOON = {
-  read: { lot: 2, ic: '📖', body: '<p>Cartes de vocabulaire métier (≈ 300 mots : sécurité, mécanique, électricité, automatisme…), une règle de grammaire par écran, quiz express.</p><p>Révision espacée : un mot raté revient demain, un mot su revient dans 2 semaines.</p>' },
   listen: { lot: 3, ic: '🎧', body: '<p>Briefings de début de poste, consignes de sécurité, appels du chef d’équipe. Vitesse normale ou 0,75×, dictées express.</p>' },
   speak: { lot: 4, ic: '🎙', body: '<p>Tu écoutes le modèle, tu dis la phrase, tu obtiens une note.</p><p>Note automatique <b>seulement si tu l’autorises</b> ; sinon auto-note, 100 % local.</p>' },
   myst: { lot: 5, ic: '🔧', body: '<canvas class="ps2" id="ps2" width="256" height="144"></canvas><p><b>Grand Tchoum Auto 6</b> · lots 5 et 6.</p><p>Mission dans une usine à l’étranger. Ta douille de 13 a disparu. Hôtel, accueil sécurité, panne sur la ligne 3, magasin d’outils… Chaque lieu = une situation en anglais et un indice.</p><p class="mut">Les chapitres se débloquent avec l’XP gagnée dans les sections 1 à 3.</p>' }
@@ -454,12 +1089,13 @@ RENDER.home = () => {
         <div class="pb" style="margin-top:4px"><i style="width:${pct}%"></i></div><div class="pbl"><span>${S.xp} XP</span><span>${pct} %</span></div></div>
     </div>
     ${cards.join('')}
-    <button class="btn" data-go="read"><span class="ic">📖</span><span>${T('read')}<span class="sub">${T('soon')} 2 · ${T('sRead')}</span></span></button>
+    <button class="btn" id="hRead"><span class="ic">📖</span><span>${T('read')}<span class="sub">${seenCount() ? `Shift du jour · ${dueList().length} à réviser` : 'Shift du jour · 5 min · ' + T('sRead')}</span></span></button>
     <button class="btn" data-go="speak"><span class="ic">🎙</span><span>${T('speak')}<span class="sub">${T('soon')} 4 · ${T('sSpeak')}</span></span></button>
     <button class="btn" data-go="listen"><span class="ic">🎧</span><span>${T('listen')}<span class="sub">${T('soon')} 3 · ${T('sListen')}</span></span></button>
     <button class="btn hz" data-go="myst"><span class="ic">🔧</span><span>${T('myst')}<span class="sub" style="color:#e8d9a8">Grand Tchoum Auto 6 · ${T('soon')} 5</span></span></button>
     <div class="hz-strip"></div>`;
   $$('#home [data-go]').forEach(b => b.onclick = () => { sfx('tap'); openSoon(b.dataset.go); });
+  $('#hRead').onclick = () => { sfx('tap'); LV = { v: 'hub' }; show('learn'); };
   const t = $('#hTest'); if (t) t.onclick = () => { sfx('tap'); testIntro(); };
   const i = $('#hInst'); if (i) i.onclick = () => { sfx('tap'); installHelp(); };
   const e = $('#hExp'); if (e) e.onclick = () => { sfx('tap'); doExport(); };
@@ -481,11 +1117,24 @@ RENDER.prog = () => {
 
 /* ================= Lexique ================= */
 RENDER.lex = () => {
-  $('#lex').innerHTML = `<h2>${T('lex')}</h2>
+  const n = seenCount();
+  if (!n) {
+    $('#lex').innerHTML = `<h2>${T('lex')}</h2>
     <div class="card" style="text-align:center;padding:24px 12px;margin-top:20px">
       <svg viewBox="0 0 120 80" width="140" style="margin:0 auto" aria-hidden="true"><rect x="14" y="16" width="62" height="46" rx="6" fill="#2c2450" stroke="#7c70b8" stroke-width="2"/><rect x="24" y="8" width="62" height="46" rx="6" fill="#3b3060" stroke="#7c70b8" stroke-width="2"/><rect x="34" y="0" width="62" height="46" rx="6" fill="#e0561a" stroke="#ffb27a" stroke-width="2"/><text x="65" y="28" text-anchor="middle" font-size="13" font-weight="900" fill="#fff" font-family="system-ui">wrench</text><circle cx="98" cy="62" r="14" fill="#ffc21a"/><text x="98" y="67" text-anchor="middle" font-size="13" font-weight="900" fill="#1a0d05" font-family="system-ui">13</text></svg>
       <div class="big" style="margin-top:12px">Ton lexique est vide… pour l’instant</div>
-      <p class="mut" style="margin-top:6px">Chaque mot appris dans « Lire &amp; apprendre » (lot 2) arrivera ici, rangé par thème : sécurité, mécanique, électricité, automatisme, déplacement pro, rapports.</p></div>`;
+      <p class="mut" style="margin-top:6px">Chaque mot appris dans « Lire &amp; apprendre » arrive ici, rangé par thème.</p></div>
+    <button class="btn" id="lexGo" style="justify-content:center">📖 Apprendre mes premiers mots</button>`;
+    $('#lexGo').onclick = () => { sfx('tap'); LV = { v: 'hub' }; show('learn'); };
+    return;
+  }
+  const m = mastCount();
+  $('#lex').innerHTML = `<h2>${T('lex')}</h2>
+    <div class="card"><b>${n}</b> mot${n > 1 ? 's' : ''} vu${n > 1 ? 's' : ''} · <b>${m}</b> maîtrisé${m > 1 ? 's' : ''} 🏆 <span class="mut">· ●●○○○ = boîte de révision</span></div>
+    <input type="text" id="lexQ" placeholder="🔍 Chercher en anglais ou en français" value="${esc(LQ)}" autocomplete="off">
+    <div id="lexL"></div>`;
+  $('#lexQ').oninput = e => { LQ = e.target.value; lexList(); };
+  lexList();
 };
 
 /* ================= Options ================= */

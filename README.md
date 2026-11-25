@@ -2,15 +2,16 @@
 
 Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**. Une seule page HTML installable sur téléphone : hors-ligne, **zéro traceur, zéro cookie, zéro compte**.
 
-- **Version courante :** L1 v0.1 · 2026-11-25
+- **Version courante :** L2 v0.2 · 2026-11-25
 - **Pour installer (ami·e, utilisateur·rice) :** [`docs/TrioLingo_Installation_v0.1_2026-11-25.md`](docs/TrioLingo_Installation_v0.1_2026-11-25.md)
+- **Pour apprendre :** [`docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md`](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md)
 
 ![Installer en 4 étapes](docs/TrioLingo_Installation_v0.1_2026-11-25.svg)
 
 ## Les 4 sections
 | | Section | Lot |
 |---|---|---|
-| 📖 | Lire & apprendre : vocabulaire métier, grammaire, révision espacée | L2 |
+| 📖 | Lire & apprendre : vocabulaire métier, grammaire, révision espacée | L2 ✅ |
 | 🎧 | Écouter : briefings, consignes, appels (voix installée sur le téléphone uniquement) | L3 |
 | 🎙 | Parler : modèle, enregistrement, note automatique **sur demande** ou auto-note | L4 |
 | 🔧 | Mode mystère **Grand Tchoum Auto 6** : retrouver la douille de 13 (jeu 3D, style console années 2000, 100 % original) | L5–L6 |
@@ -18,6 +19,22 @@ Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**.
 ---
 
 ## Notes de version
+
+### L2 v0.2 · 2026-11-25 · Lire & apprendre
+![Le Shift du jour et les 5 boîtes](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.svg)
+- ▶ **Shift du jour** (≈ 5 min, 1 bouton) : 4 nouveaux mots, quiz, jusqu'à 6 révisions, 1 règle avec 3 questions. Barre de progression « Étape X / N · % », bouton ✕ pour quitter à tout moment sans rien perdre.
+- 🗂 **240 mots métier** en 8 thèmes de 30 : Sécurité, Mécanique, Électricité, Automatisme, Hydraulique & pneumatique, Outils & mesure, Production & qualité, Déplacement & rapports. Chaque mot : traduction, phrase d'exemple du métier, 🔊 si une voix anglaise est installée, note 🇬🇧 quand le mot britannique diffère (wrench / spanner, outlet / socket…).
+- 📦 **Révision espacée en 5 boîtes** (1, 2, 4, 8 puis 16 jours). Erreur = retour en boîte 1, **aucune perte d'XP**. Les questions changent avec la boîte : anglais → français, puis français → anglais, puis phrase à compléter.
+- 📐 **30 règles** en 1 écran chacune (10 de grammaire, 10 de conjugaison, 10 de syntaxe), 3 questions par règle. Le Shift du jour propose d'abord la compétence la plus faible.
+- 📖 **10 documents du métier** (bon de travail, panneau de sécurité, hôtel, e-mail, passation de consignes, consignation, rapport d'intervention, fiche technique, annonce en gare, presque-accident) avec 3 questions chacun. **Les mots du lexique sont soulignés** : un toucher donne la traduction.
+- 🗂 **Onglet Lexique** : tous les mots vus, rangés par thème, avec leur boîte (●●○○○) et une recherche FR / EN.
+- ⭐ **Thème prioritaire** du Shift, au choix dans Vocabulaire.
+- 📈 Les niveaux montent avec le travail réel : vocabulaire (nouveaux mots, révisions, mots maîtrisés), grammaire, conjugaison, syntaxe (règles), lecture (documents). La 1re bonne réponse compte plus que les suivantes.
+- ♻️ Les sauvegardes du lot 1 se chargent telles quelles (rien à refaire).
+
+**Testé** (Chromium, écran 390 × 844) : relecture d'une sauvegarde L1, Shift du jour complet, thème (apprendre + réviser), règle, lecture avec glossaire, calcul des boîtes (bonne réponse, erreur, mot maîtrisé, entraînement hors date), lexique et recherche, données gardées après rechargement, export avec les cartes, et tous les tests du lot 1. Résultat : 0 erreur, **0 requête vers un autre site**. Le contenu a aussi été vérifié automatiquement : 30 mots par thème, chaque exemple contient son mot, 3 réponses différentes par question.
+
+**Limites connues** : pas encore essayé sur un vrai téléphone ; prononciation 🔊 seulement avec une voix anglaise installée.
 
 ### L1 v0.1 · 2026-11-25 · Le socle
 - 🏗 **App installable** (écran d'accueil iPhone et Android) qui marche **sans réseau** une fois ouverte.

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+  <!-- TrioLingo · Lire & apprendre · L2 v0.2 · 2026-11-25 -->
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#a9a3c4"/></marker></defs>
+  <rect width="900" height="560" rx="18" fill="#0d0a1a"/>
+  <text x="30" y="44" fill="#fff" font-size="22" font-weight="900" letter-spacing="1">LIRE &amp; APPRENDRE · LE SHIFT DU JOUR</text>
+  <text x="30" y="68" fill="#ffc21a" font-size="13" font-weight="700">L2 v0.2 · 2026-11-25 · ≈ 5 min · 1 bouton : ▶ Shift du jour</text>
+  <g font-size="13" text-anchor="middle">
+    <rect x="30" y="92" width="185" height="120" rx="12" fill="#e0561a"/>
+    <text x="122" y="124" font-size="26">✨</text><text x="122" y="152" fill="#fff" font-weight="900">4 NOUVEAUX MOTS</text>
+    <text x="122" y="174" fill="#ffe3cc">mot + traduction</text><text x="122" y="193" fill="#ffe3cc">+ phrase d’exemple</text>
+    <rect x="245" y="92" width="185" height="120" rx="12" fill="#e0561a"/>
+    <text x="337" y="124" font-size="26">❓</text><text x="337" y="152" fill="#fff" font-weight="900">QUIZ EXPRESS</text>
+    <text x="337" y="174" fill="#ffe3cc">3 choix</text><text x="337" y="193" fill="#ffe3cc">+ 🤷 Je ne sais pas</text>
+    <rect x="460" y="92" width="185" height="120" rx="12" fill="#e0561a"/>
+    <text x="552" y="124" font-size="26">🔁</text><text x="552" y="152" fill="#fff" font-weight="900">6 RÉVISIONS MAX</text>
+    <text x="552" y="174" fill="#ffe3cc">les mots dont</text><text x="552" y="193" fill="#ffe3cc">c’est le jour</text>
+    <rect x="675" y="92" width="195" height="120" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/>
+    <text x="772" y="124" font-size="26">📐</text><text x="772" y="152" fill="#ffc21a" font-weight="900">1 RÈGLE</text>
+    <text x="772" y="174" fill="#e8d9a8">1 écran d’explication</text><text x="772" y="193" fill="#e8d9a8">+ 3 questions</text>
+  </g>
+  <g stroke="#a9a3c4" stroke-width="2" marker-end="url(#a)"><path d="M215 152h27"/><path d="M430 152h27"/><path d="M645 152h27"/></g>
+  <text x="30" y="262" fill="#fff" font-size="16" font-weight="900">LES 5 BOÎTES DE RÉVISION (méthode Leitner)</text>
+  <g text-anchor="middle" font-size="13">
+    <rect x="30" y="280" width="140" height="90" rx="10" fill="#2c2450" stroke="#7c5cff"/><text x="100" y="312" fill="#fff" font-weight="900">📦 BOÎTE 1</text><text x="100" y="340" fill="#a9a3c4">revient demain</text>
+    <rect x="200" y="280" width="140" height="90" rx="10" fill="#2c2450" stroke="#7c5cff"/><text x="270" y="312" fill="#fff" font-weight="900">📦 BOÎTE 2</text><text x="270" y="340" fill="#a9a3c4">dans 2 jours</text>
+    <rect x="370" y="280" width="140" height="90" rx="10" fill="#2c2450" stroke="#7c5cff"/><text x="440" y="312" fill="#fff" font-weight="900">📦 BOÎTE 3</text><text x="440" y="340" fill="#a9a3c4">dans 4 jours</text>
+    <rect x="540" y="280" width="140" height="90" rx="10" fill="#2c2450" stroke="#7c5cff"/><text x="610" y="312" fill="#fff" font-weight="900">📦 BOÎTE 4</text><text x="610" y="340" fill="#a9a3c4">dans 8 jours</text>
+    <rect x="710" y="280" width="160" height="90" rx="10" fill="#17130a" stroke="#ffc21a" stroke-width="2"/><text x="790" y="312" fill="#ffc21a" font-weight="900">🏆 MAÎTRISÉ</text><text x="790" y="340" fill="#e8d9a8">dans 16 jours</text>
+  </g>
+  <g stroke="#5fd38d" stroke-width="2" fill="none" marker-end="url(#a)"><path d="M170 325h27"/><path d="M340 325h27"/><path d="M510 325h27"/><path d="M680 325h27"/></g>
+  <text x="440" y="396" text-anchor="middle" fill="#5fd38d" font-size="13" font-weight="700">✔ bonne réponse = le mot monte d’une boîte</text>
+  <path d="M790 372 V420 H100 V374" stroke="#ff6b6b" stroke-width="2" fill="none" stroke-dasharray="6 5" marker-end="url(#a)"/>
+  <text x="440" y="440" text-anchor="middle" fill="#ff8a8a" font-size="13" font-weight="700">✗ erreur = retour en boîte 1, sans pénalité ni perte d’XP</text>
+  <rect x="30" y="462" width="840" height="76" rx="12" fill="none" stroke="#a9a3c4" stroke-dasharray="5 5"/>
+  <g font-size="13" fill="#f4f1ff">
+    <text x="50" y="490">🗂 <tspan font-weight="800">240 mots</tspan> en 8 thèmes  ·  📐 <tspan font-weight="800">30 règles</tspan>  ·  📖 <tspan font-weight="800">10 documents</tspan> du métier (mots soulignés = toucher pour traduire)</text>
+    <text x="50" y="518">⭐ Choisis ton thème prioritaire dans Vocabulaire  ·  🗂 Onglet Lexique : tous tes mots vus, avec recherche FR / EN</text>
+  </g>
+</svg>
