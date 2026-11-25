@@ -2,12 +2,12 @@
 
 Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**. Une seule page HTML installable sur téléphone : hors-ligne, **zéro traceur, zéro cookie, zéro compte**.
 
-- **Version courante :** L5 v0.7 · 2026-11-25
+- **Version courante :** L6 v0.8 · 2026-11-25 · **les 6 lots sont livrés** ✅
 - **Pour installer (ami·e, utilisateur·rice) :** [`docs/TrioLingo_Installation_v0.1_2026-11-25.md`](docs/TrioLingo_Installation_v0.1_2026-11-25.md)
 - **Pour apprendre :** [`docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md`](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md)
 - **Pour écouter :** [`docs/TrioLingo_Ecouter_v0.4_2026-11-25.md`](docs/TrioLingo_Ecouter_v0.4_2026-11-25.md)
 - **Pour parler :** [`docs/TrioLingo_Parler_v0.5_2026-11-25.md`](docs/TrioLingo_Parler_v0.5_2026-11-25.md)
-- **Pour jouer à Grand Tchoum Auto 6 :** [`docs/GrandTchoumAuto6_Guide_v0.6_2026-11-25.md`](docs/GrandTchoumAuto6_Guide_v0.6_2026-11-25.md)
+- **Pour jouer à Grand Tchoum Auto 6 :** [`docs/GrandTchoumAuto6_Guide_v0.8_2026-11-25.md`](docs/GrandTchoumAuto6_Guide_v0.8_2026-11-25.md)
 
 ![Installer en 4 étapes](docs/TrioLingo_Installation_v0.1_2026-11-25.svg)
 
@@ -17,11 +17,25 @@ Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**.
 | 📖 | Lire & apprendre : vocabulaire métier, grammaire, révision espacée | L2 ✅ |
 | 🎧 | Écouter : briefings, consignes, appels (voix installée sur le téléphone uniquement) | L3 ✅ |
 | 🎙 | Parler : modèle, enregistrement, note automatique **sur demande** ou auto-note | L4 ✅ |
-| 🔧 | Mode mystère **Grand Tchoum Auto 6** : retrouver la douille de 13 (jeu 3D, style console années 2000, 100 % original) | L5 ✅ (chap. 1-3) · L6 |
+| 🔧 | Mode mystère **Grand Tchoum Auto 6** : retrouver la douille de 13 (jeu 3D, style console années 2000, 100 % original) | L5 ✅ · L6 ✅ |
 
 ---
 
 ## Notes de version
+
+### L6 v0.8 · 2026-11-25 · Grand Tchoum Auto 6 : chapitres 4 à 6 et la finale
+![Guide du jeu](docs/GrandTchoumAuto6_Guide_v0.8_2026-11-25.svg)
+- 🏭 **La cour de l'usine 6** : ligne 3 (convoyeur à rouleaux, presse, moteur, réducteur, voyant d'alarme), magasin d'outils, bureau maintenance. La barrière se lève une fois l'accueil sécurité terminé.
+- ⚙️ **Chapitre 4 · Breakdown** (400 XP) : Barry Ing, opérateur. Décrire une panne au passé, puis diagnostic à partir d'un relevé (bruit, température, vibrations). Le voyant passe au vert quand la ligne redémarre. **Indice 4.**
+- 🧰 **Chapitre 5 · Tool crib** (550 XP) : Clé Mollette. Emprunter poliment, millimètres ↔ pouces (13 mm ≈ ½ pouce), comparer des tailles. **Indice 5.**
+- 📝 **Chapitre 6 · The report** (700 XP) : Otto Mate. Rapport d'intervention au passif (problème, cause racine, action réalisée, résultat).
+- 🎯 **Finale** : désigner la cachette parmi 5, avec les indices relisibles dans la même fenêtre. Mauvaise réponse = un gag (le canard en plastique de Ty, le regard fâché de Barry…), jamais d'échec. Dernière ligne du rapport en anglais, **🏆 Affaire résolue · +50 XP**, puis balade libre.
+- 📒 Carnet d'enquête : 5 indices sur 5, 6 chapitres, mots de chaque chapitre (grinding noise, tool crib, inch, root cause, case closed…).
+- 👀 L'anneau « 13 » s'efface quand tu es arrivé, pour laisser lire le nom du personnage.
+
+**Testé** (Chromium, écran 390 × 844 ×2, rendu 3D logiciel) : partie complète des 6 chapitres (mauvaise puis bonne réponse, diagnostic, conversions, rapport, accusation avec 2 erreurs puis la bonne, finale), 5 indices, XP renvoyée à TrioLingo, écran titre « tout fait » après rechargement, puis tous les tests de l'app (lots 1 à 4, personnage). Résultat : 0 erreur, **0 requête vers un autre site**.
+
+**Limites connues** : fluidité et voix à vérifier sur ton téléphone ; l'histoire est jouable une fois (la balade libre reste ouverte après la fin).
 
 ### L5 v0.7 · 2026-11-25 · Grand Tchoum Auto 6 en haute définition
 - 🖼 **Rendu 3D HD** : pleine résolution de l'écran (×2 sur iPhone), bords lissés. L'image n'est plus pixelisée.

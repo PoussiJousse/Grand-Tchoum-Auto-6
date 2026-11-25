@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+  <!-- Grand Tchoum Auto 6 · Guide · L6 v0.8 · 2026-11-25 -->
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ffc21a"/></marker>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1442"/><stop offset=".6" stop-color="#8a2f63"/><stop offset="1" stop-color="#e0683e"/></linearGradient></defs>
+  <rect width="900" height="620" rx="18" fill="url(#sky)"/>
+  <text x="30" y="48" fill="#fff" font-size="26" font-weight="900" font-style="italic">GRAND TCHOUM AUTO 6</text>
+  <rect x="30" y="60" width="210" height="24" fill="#ffc21a" stroke="#1a1206" stroke-width="2"/><text x="135" y="77" text-anchor="middle" fill="#1a1206" font-size="13" font-weight="900" letter-spacing="3">LA DOUILLE DE 13</text>
+  <text x="260" y="77" fill="#ffe3cc" font-size="13" font-weight="700">L6 v0.8 · 2026-11-25 · 6 chapitres + finale · l’XP de TrioLingo ouvre les chapitres</text>
+  <g font-size="12.5" text-anchor="middle">
+    <g transform="translate(30,105)"><rect width="260" height="96" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/><text x="130" y="26" fill="#ffc21a" font-weight="900">1 · ARRIVAL · 0 XP</text><text x="130" y="48" fill="#fff">🚉 panneau des départs, chemin</text><text x="130" y="76" fill="#5fd38d" font-weight="800">🔍 indice 1</text></g>
+    <g transform="translate(320,105)"><rect width="260" height="96" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/><text x="130" y="26" fill="#ffc21a" font-weight="900">2 · CHECK-IN · 120 XP</text><text x="130" y="48" fill="#fff">🏨 réservation, « Could I… ? »</text><text x="130" y="76" fill="#5fd38d" font-weight="800">🔍 indice 2</text></g>
+    <g transform="translate(610,105)"><rect width="260" height="96" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/><text x="130" y="26" fill="#ffc21a" font-weight="900">3 · SAFETY · 250 XP</text><text x="130" y="48" fill="#fff">🦺 EPI, ordre de consignation</text><text x="130" y="76" fill="#5fd38d" font-weight="800">🔍 indice 3</text></g>
+    <g transform="translate(610,225)"><rect width="260" height="96" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/><text x="130" y="26" fill="#ffc21a" font-weight="900">4 · BREAKDOWN · 400 XP</text><text x="130" y="48" fill="#fff">⚙️ Barry Ing : décrire la panne au passé</text><text x="130" y="66" fill="#fff">diagnostic de la ligne 3</text><text x="130" y="88" fill="#5fd38d" font-weight="800">🔍 indice 4</text></g>
+    <g transform="translate(320,225)"><rect width="260" height="96" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/><text x="130" y="26" fill="#ffc21a" font-weight="900">5 · TOOL CRIB · 550 XP</text><text x="130" y="48" fill="#fff">🧰 Clé Mollette : emprunter poliment</text><text x="130" y="66" fill="#fff">millimètres ↔ pouces</text><text x="130" y="88" fill="#5fd38d" font-weight="800">🔍 indice 5</text></g>
+    <g transform="translate(30,225)"><rect width="260" height="96" rx="12" fill="#3a1206" stroke="#ff7a2f" stroke-width="3"/><text x="130" y="26" fill="#ffb27a" font-weight="900">6 · THE REPORT · 700 XP</text><text x="130" y="48" fill="#fff">📝 Otto Mate : rapport au passif</text><text x="130" y="66" fill="#fff">🎯 FINALE : désigne la cachette</text><text x="130" y="88" fill="#ffc21a" font-weight="800">🏆 Affaire résolue · +50 XP</text></g>
+  </g>
+  <g stroke="#ffc21a" stroke-width="2.5" fill="none" marker-end="url(#a)"><path d="M290 153h27"/><path d="M580 153h27"/><path d="M740 201v21"/><path d="M610 273h-27"/><path d="M320 273h-27"/></g>
+  <rect x="30" y="345" width="410" height="250" rx="14" fill="rgba(12,8,20,.85)"/>
+  <text x="50" y="375" fill="#fff" font-size="16" font-weight="900">🎮 LES COMMANDES</text>
+  <g font-size="13" fill="#f4f1ff">
+    <text x="50" y="405">🕹 joystick (en bas à droite) : marcher</text>
+    <text x="50" y="431">🟠 gros bouton orange : parler / agir</text>
+    <text x="50" y="457">🟡 anneau « 13 » + flèche + distance : où aller</text>
+    <text x="50" y="483">🔊 réplique lue en anglais · 🇫🇷 traduction</text>
+    <text x="50" y="509">📒 carnet d’enquête · ⚙ réglages · ✕ retour</text>
+    <text x="50" y="535">🕹 Style rétro (gros pixels) : ⚙ Réglages</text>
+    <text x="50" y="565" fill="#a9a3c4">Qualité d’image réglée toute seule selon le téléphone</text>
+  </g>
+  <rect x="460" y="345" width="410" height="250" rx="14" fill="rgba(12,8,20,.85)"/>
+  <text x="480" y="375" fill="#fff" font-size="16" font-weight="900">🎯 LA FINALE</text>
+  <g font-size="13" fill="#f4f1ff">
+    <text x="480" y="405">Relis tes 5 indices (📒 dans la fenêtre)</text>
+    <text x="480" y="431">puis choisis la cachette parmi 5.</text>
+    <text x="480" y="461" fill="#ff8a8a">✗ mauvaise cachette : un gag, et tu réessaies</text>
+    <text x="480" y="487" fill="#5fd38d">✔ bonne cachette : la vérité + la dernière</text>
+    <text x="480" y="507" fill="#5fd38d">   ligne du rapport en anglais</text>
+    <text x="480" y="541">⭐ Toute l’XP du jeu compte dans TrioLingo</text>
+    <text x="480" y="567">🌆 Après la fin : balade libre dans la ville</text>
+  </g>
+</svg>

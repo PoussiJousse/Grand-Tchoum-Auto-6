@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- TrioLingo · Industrial Edition Pro Max · L5 v0.6 · généré le 2026-11-25
+<!-- TrioLingo · Industrial Edition Pro Max · L6 v0.8 · généré le 2026-11-25
      100 % local : aucun traceur, aucun cookie, aucun compte, aucune police ni script externe.
      Toutes les données restent dans ce téléphone (stockage local). Aucune donnée personnelle dans ce code.
      Seule exception future (lot 4), et seulement si l'utilisateur répond Oui : la reconnaissance vocale
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TrioLingo"><meta name="theme-color" content="#120c24">
-<title>TrioLingo L5 v0.6</title>
+<title>TrioLingo L6 v0.8</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
 <style>
 :root{--a:#ff7a2f;--b:#7c5cff;--hz:#ffc21a;--ok:#5fd38d;--bad:#ff6b6b;--bg:#0d0a1a;--fg:#f4f1ff;--mut:#a9a3c4;--pn:rgba(18,12,36,.92);--bd:rgba(255,255,255,.16)}
@@ -90,7 +90,7 @@ canvas.ps2{width:100%;aspect-ratio:16/9;image-rendering:pixelated;image-renderin
 .flow div{flex:1;padding:8px 4px;border-radius:8px;background:#241c42;border:1px solid var(--bd)}
 .flow .x{flex:none;background:none;border:0;padding:0;color:var(--mut)}
 svg{display:block}
-/* L5 v0.6 · avatar réaliste */
+/* L6 v0.8 · avatar réaliste */
 .avbox{display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 0;position:sticky;top:-14px;z-index:3;background:linear-gradient(var(--bg) 85%,rgba(13,10,26,0))}.avbox svg{filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
 .avrow{display:flex;flex-wrap:wrap;gap:4px}
 .ch2{min-height:42px;padding:6px 14px;border-radius:21px;border:1px solid var(--bd);background:#241c42;color:var(--fg);font:600 .85rem system-ui,sans-serif;cursor:pointer}
@@ -131,7 +131,7 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
   <div class="pb"><i id="bI"></i></div>
   <div class="pbl"><span id="bL">Démarrage…</span><span id="bP">0 %</span></div>
   <button class="btn" id="bgo" style="justify-content:center;display:none">Touche pour commencer</button>
-  <p class="mut" style="text-align:center;font-size:.7rem">L5 v0.6 · 2026-11-25 · 100 % local, 0 traceur</p>
+  <p class="mut" style="text-align:center;font-size:.7rem">L6 v0.8 · 2026-11-25 · 100 % local, 0 traceur</p>
 </section>
 
 <!-- Profil (création ou modification) -->
@@ -164,8 +164,8 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
 
 <script>
 'use strict';
-/* ============ TrioLingo · L5 v0.6 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) + Écouter (L3) + Parler (L4) · mode mystère dans grandtchoumauto6.html (L5) ============ */
-const VERSION = 'L5 v0.6', BUILD = '2026-11-25', KEY = 'tl_save_v1';
+/* ============ TrioLingo · L6 v0.8 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) + Écouter (L3) + Parler (L4) · mode mystère dans grandtchoumauto6.html (L5-L6) ============ */
+const VERSION = 'L6 v0.8', BUILD = '2026-11-25', KEY = 'tl_save_v1';
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -326,7 +326,7 @@ function radar(size, labels) {
   if (labels) SK.forEach((k, i) => { const [x, y] = pt(i, 1.24); s += `<text x="${x}" y="${+y + 4}" text-anchor="middle" fill="#a9a3c4" font-size="10.5" font-family="system-ui">${k.ic} ${esc(cefr(S.skills[k.id]))}</text>`; });
   return s + '</svg>';
 }
-/* ---------- Avatar réaliste v2 (L5 v0.6) : technicien·ne en EPI, 100 % dessiné en code ---------- */
+/* ---------- Avatar réaliste v2 (L6 v0.8) : technicien·ne en EPI, 100 % dessiné en code ---------- */
 const AV = {
   hat: ['#ffc21a', '#f2efe6', '#ff7a2f', '#2f6fd6', '#3aa655', '#d63b3b'],
   vest: ['#d4ef1f', '#ff6a1a'],
@@ -1504,7 +1504,7 @@ RENDER.home = () => {
     <button class="btn" id="hRead"><span class="ic">📖</span><span>${T('read')}<span class="sub">${seenCount() ? `Shift du jour · ${dueList().length} à réviser` : 'Shift du jour · 5 min · ' + T('sRead')}</span></span></button>
     <button class="btn" id="hSpeak"><span class="ic">🎙</span><span>${T('speak')}<span class="sub">Shift de parole · 3 min · ${srOn() ? 'note automatique' : 'auto-note locale'}</span></span></button>
     <button class="btn" id="hListen"><span class="ic">🎧</span><span>${T('listen')}<span class="sub">${VOICE ? 'Shift d’écoute · 5 min · ' + T('sListen') : '🔈 voix anglaise à installer'}</span></span></button>
-    <button class="btn hz" id="hMyst"><span class="ic">🔧</span><span>${T('myst')}<span class="sub" style="color:#e8d9a8">Grand Tchoum Auto 6 · chapitres 1 à 3 · ${S.xp} XP</span></span></button>
+    <button class="btn hz" id="hMyst"><span class="ic">🔧</span><span>${T('myst')}<span class="sub" style="color:#e8d9a8">Grand Tchoum Auto 6 · 6 chapitres · ${S.xp} XP</span></span></button>
     <div class="hz-strip"></div>`;
   $$('#home [data-go]').forEach(b => b.onclick = () => { sfx('tap'); openSoon(b.dataset.go); });
   $('#hRead').onclick = () => { sfx('tap'); LV = { v: 'hub' }; show('learn'); };
