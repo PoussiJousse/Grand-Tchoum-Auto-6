@@ -2,11 +2,12 @@
 
 Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**. Une seule page HTML installable sur téléphone : hors-ligne, **zéro traceur, zéro cookie, zéro compte**.
 
-- **Version courante :** L4 v0.5 · 2026-11-25
+- **Version courante :** L5 v0.6 · 2026-11-25
 - **Pour installer (ami·e, utilisateur·rice) :** [`docs/TrioLingo_Installation_v0.1_2026-11-25.md`](docs/TrioLingo_Installation_v0.1_2026-11-25.md)
 - **Pour apprendre :** [`docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md`](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md)
 - **Pour écouter :** [`docs/TrioLingo_Ecouter_v0.4_2026-11-25.md`](docs/TrioLingo_Ecouter_v0.4_2026-11-25.md)
 - **Pour parler :** [`docs/TrioLingo_Parler_v0.5_2026-11-25.md`](docs/TrioLingo_Parler_v0.5_2026-11-25.md)
+- **Pour jouer à Grand Tchoum Auto 6 :** [`docs/GrandTchoumAuto6_Guide_v0.6_2026-11-25.md`](docs/GrandTchoumAuto6_Guide_v0.6_2026-11-25.md)
 
 ![Installer en 4 étapes](docs/TrioLingo_Installation_v0.1_2026-11-25.svg)
 
@@ -16,11 +17,29 @@ Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**.
 | 📖 | Lire & apprendre : vocabulaire métier, grammaire, révision espacée | L2 ✅ |
 | 🎧 | Écouter : briefings, consignes, appels (voix installée sur le téléphone uniquement) | L3 ✅ |
 | 🎙 | Parler : modèle, enregistrement, note automatique **sur demande** ou auto-note | L4 ✅ |
-| 🔧 | Mode mystère **Grand Tchoum Auto 6** : retrouver la douille de 13 (jeu 3D, style console années 2000, 100 % original) | L5–L6 |
+| 🔧 | Mode mystère **Grand Tchoum Auto 6** : retrouver la douille de 13 (jeu 3D, style console années 2000, 100 % original) | L5 ✅ (chap. 1-3) · L6 |
 
 ---
 
 ## Notes de version
+
+### L5 v0.6 · 2026-11-25 · Grand Tchoum Auto 6, chapitres 1 à 3
+![Guide du jeu](docs/GrandTchoumAuto6_Guide_v0.6_2026-11-25.svg)
+- 🔧 **Le mode mystère est jouable** : `grandtchoumauto6.html`, ouvert depuis l'accueil (bouton 🔧). Jeu 3D, chargé seulement quand on y entre : l'app reste légère.
+- 🌆 **Tchoum City au coucher du soleil**, style console années 2000 : image basse résolution agrandie, couleurs réduites et tramage, brume orange, zone industrielle, palmiers, gare, hôtel, usine 6 avec cheminées qui fument. Dessin 100 % original, aucun élément d'un jeu existant.
+- 👷 **Ton personnage** reprend ton casque, ton gilet, ta peau et tes cheveux de TrioLingo.
+- 📖 **3 chapitres** : 1 · Arrival (gare, panneau des départs, demander son chemin) · 2 · Check-in (réservation, demande polie, problème de chambre) · 3 · Safety first (EPI, consignation). **3 indices** sur la douille de 13, notés dans le 📒 carnet d'enquête.
+- 💬 **Dialogues en anglais** : 🔊 voix du téléphone, 🇫🇷 traduction, 3 réponses au choix. Mauvaise réponse = réaction drôle et on réessaie, **jamais de game over**.
+- 🎯 Anneau « 13 », flèche et distance pour savoir où aller · joystick tactile ou clavier · palmiers transparents quand ils cachent le personnage.
+- ⭐ **L'XP du jeu compte dans TrioLingo** (radar et niveau). L'XP de TrioLingo **ouvre les chapitres** : 0, 120, puis 250 XP.
+- 🎵 Musique et sons synthétisés dans le jeu (aucun fichier), réglables.
+- 💾 Partie sauvegardée sur le téléphone, **incluse dans l'export / import** de TrioLingo.
+- 🐞 Correctif hors-ligne : chaque page (app et jeu) est gardée sous son propre nom. Avant, ouvrir le jeu pouvait remplacer la copie hors-ligne de l'app.
+- 🔒 Toujours 0 traceur, 0 requête réseau (même verrou de sécurité que l'app). Moteur dérivé du *Mystère de Babylone* ; three.js (licence MIT) inclus.
+
+**Testé** (Chromium, écran 390 × 844, rendu 3D logiciel sans carte graphique) : bouton Mode mystère → jeu, partie complète des chapitres 1 à 3 (panneau, dialogues avec mauvaise puis bonne réponse, chapitre verrouillé puis ouvert, chambre 312, EPI avec erreur, ordre de consignation), 3 indices, carnet, XP renvoyée à TrioLingo, ≈ 60 images/s, sauvegarde après rechargement, retour à l'app, jeu et app ouverts **sans réseau**, export contenant la partie, puis tous les tests L1 à L4. Résultat : 0 erreur, **0 requête vers un autre site**.
+
+**Limites connues** : pas encore essayé sur un vrai téléphone (fluidité à vérifier sur un vieux modèle) ; chapitres 4 à 6 et finale au lot 6.
 
 ### L4 v0.5 · 2026-11-25 · Parler
 ![Les 2 modes du micro](docs/TrioLingo_Parler_v0.5_2026-11-25.svg)
