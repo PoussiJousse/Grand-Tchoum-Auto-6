@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- TrioLingo · Industrial Edition Pro Max · L2 v0.2 · généré le 2026-11-25
+<!-- TrioLingo · Industrial Edition Pro Max · L2 v0.3 · généré le 2026-11-25
      100 % local : aucun traceur, aucun cookie, aucun compte, aucune police ni script externe.
      Toutes les données restent dans ce téléphone (stockage local). Aucune donnée personnelle dans ce code.
      Seule exception future (lot 4), et seulement si l'utilisateur répond Oui : la reconnaissance vocale
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TrioLingo"><meta name="theme-color" content="#120c24">
-<title>TrioLingo L2 v0.2</title>
+<title>TrioLingo L2 v0.3</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
 <style>
 :root{--a:#ff7a2f;--b:#7c5cff;--hz:#ffc21a;--ok:#5fd38d;--bad:#ff6b6b;--bg:#0d0a1a;--fg:#f4f1ff;--mut:#a9a3c4;--pn:rgba(18,12,36,.92);--bd:rgba(255,255,255,.16)}
@@ -90,6 +90,11 @@ canvas.ps2{width:100%;aspect-ratio:16/9;image-rendering:pixelated;image-renderin
 .flow div{flex:1;padding:8px 4px;border-radius:8px;background:#241c42;border:1px solid var(--bd)}
 .flow .x{flex:none;background:none;border:0;padding:0;color:var(--mut)}
 svg{display:block}
+/* L2 v0.3 · avatar réaliste */
+.avbox{display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 0;position:sticky;top:-14px;z-index:3;background:linear-gradient(var(--bg) 85%,rgba(13,10,26,0))}.avbox svg{filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
+.avrow{display:flex;flex-wrap:wrap;gap:4px}
+.ch2{min-height:42px;padding:6px 14px;border-radius:21px;border:1px solid var(--bd);background:#241c42;color:var(--fg);font:600 .85rem system-ui,sans-serif;cursor:pointer}
+.ch2.on{background:var(--a);color:#1a0d05;border-color:var(--a)}
 /* L2 · Lire & apprendre */
 .flash{padding:16px}.word{font:900 2rem/1.15 system-ui,sans-serif;margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .fr{font:700 1.15rem system-ui,sans-serif;color:var(--hz);margin-top:4px}.uk{font-size:.8rem;color:var(--mut);margin-top:6px}
@@ -115,7 +120,7 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
   <div class="pb"><i id="bI"></i></div>
   <div class="pbl"><span id="bL">Démarrage…</span><span id="bP">0 %</span></div>
   <button class="btn" id="bgo" style="justify-content:center;display:none">Touche pour commencer</button>
-  <p class="mut" style="text-align:center;font-size:.7rem">L2 v0.2 · 2026-11-25 · 100 % local, 0 traceur</p>
+  <p class="mut" style="text-align:center;font-size:.7rem">L2 v0.3 · 2026-11-25 · 100 % local, 0 traceur</p>
 </section>
 
 <!-- Profil (création ou modification) -->
@@ -146,8 +151,8 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
 
 <script>
 'use strict';
-/* ============ TrioLingo · L2 v0.2 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) ============ */
-const VERSION = 'L2 v0.2', BUILD = '2026-11-25', KEY = 'tl_save_v1';
+/* ============ TrioLingo · L2 v0.3 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) ============ */
+const VERSION = 'L2 v0.3', BUILD = '2026-11-25', KEY = 'tl_save_v1';
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -171,7 +176,7 @@ const skName = k => uiEN('menu') ? k.en : k.fr;
 /* ---------- Sauvegarde locale (jamais envoyée) ---------- */
 function def() {
   return {
-    v: 1, app: 'TrioLingo', created: today(), name: '', avatar: { h: 0, s: 1 }, xp: 0,
+    v: 1, app: 'TrioLingo', created: today(), name: '', avatar: { v: 2, h: 0, ve: 0, s: 1, hc: 1, hs: 0, b: 0, g: 0, e: 0 }, xp: 0,
     skills: Object.fromEntries(SK.map(k => [k.id, 0])), placed: false, tested: {}, days: {},
     settings: { sfx: true, vib: true, ui: 'auto', sr: null }, lastExport: null, installHintOff: false,
     cards: {}, rules: {}, reads: {}, focus: 'saf'
@@ -181,7 +186,7 @@ function merge(o) {
   const d = def(), r = Object.assign(d, o);
   r.settings = Object.assign(def().settings, o.settings || {});
   r.skills = Object.assign(def().skills, o.skills || {});
-  r.avatar = Object.assign(def().avatar, o.avatar || {});
+  r.avatar = avFix(o.avatar);
   r.days = o.days && typeof o.days === 'object' ? o.days : {};
   r.tested = o.tested && typeof o.tested === 'object' ? o.tested : {};
   ['cards', 'rules', 'reads'].forEach(k => { r[k] = o[k] && typeof o[k] === 'object' ? o[k] : {}; });
@@ -307,10 +312,76 @@ function radar(size, labels) {
   if (labels) SK.forEach((k, i) => { const [x, y] = pt(i, 1.24); s += `<text x="${x}" y="${+y + 4}" text-anchor="middle" fill="#a9a3c4" font-size="10.5" font-family="system-ui">${k.ic} ${esc(cefr(S.skills[k.id]))}</text>`; });
   return s + '</svg>';
 }
-const HATS = ['#ffc21a', '#ff7a2f', '#5fd38d', '#7c5cff', '#4fc3f7', '#f4f1ff'], SKINS = ['#f3d2b3', '#d9a27a', '#a86b45', '#6b4129'];
+/* ---------- Avatar réaliste v2 (L2 v0.3) : technicien·ne en EPI, 100 % dessiné en code ---------- */
+const AV = {
+  hat: ['#ffc21a', '#f2efe6', '#ff7a2f', '#2f6fd6', '#3aa655', '#d63b3b'],
+  vest: ['#d4ef1f', '#ff6a1a'],
+  skin: ['#f6d7c3', '#e9b99a', '#d29a72', '#a86e4a', '#7a4b2f', '#4e2f1d'],
+  hairC: ['#1d1a19', '#4a2f1f', '#8a5a32', '#d9b26a', '#a9441f', '#9a9a9a'],
+  eye: ['#5a3a22', '#8a6a2a', '#3f7fb5', '#4f8a4a'],
+  hairS: ['Court', 'Long', 'Rasé', 'Bouclé'], beard: ['Aucune', 'Naissante', 'Barbe', 'Moustache'], glass: ['Sans', 'Lunettes']
+};
+const AV_DEF = { v: 2, h: 0, ve: 0, s: 1, hc: 1, hs: 0, b: 0, g: 0, e: 0 };
+function avFix(a) { // ancienne version (L1) → v2, valeurs hors limites → défaut
+  a = a && typeof a === 'object' ? a : {};
+  if (a.v !== 2) a = { v: 2, h: [0, 2, 4, 3, 3, 1][a.h] ?? 0, s: [0, 2, 3, 4][a.s] ?? 1 };
+  const r = Object.assign({}, AV_DEF, a), lim = { h: 6, ve: 2, s: 6, hc: 6, hs: 4, b: 4, g: 2, e: 4 };
+  for (const k in lim) if (!(Number.isInteger(r[k]) && r[k] >= 0 && r[k] < lim[k])) r[k] = AV_DEF[k];
+  return r;
+}
+function shade(hex, f) { const n = parseInt(hex.slice(1), 16), c = [n >> 16, (n >> 8) & 255, n & 255].map(v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f)))); return '#' + c.map(v => v.toString(16).padStart(2, '0')).join(''); }
+let AVN = 0;
 function avatar(a, sz = 64) {
-  const h = HATS[a.h] || HATS[0], s = SKINS[a.s] || SKINS[1];
-  return `<svg viewBox="0 0 64 64" width="${sz}" height="${sz}" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#2c2450"/><path d="M11 64q2-18 21-18t21 18z" fill="#ffc21a"/><rect x="21" y="53" width="22" height="3" fill="#c9c9d6"/><rect x="21" y="59" width="22" height="3" fill="#c9c9d6"/><rect x="28" y="41" width="8" height="7" fill="${s}"/><circle cx="32" cy="33" r="12" fill="${s}"/><circle cx="27.5" cy="34" r="1.6" fill="#1a0d05"/><circle cx="36.5" cy="34" r="1.6" fill="#1a0d05"/><path d="M28 39q4 3 8 0" stroke="#1a0d05" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M18 29q0-14 14-14t14 14z" fill="${h}"/><rect x="15" y="27" width="34" height="4" rx="2" fill="${h}"/><rect x="30" y="15" width="4" height="13" fill="rgba(0,0,0,.18)"/></svg>`;
+  a = avFix(a); const id = 'av' + (++AVN);
+  const H = AV.hat[a.h], V = AV.vest[a.ve], K = AV.skin[a.s], KS = shade(K, -.18), KD = shade(K, -.32), HC = AV.hairC[a.hc], E = AV.eye[a.e];
+  const torso = 'M12 120C14 97 32 88 60 88C88 88 106 97 108 120Z';
+  let s = `<svg viewBox="0 0 120 120" width="${sz}" height="${sz}" aria-hidden="true"><defs>
+    <clipPath id="${id}c"><circle cx="60" cy="60" r="59"/></clipPath><clipPath id="${id}t"><path d="${torso}"/></clipPath>
+    <radialGradient id="${id}bg" cx=".5" cy=".35" r=".75"><stop offset="0" stop-color="#3d3170"/><stop offset="1" stop-color="#17112c"/></radialGradient>
+    <linearGradient id="${id}f" x1="0" x2="1"><stop offset="0" stop-color="${K}"/><stop offset=".7" stop-color="${K}"/><stop offset="1" stop-color="${KS}"/></linearGradient>
+    <linearGradient id="${id}h" x1=".2" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="${shade(H, .35)}"/><stop offset=".55" stop-color="${H}"/><stop offset="1" stop-color="${shade(H, -.25)}"/></linearGradient>
+  </defs><g clip-path="url(#${id}c)"><circle cx="60" cy="60" r="60" fill="url(#${id}bg)"/><g transform="translate(-15 -9) scale(1.25)">`;
+  // cheveux longs (derrière)
+  if (a.hs === 1) s += `<path d="M39 46C35 62 35 80 38 92L82 92C85 80 85 62 81 46Z" fill="${shade(HC, -.15)}"/>`;
+  // buste : chemise de travail + gilet haute visibilité + bandes réfléchissantes
+  s += `<path d="${torso}" fill="#28324d"/><g clip-path="url(#${id}t)">
+    <path d="${torso}" fill="${V}"/><path d="M12 120C14 97 32 88 60 88L60 120Z" fill="${shade(V, .12)}" opacity=".5"/>
+    <rect x="0" y="103" width="120" height="5" fill="#c9ced6"/><rect x="0" y="103" width="120" height="1.4" fill="#eef1f5"/>
+    <rect x="0" y="112" width="120" height="5" fill="#c9ced6"/><rect x="0" y="112" width="120" height="1.4" fill="#eef1f5"/>
+    <rect x="31" y="88" width="5" height="32" fill="#c9ced6"/><rect x="84" y="88" width="5" height="32" fill="#c9ced6"/>
+    <rect x="96" y="88" width="24" height="32" fill="${shade(V, -.22)}" opacity=".45"/></g>
+    <path d="M45 88L60 114L75 88Z" fill="#28324d"/><path d="M48 88L60 101L54 104Z" fill="#3a4668"/><path d="M72 88L60 101L66 104Z" fill="#323d5c"/>`;
+  // cou + oreilles + visage
+  s += `<path d="M51 72L51 90Q60 96 69 90L69 72Z" fill="${KS}"/><ellipse cx="60" cy="80" rx="10" ry="3.5" fill="${KD}" opacity=".45"/>
+    <ellipse cx="42.5" cy="59" rx="4.2" ry="6.4" fill="${KS}"/><ellipse cx="43.3" cy="59.5" rx="2" ry="3.8" fill="${KD}" opacity=".5"/>
+    <ellipse cx="77.5" cy="59" rx="4.2" ry="6.4" fill="${KS}"/><ellipse cx="76.7" cy="59.5" rx="2" ry="3.8" fill="${KD}" opacity=".5"/>
+    <path d="M43.5 49C43.5 38 76.5 38 76.5 49L76.5 61C76.5 73 68.5 80.5 60 80.5C51.5 80.5 43.5 73 43.5 61Z" fill="url(#${id}f)"/>
+    <ellipse cx="50" cy="67" rx="4" ry="2.4" fill="#e0705a" opacity=".12"/><ellipse cx="70" cy="67" rx="4" ry="2.4" fill="#e0705a" opacity=".12"/>`;
+  // cheveux visibles sous le casque
+  if (a.hs === 0) s += `<path d="M43.5 47L47 47L47 58Q45 56 43.5 57Z" fill="${HC}"/><path d="M76.5 47L73 47L73 58Q75 56 76.5 57Z" fill="${HC}"/>`;
+  if (a.hs === 1) s += `<path d="M42 45C40 56 40 68 41.5 78L46.5 74L46.5 47Z" fill="${HC}"/><path d="M78 45C80 56 80 68 78.5 78L73.5 74L73.5 47Z" fill="${HC}"/>`;
+  if (a.hs === 2) s += `<path d="M43.5 47L46.5 47L46.5 55Q45 54 43.5 55Z" fill="${HC}" opacity=".35"/><path d="M76.5 47L73.5 47L73.5 55Q75 54 76.5 55Z" fill="${HC}" opacity=".35"/>`;
+  if (a.hs === 3) [[43, 48], [41.5, 53], [43, 57.5], [77, 48], [78.5, 53], [77, 57.5]].forEach(([x, y]) => s += `<circle cx="${x}" cy="${y}" r="3.1" fill="${HC}"/><circle cx="${x - .8}" cy="${y - .8}" r="1" fill="${shade(HC, .2)}" opacity=".6"/>`);
+  // barbe
+  if (a.b === 1) s += `<path d="M44 63C45 74 52 80.5 60 80.5C68 80.5 75 74 76 63C73 70 68 73 60 73C52 73 47 70 44 63Z" fill="${HC}" opacity=".28"/>`;
+  if (a.b === 2) s += `<path d="M43.8 60C44 75 51 83 60 83C69 83 76 75 76.2 60C74 67 71 69.5 66 70.5C64 69 62 68.6 60 68.6C58 68.6 56 69 54 70.5C49 69.5 46 67 43.8 60Z" fill="${HC}"/><path d="M54.5 72.5Q60 75 65.5 72.5Q60 77.5 54.5 72.5Z" fill="${shade(K, -.45)}"/>`;
+  if (a.b === 3) s += `<path d="M52 71Q56 68 60 69.5Q64 68 68 71Q66 73 60 72Q54 73 52 71Z" fill="${HC}"/>`;
+  // sourcils, yeux, nez, bouche
+  s += `<path d="M48.5 53Q53.5 50.5 58 52.6" stroke="${HC}" stroke-width="1.9" fill="none" stroke-linecap="round"/><path d="M71.5 53Q66.5 50.5 62 52.6" stroke="${HC}" stroke-width="1.9" fill="none" stroke-linecap="round"/>`;
+  [[53.5, 1], [66.5, -1]].forEach(([x]) => s += `<path d="M${x - 4.6} 58.2Q${x} 54.4 ${x + 4.6} 58.2Q${x} 61 ${x - 4.6} 58.2Z" fill="#fbf8f4"/><circle cx="${x}" cy="58" r="2.25" fill="${E}"/><circle cx="${x}" cy="58" r="1.05" fill="#140d0a"/><circle cx="${x + .7}" cy="57.2" r=".6" fill="#fff"/><path d="M${x - 4.8} 58.1Q${x} 54.1 ${x + 4.8} 58.1" stroke="${shade(K, -.55)}" stroke-width="1.1" fill="none" stroke-linecap="round"/>`);
+  s += `<path d="M60.5 58.5Q59 65 57.2 67.4Q60 69.2 63 67.4" stroke="${KD}" stroke-width="1.3" fill="none" stroke-linecap="round"/>`;
+  if (a.b !== 2) s += `<path d="M54.5 73Q60 76.6 65.5 73" stroke="#9c4a3f" stroke-width="1.7" fill="none" stroke-linecap="round"/><path d="M56.5 74.8Q60 76.6 63.5 74.8" stroke="${shade(K, .2)}" stroke-width=".8" fill="none" opacity=".7"/>`;
+  // lunettes de sécurité
+  if (a.g === 1) s += `<path d="M46 54.5Q60 52 74 54.5L73.5 61Q67 63.5 61.5 60.5L60 59.5L58.5 60.5Q53 63.5 46.5 61Z" fill="rgba(190,225,255,.32)" stroke="#2a2a33" stroke-width="1.2" stroke-linejoin="round"/><path d="M46 55.5L41 57M74 55.5L79 57" stroke="#2a2a33" stroke-width="1.4"/><path d="M49 56L53 55.3" stroke="#fff" stroke-width=".8" opacity=".7"/>`;
+  // casque de chantier : ombre, dôme, nervure, visière, reflet, autocollant « 13 »
+  s += `<ellipse cx="60" cy="47.5" rx="17.5" ry="3" fill="#000" opacity=".2"/>
+    <path d="M37.5 46C37.5 24 82.5 24 82.5 46Z" fill="url(#${id}h)"/>
+    <path d="M56.5 27.6Q60 26.2 63.5 27.6L63.5 46L56.5 46Z" fill="${shade(H, .18)}"/><path d="M56.5 27.6L56.5 46" stroke="${shade(H, -.3)}" stroke-width=".8"/><path d="M63.5 27.6L63.5 46" stroke="${shade(H, -.3)}" stroke-width=".8"/>
+    <path d="M33 46.4Q60 40.8 87 46.4L87.6 49.2Q60 44.6 32.4 49.2Z" fill="${shade(H, -.15)}"/><path d="M33 46.4Q60 40.8 87 46.4" stroke="${shade(H, .3)}" stroke-width=".9" fill="none"/>
+    <ellipse cx="47.5" cy="33" rx="6.5" ry="2.6" fill="#fff" opacity=".35" transform="rotate(-28 47.5 33)"/>
+    <g transform="translate(71 38) rotate(8)"><path d="M-3.6 0L-1.8 -3.1L1.8 -3.1L3.6 0L1.8 3.1L-1.8 3.1Z" fill="#1a0d05"/><text x="0" y="1.5" font-size="3.6" text-anchor="middle" font-weight="900" fill="#ffc21a" font-family="system-ui,sans-serif">13</text></g>
+  </g></g></svg>`;
+  return s;
 }
 
 /* ---------- Semaine : jamais de « série perdue » (flamme en veille) ---------- */
@@ -953,24 +1024,28 @@ function lexList() {
 /* ================= Profil ================= */
 let EDIT = false;
 RENDER.onb = () => {
-  const el = $('#onb'), a = Object.assign({}, S.avatar);
+  const el = $('#onb'), a = avFix(S.avatar), LIM = { h: 6, ve: 2, s: 6, hc: 6, hs: 4, b: 4, g: 2, e: 4 };
+  const row = (k, label, list, color) => `<div class="t">${label}</div><div class="avrow">${list.map((v, i) => color
+    ? `<button class="sw" data-ak="${k}" data-av="${i}" style="background:${v}" aria-label="${label} ${i + 1}"></button>`
+    : `<button class="ch2" data-ak="${k}" data-av="${i}">${v}</button>`).join('')}</div>`;
   el.innerHTML = `<h2>${EDIT ? 'Modifier mon profil' : 'Bienvenue, technicien·ne !'}</h2>
-    <div style="text-align:center" id="oAv">${avatar(a, 110)}</div>
+    <div class="avbox"><div id="oAv"></div><button class="btn alt sm" id="oRnd" style="width:auto">🎲 Au hasard</button></div>
     <div class="t">Ton prénom ou pseudo</div>
     <input type="text" id="oName" maxlength="20" autocomplete="off" placeholder="ex. Alex" value="${esc(S.name)}">
     <p class="mut">🔒 Reste sur ce téléphone. Jamais envoyé nulle part.</p>
-    <div class="t">Couleur du casque</div><div>${HATS.map((c, i) => `<button class="sw" data-h="${i}" style="background:${c}" aria-label="casque ${i + 1}"></button>`).join('')}</div>
-    <div class="t">Teinte de peau</div><div>${SKINS.map((c, i) => `<button class="sw" data-k="${i}" style="background:${c}" aria-label="teinte ${i + 1}"></button>`).join('')}</div>
+    ${row('h', 'Casque', AV.hat, 1)}${row('ve', 'Gilet', AV.vest, 1)}${row('s', 'Peau', AV.skin, 1)}
+    ${row('hs', 'Coiffure', AV.hairS)}${row('hc', 'Couleur des cheveux et sourcils', AV.hairC, 1)}
+    ${row('b', 'Barbe', AV.beard)}${row('e', 'Yeux', AV.eye, 1)}${row('g', 'Lunettes de sécurité', AV.glass)}
     <div style="margin-top:auto"></div>
     <button class="btn" id="oGo" style="justify-content:center">${EDIT ? 'Enregistrer' : 'Continuer'}</button>
     ${EDIT ? '<button class="btn alt sm" id="oBack">Retour</button>' : ''}`;
-  const sync = () => { $('#oAv').innerHTML = avatar(a, 110); $$('[data-h]').forEach(b => b.classList.toggle('on', +b.dataset.h === a.h)); $$('[data-k]').forEach(b => b.classList.toggle('on', +b.dataset.k === a.s)); $('#oGo').disabled = !$('#oName').value.trim(); };
-  $$('[data-h]').forEach(b => b.onclick = () => { sfx('tap'); a.h = +b.dataset.h; sync(); });
-  $$('[data-k]').forEach(b => b.onclick = () => { sfx('tap'); a.s = +b.dataset.k; sync(); });
+  const sync = () => { $('#oAv').innerHTML = avatar(a, 112); $$('[data-ak]').forEach(b => b.classList.toggle('on', a[b.dataset.ak] === +b.dataset.av)); $('#oGo').disabled = !$('#oName').value.trim(); };
+  $$('[data-ak]').forEach(b => b.onclick = () => { sfx('tap'); a[b.dataset.ak] = +b.dataset.av; sync(); });
+  $('#oRnd').onclick = () => { sfx('tap'); buzz(15); for (const k in LIM) a[k] = Math.floor(Math.random() * LIM[k]); sync(); };
   $('#oName').oninput = sync; sync();
   $('#oGo').onclick = () => {
     const n = $('#oName').value.trim().slice(0, 20); if (!n) return;
-    sfx('ok'); S.name = n; S.avatar = a; save();
+    sfx('ok'); S.name = n; S.avatar = avFix(a); save();
     if (EDIT) { EDIT = false; show('opt'); } else testIntro();
   };
   if (EDIT) $('#oBack').onclick = () => { EDIT = false; show('opt'); };

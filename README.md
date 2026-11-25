@@ -2,7 +2,7 @@
 
 Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**. Une seule page HTML installable sur téléphone : hors-ligne, **zéro traceur, zéro cookie, zéro compte**.
 
-- **Version courante :** L2 v0.2 · 2026-11-25
+- **Version courante :** L2 v0.3 · 2026-11-25
 - **Pour installer (ami·e, utilisateur·rice) :** [`docs/TrioLingo_Installation_v0.1_2026-11-25.md`](docs/TrioLingo_Installation_v0.1_2026-11-25.md)
 - **Pour apprendre :** [`docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md`](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md)
 
@@ -19,6 +19,14 @@ Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**.
 ---
 
 ## Notes de version
+
+### L2 v0.3 · 2026-11-25 · Personnage réaliste
+- 👷 **Nouveau personnage plus réaliste** : visage proportionné, yeux détaillés, nez, oreilles, casque de chantier en volume (nervure, visière, reflet, autocollant « 13 »), chemise de travail et gilet haute visibilité avec bandes réfléchissantes.
+- 🎨 **Plus de choix** : 6 casques, 2 gilets (jaune fluo, orange), 6 teintes de peau, 4 coiffures (court, long, rasé, bouclé), 6 couleurs de cheveux, 4 barbes (aucune, naissante, barbe, moustache), 4 couleurs d'yeux, lunettes de sécurité. Bouton **🎲 Au hasard**.
+- 👀 L'aperçu reste visible en haut de l'écran pendant les choix.
+- ♻️ Les profils existants sont **convertis automatiquement** (la couleur du casque et la teinte de peau sont gardées, rien à refaire).
+
+**Testé** : conversion d'un profil L1, création et modification du profil, bouton 🎲, puis tous les tests L1 et L2. Résultat : 0 erreur, 0 requête vers un autre site.
 
 ### L2 v0.2 · 2026-11-25 · Lire & apprendre
 ![Le Shift du jour et les 5 boîtes](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.svg)
