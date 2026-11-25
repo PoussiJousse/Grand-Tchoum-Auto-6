@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- TrioLingo · Industrial Edition Pro Max · L2 v0.2 · généré le 2026-11-25
+<!-- TrioLingo · Industrial Edition Pro Max · L3 v0.4 · généré le 2026-11-25
      100 % local : aucun traceur, aucun cookie, aucun compte, aucune police ni script externe.
      Toutes les données restent dans ce téléphone (stockage local). Aucune donnée personnelle dans ce code.
      Seule exception future (lot 4), et seulement si l'utilisateur répond Oui : la reconnaissance vocale
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TrioLingo"><meta name="theme-color" content="#120c24">
-<title>TrioLingo L2 v0.2</title>
+<title>TrioLingo L3 v0.4</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
 <style>
 :root{--a:#ff7a2f;--b:#7c5cff;--hz:#ffc21a;--ok:#5fd38d;--bad:#ff6b6b;--bg:#0d0a1a;--fg:#f4f1ff;--mut:#a9a3c4;--pn:rgba(18,12,36,.92);--bd:rgba(255,255,255,.16)}
@@ -90,6 +90,14 @@ canvas.ps2{width:100%;aspect-ratio:16/9;image-rendering:pixelated;image-renderin
 .flow div{flex:1;padding:8px 4px;border-radius:8px;background:#241c42;border:1px solid var(--bd)}
 .flow .x{flex:none;background:none;border:0;padding:0;color:var(--mut)}
 svg{display:block}
+/* L3 v0.4 · avatar réaliste */
+.avbox{display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 0;position:sticky;top:-14px;z-index:3;background:linear-gradient(var(--bg) 85%,rgba(13,10,26,0))}.avbox svg{filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
+.avrow{display:flex;flex-wrap:wrap;gap:4px}
+.ch2{min-height:42px;padding:6px 14px;border-radius:21px;border:1px solid var(--bd);background:#241c42;color:var(--fg);font:600 .85rem system-ui,sans-serif;cursor:pointer}
+.ch2.on{background:var(--a);color:#1a0d05;border-color:var(--a)}
+/* L3 · Écouter */
+.pairs{display:flex;gap:6px;margin-top:8px;text-align:center}.pairs>div{flex:1;background:#241c42;border-radius:8px;padding:6px 2px}.pairs b{display:block;font-size:1.3rem;color:var(--hz)}.pairs span{font-size:.7rem;color:var(--mut)}
+input.okin{border-color:var(--ok)}input.noin{border-color:var(--bad)}
 /* L2 · Lire & apprendre */
 .flash{padding:16px}.word{font:900 2rem/1.15 system-ui,sans-serif;margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .fr{font:700 1.15rem system-ui,sans-serif;color:var(--hz);margin-top:4px}.uk{font-size:.8rem;color:var(--mut);margin-top:6px}
@@ -115,7 +123,7 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
   <div class="pb"><i id="bI"></i></div>
   <div class="pbl"><span id="bL">Démarrage…</span><span id="bP">0 %</span></div>
   <button class="btn" id="bgo" style="justify-content:center;display:none">Touche pour commencer</button>
-  <p class="mut" style="text-align:center;font-size:.7rem">L2 v0.2 · 2026-11-25 · 100 % local, 0 traceur</p>
+  <p class="mut" style="text-align:center;font-size:.7rem">L3 v0.4 · 2026-11-25 · 100 % local, 0 traceur</p>
 </section>
 
 <!-- Profil (création ou modification) -->
@@ -127,6 +135,7 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
 <!-- L2 : Lire & apprendre + lanceur de séance -->
 <section id="learn" class="scr notab"></section>
 <section id="run" class="scr notab"></section>
+<section id="listen" class="scr notab"></section>
 <!-- Onglets -->
 <section id="home" class="scr"></section>
 <section id="prog" class="scr"></section>
@@ -146,8 +155,8 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
 
 <script>
 'use strict';
-/* ============ TrioLingo · L2 v0.2 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) ============ */
-const VERSION = 'L2 v0.2', BUILD = '2026-11-25', KEY = 'tl_save_v1';
+/* ============ TrioLingo · L3 v0.4 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) + Écouter (L3) ============ */
+const VERSION = 'L3 v0.4', BUILD = '2026-11-25', KEY = 'tl_save_v1';
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -171,20 +180,20 @@ const skName = k => uiEN('menu') ? k.en : k.fr;
 /* ---------- Sauvegarde locale (jamais envoyée) ---------- */
 function def() {
   return {
-    v: 1, app: 'TrioLingo', created: today(), name: '', avatar: { h: 0, s: 1 }, xp: 0,
+    v: 1, app: 'TrioLingo', created: today(), name: '', avatar: { v: 2, h: 0, ve: 0, s: 1, hc: 1, hs: 0, b: 0, g: 0, e: 0 }, xp: 0,
     skills: Object.fromEntries(SK.map(k => [k.id, 0])), placed: false, tested: {}, days: {},
     settings: { sfx: true, vib: true, ui: 'auto', sr: null }, lastExport: null, installHintOff: false,
-    cards: {}, rules: {}, reads: {}, focus: 'saf'
+    cards: {}, rules: {}, reads: {}, focus: 'saf', audios: {}, ldDay: null
   };
 }
 function merge(o) {
   const d = def(), r = Object.assign(d, o);
   r.settings = Object.assign(def().settings, o.settings || {});
   r.skills = Object.assign(def().skills, o.skills || {});
-  r.avatar = Object.assign(def().avatar, o.avatar || {});
+  r.avatar = avFix(o.avatar);
   r.days = o.days && typeof o.days === 'object' ? o.days : {};
   r.tested = o.tested && typeof o.tested === 'object' ? o.tested : {};
-  ['cards', 'rules', 'reads'].forEach(k => { r[k] = o[k] && typeof o[k] === 'object' ? o[k] : {}; });
+  ['cards', 'rules', 'reads', 'audios'].forEach(k => { r[k] = o[k] && typeof o[k] === 'object' ? o[k] : {}; });
   if (!['saf', 'mec', 'ele', 'aut', 'flu', 'too', 'pro', 'tra'].includes(r.focus)) r.focus = 'saf';
   for (const k in r.skills) r.skills[k] = Math.max(0, Math.min(1000, +r.skills[k] || 0));
   r.xp = Math.max(0, +r.xp || 0); r.name = String(r.name || '').slice(0, 20);
@@ -250,15 +259,16 @@ function pickVoice() {
 function initVoices() {
   return new Promise(res => {
     if (!('speechSynthesis' in window)) return res(null);
-    let done = false; const fin = () => { VOICE = pickVoice(); if (!done) { done = true; res(VOICE); } };
+    let done = false; const fin = () => { const v = pickVoice(); if (v || !VOICE) VOICE = v; // une liste vide ne doit jamais effacer une voix déjà trouvée
+    if (!done) { done = true; res(VOICE); } };
     speechSynthesis.onvoiceschanged = fin; // les voix arrivent parfois en retard
     if (speechSynthesis.getVoices().length) fin(); else setTimeout(fin, 1500);
   });
 }
-function say(text, rate = 1) {
+function say(text, rate = 1, pitch = 1) {
   return new Promise(res => {
     if (!VOICE) return res(false);
-    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.voice = VOICE; u.lang = VOICE.lang; u.rate = .92 * rate; u.onend = () => res(true); u.onerror = () => res(false); speechSynthesis.speak(u); }
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.voice = VOICE; u.lang = VOICE.lang; u.rate = .92 * rate; u.pitch = pitch; u.onend = () => res(true); u.onerror = () => res(false); speechSynthesis.speak(u); }
     catch (e) { res(false); }
   });
 }
@@ -307,10 +317,76 @@ function radar(size, labels) {
   if (labels) SK.forEach((k, i) => { const [x, y] = pt(i, 1.24); s += `<text x="${x}" y="${+y + 4}" text-anchor="middle" fill="#a9a3c4" font-size="10.5" font-family="system-ui">${k.ic} ${esc(cefr(S.skills[k.id]))}</text>`; });
   return s + '</svg>';
 }
-const HATS = ['#ffc21a', '#ff7a2f', '#5fd38d', '#7c5cff', '#4fc3f7', '#f4f1ff'], SKINS = ['#f3d2b3', '#d9a27a', '#a86b45', '#6b4129'];
+/* ---------- Avatar réaliste v2 (L3 v0.4) : technicien·ne en EPI, 100 % dessiné en code ---------- */
+const AV = {
+  hat: ['#ffc21a', '#f2efe6', '#ff7a2f', '#2f6fd6', '#3aa655', '#d63b3b'],
+  vest: ['#d4ef1f', '#ff6a1a'],
+  skin: ['#f6d7c3', '#e9b99a', '#d29a72', '#a86e4a', '#7a4b2f', '#4e2f1d'],
+  hairC: ['#1d1a19', '#4a2f1f', '#8a5a32', '#d9b26a', '#a9441f', '#9a9a9a'],
+  eye: ['#5a3a22', '#8a6a2a', '#3f7fb5', '#4f8a4a'],
+  hairS: ['Court', 'Long', 'Rasé', 'Bouclé'], beard: ['Aucune', 'Naissante', 'Barbe', 'Moustache'], glass: ['Sans', 'Lunettes']
+};
+const AV_DEF = { v: 2, h: 0, ve: 0, s: 1, hc: 1, hs: 0, b: 0, g: 0, e: 0 };
+function avFix(a) { // ancienne version (L1) → v2, valeurs hors limites → défaut
+  a = a && typeof a === 'object' ? a : {};
+  if (a.v !== 2) a = { v: 2, h: [0, 2, 4, 3, 3, 1][a.h] ?? 0, s: [0, 2, 3, 4][a.s] ?? 1 };
+  const r = Object.assign({}, AV_DEF, a), lim = { h: 6, ve: 2, s: 6, hc: 6, hs: 4, b: 4, g: 2, e: 4 };
+  for (const k in lim) if (!(Number.isInteger(r[k]) && r[k] >= 0 && r[k] < lim[k])) r[k] = AV_DEF[k];
+  return r;
+}
+function shade(hex, f) { const n = parseInt(hex.slice(1), 16), c = [n >> 16, (n >> 8) & 255, n & 255].map(v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f)))); return '#' + c.map(v => v.toString(16).padStart(2, '0')).join(''); }
+let AVN = 0;
 function avatar(a, sz = 64) {
-  const h = HATS[a.h] || HATS[0], s = SKINS[a.s] || SKINS[1];
-  return `<svg viewBox="0 0 64 64" width="${sz}" height="${sz}" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#2c2450"/><path d="M11 64q2-18 21-18t21 18z" fill="#ffc21a"/><rect x="21" y="53" width="22" height="3" fill="#c9c9d6"/><rect x="21" y="59" width="22" height="3" fill="#c9c9d6"/><rect x="28" y="41" width="8" height="7" fill="${s}"/><circle cx="32" cy="33" r="12" fill="${s}"/><circle cx="27.5" cy="34" r="1.6" fill="#1a0d05"/><circle cx="36.5" cy="34" r="1.6" fill="#1a0d05"/><path d="M28 39q4 3 8 0" stroke="#1a0d05" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M18 29q0-14 14-14t14 14z" fill="${h}"/><rect x="15" y="27" width="34" height="4" rx="2" fill="${h}"/><rect x="30" y="15" width="4" height="13" fill="rgba(0,0,0,.18)"/></svg>`;
+  a = avFix(a); const id = 'av' + (++AVN);
+  const H = AV.hat[a.h], V = AV.vest[a.ve], K = AV.skin[a.s], KS = shade(K, -.18), KD = shade(K, -.32), HC = AV.hairC[a.hc], E = AV.eye[a.e];
+  const torso = 'M12 120C14 97 32 88 60 88C88 88 106 97 108 120Z';
+  let s = `<svg viewBox="0 0 120 120" width="${sz}" height="${sz}" aria-hidden="true"><defs>
+    <clipPath id="${id}c"><circle cx="60" cy="60" r="59"/></clipPath><clipPath id="${id}t"><path d="${torso}"/></clipPath>
+    <radialGradient id="${id}bg" cx=".5" cy=".35" r=".75"><stop offset="0" stop-color="#3d3170"/><stop offset="1" stop-color="#17112c"/></radialGradient>
+    <linearGradient id="${id}f" x1="0" x2="1"><stop offset="0" stop-color="${K}"/><stop offset=".7" stop-color="${K}"/><stop offset="1" stop-color="${KS}"/></linearGradient>
+    <linearGradient id="${id}h" x1=".2" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="${shade(H, .35)}"/><stop offset=".55" stop-color="${H}"/><stop offset="1" stop-color="${shade(H, -.25)}"/></linearGradient>
+  </defs><g clip-path="url(#${id}c)"><circle cx="60" cy="60" r="60" fill="url(#${id}bg)"/><g transform="translate(-15 -9) scale(1.25)">`;
+  // cheveux longs (derrière)
+  if (a.hs === 1) s += `<path d="M39 46C35 62 35 80 38 92L82 92C85 80 85 62 81 46Z" fill="${shade(HC, -.15)}"/>`;
+  // buste : chemise de travail + gilet haute visibilité + bandes réfléchissantes
+  s += `<path d="${torso}" fill="#28324d"/><g clip-path="url(#${id}t)">
+    <path d="${torso}" fill="${V}"/><path d="M12 120C14 97 32 88 60 88L60 120Z" fill="${shade(V, .12)}" opacity=".5"/>
+    <rect x="0" y="103" width="120" height="5" fill="#c9ced6"/><rect x="0" y="103" width="120" height="1.4" fill="#eef1f5"/>
+    <rect x="0" y="112" width="120" height="5" fill="#c9ced6"/><rect x="0" y="112" width="120" height="1.4" fill="#eef1f5"/>
+    <rect x="31" y="88" width="5" height="32" fill="#c9ced6"/><rect x="84" y="88" width="5" height="32" fill="#c9ced6"/>
+    <rect x="96" y="88" width="24" height="32" fill="${shade(V, -.22)}" opacity=".45"/></g>
+    <path d="M45 88L60 114L75 88Z" fill="#28324d"/><path d="M48 88L60 101L54 104Z" fill="#3a4668"/><path d="M72 88L60 101L66 104Z" fill="#323d5c"/>`;
+  // cou + oreilles + visage
+  s += `<path d="M51 72L51 90Q60 96 69 90L69 72Z" fill="${KS}"/><ellipse cx="60" cy="80" rx="10" ry="3.5" fill="${KD}" opacity=".45"/>
+    <ellipse cx="42.5" cy="59" rx="4.2" ry="6.4" fill="${KS}"/><ellipse cx="43.3" cy="59.5" rx="2" ry="3.8" fill="${KD}" opacity=".5"/>
+    <ellipse cx="77.5" cy="59" rx="4.2" ry="6.4" fill="${KS}"/><ellipse cx="76.7" cy="59.5" rx="2" ry="3.8" fill="${KD}" opacity=".5"/>
+    <path d="M43.5 49C43.5 38 76.5 38 76.5 49L76.5 61C76.5 73 68.5 80.5 60 80.5C51.5 80.5 43.5 73 43.5 61Z" fill="url(#${id}f)"/>
+    <ellipse cx="50" cy="67" rx="4" ry="2.4" fill="#e0705a" opacity=".12"/><ellipse cx="70" cy="67" rx="4" ry="2.4" fill="#e0705a" opacity=".12"/>`;
+  // cheveux visibles sous le casque
+  if (a.hs === 0) s += `<path d="M43.5 47L47 47L47 58Q45 56 43.5 57Z" fill="${HC}"/><path d="M76.5 47L73 47L73 58Q75 56 76.5 57Z" fill="${HC}"/>`;
+  if (a.hs === 1) s += `<path d="M42 45C40 56 40 68 41.5 78L46.5 74L46.5 47Z" fill="${HC}"/><path d="M78 45C80 56 80 68 78.5 78L73.5 74L73.5 47Z" fill="${HC}"/>`;
+  if (a.hs === 2) s += `<path d="M43.5 47L46.5 47L46.5 55Q45 54 43.5 55Z" fill="${HC}" opacity=".35"/><path d="M76.5 47L73.5 47L73.5 55Q75 54 76.5 55Z" fill="${HC}" opacity=".35"/>`;
+  if (a.hs === 3) [[43, 48], [41.5, 53], [43, 57.5], [77, 48], [78.5, 53], [77, 57.5]].forEach(([x, y]) => s += `<circle cx="${x}" cy="${y}" r="3.1" fill="${HC}"/><circle cx="${x - .8}" cy="${y - .8}" r="1" fill="${shade(HC, .2)}" opacity=".6"/>`);
+  // barbe
+  if (a.b === 1) s += `<path d="M44 63C45 74 52 80.5 60 80.5C68 80.5 75 74 76 63C73 70 68 73 60 73C52 73 47 70 44 63Z" fill="${HC}" opacity=".28"/>`;
+  if (a.b === 2) s += `<path d="M43.8 60C44 75 51 83 60 83C69 83 76 75 76.2 60C74 67 71 69.5 66 70.5C64 69 62 68.6 60 68.6C58 68.6 56 69 54 70.5C49 69.5 46 67 43.8 60Z" fill="${HC}"/><path d="M54.5 72.5Q60 75 65.5 72.5Q60 77.5 54.5 72.5Z" fill="${shade(K, -.45)}"/>`;
+  if (a.b === 3) s += `<path d="M52 71Q56 68 60 69.5Q64 68 68 71Q66 73 60 72Q54 73 52 71Z" fill="${HC}"/>`;
+  // sourcils, yeux, nez, bouche
+  s += `<path d="M48.5 53Q53.5 50.5 58 52.6" stroke="${HC}" stroke-width="1.9" fill="none" stroke-linecap="round"/><path d="M71.5 53Q66.5 50.5 62 52.6" stroke="${HC}" stroke-width="1.9" fill="none" stroke-linecap="round"/>`;
+  [[53.5, 1], [66.5, -1]].forEach(([x]) => s += `<path d="M${x - 4.6} 58.2Q${x} 54.4 ${x + 4.6} 58.2Q${x} 61 ${x - 4.6} 58.2Z" fill="#fbf8f4"/><circle cx="${x}" cy="58" r="2.25" fill="${E}"/><circle cx="${x}" cy="58" r="1.05" fill="#140d0a"/><circle cx="${x + .7}" cy="57.2" r=".6" fill="#fff"/><path d="M${x - 4.8} 58.1Q${x} 54.1 ${x + 4.8} 58.1" stroke="${shade(K, -.55)}" stroke-width="1.1" fill="none" stroke-linecap="round"/>`);
+  s += `<path d="M60.5 58.5Q59 65 57.2 67.4Q60 69.2 63 67.4" stroke="${KD}" stroke-width="1.3" fill="none" stroke-linecap="round"/>`;
+  if (a.b !== 2) s += `<path d="M54.5 73Q60 76.6 65.5 73" stroke="#9c4a3f" stroke-width="1.7" fill="none" stroke-linecap="round"/><path d="M56.5 74.8Q60 76.6 63.5 74.8" stroke="${shade(K, .2)}" stroke-width=".8" fill="none" opacity=".7"/>`;
+  // lunettes de sécurité
+  if (a.g === 1) s += `<path d="M46 54.5Q60 52 74 54.5L73.5 61Q67 63.5 61.5 60.5L60 59.5L58.5 60.5Q53 63.5 46.5 61Z" fill="rgba(190,225,255,.32)" stroke="#2a2a33" stroke-width="1.2" stroke-linejoin="round"/><path d="M46 55.5L41 57M74 55.5L79 57" stroke="#2a2a33" stroke-width="1.4"/><path d="M49 56L53 55.3" stroke="#fff" stroke-width=".8" opacity=".7"/>`;
+  // casque de chantier : ombre, dôme, nervure, visière, reflet, autocollant « 13 »
+  s += `<ellipse cx="60" cy="47.5" rx="17.5" ry="3" fill="#000" opacity=".2"/>
+    <path d="M37.5 46C37.5 24 82.5 24 82.5 46Z" fill="url(#${id}h)"/>
+    <path d="M56.5 27.6Q60 26.2 63.5 27.6L63.5 46L56.5 46Z" fill="${shade(H, .18)}"/><path d="M56.5 27.6L56.5 46" stroke="${shade(H, -.3)}" stroke-width=".8"/><path d="M63.5 27.6L63.5 46" stroke="${shade(H, -.3)}" stroke-width=".8"/>
+    <path d="M33 46.4Q60 40.8 87 46.4L87.6 49.2Q60 44.6 32.4 49.2Z" fill="${shade(H, -.15)}"/><path d="M33 46.4Q60 40.8 87 46.4" stroke="${shade(H, .3)}" stroke-width=".9" fill="none"/>
+    <ellipse cx="47.5" cy="33" rx="6.5" ry="2.6" fill="#fff" opacity=".35" transform="rotate(-28 47.5 33)"/>
+    <g transform="translate(71 38) rotate(8)"><path d="M-3.6 0L-1.8 -3.1L1.8 -3.1L3.6 0L1.8 3.1L-1.8 3.1Z" fill="#1a0d05"/><text x="0" y="1.5" font-size="3.6" text-anchor="middle" font-weight="900" fill="#ffc21a" font-family="system-ui,sans-serif">13</text></g>
+  </g></g></svg>`;
+  return s;
 }
 
 /* ---------- Semaine : jamais de « série perdue » (flamme en veille) ---------- */
@@ -789,7 +865,7 @@ function glossHTML(txt) {
   return esc(t).replace(/\u0001(\d+)\u0002/g, (_, i) => { const [m, c] = keep[+i]; return `<span class="w" data-en="${esc(c.en)}" data-fr="${esc(c.fr)}">${esc(m)}</span>`; });
 }
 document.addEventListener('click', e => {
-  const s = e.target.closest('[data-say]'); if (s) { e.stopPropagation(); say(s.dataset.say, s.dataset.rate ? +s.dataset.rate : 1); return; }
+  const s = e.target.closest('[data-say]'); if (s) { e.stopPropagation(); say(s.dataset.say, s.dataset.rate ? +s.dataset.rate : 1, s.dataset.pitch ? +s.dataset.pitch : 1); return; }
   const w = e.target.closest('.w'); if (w) { toast(`${w.dataset.en} = ${w.dataset.fr}`); say(w.dataset.en); }
 });
 
@@ -801,7 +877,7 @@ function startRun(title, steps, back) {
   show('run'); renderStep();
 }
 function nextStep() { RUN.i++; if (RUN.i < RUN.steps.length) renderStep(); else endRun(); }
-function quitRun() { if ('speechSynthesis' in window) speechSynthesis.cancel(); const b = RUN.back; RUN = null; LV = b; show('learn'); }
+function quitRun() { if ('speechSynthesis' in window) speechSynthesis.cancel(); const b = RUN.back; RUN = null; if (b.scr === 'listen') { LVL = b; show('listen'); } else { LV = b; show('learn'); } }
 function choices(prompt, opts, onAnswer, extra) {
   const o = shuffle(opts.map((t, i) => ({ t, good: i === 0 })));
   return { html: `<div class="qp">${prompt}</div>${extra || ''}<div id="qO">${o.map((x, i) => `<button class="ch" data-i="${i}">${esc(x.t)}</button>`).join('')}<button class="ch idk" data-i="-1">🤷 Je ne sais pas</button></div><div id="qF"></div>`,
@@ -870,6 +946,7 @@ function renderStep() {
     }, `<details class="doc"><summary>📄 Revoir le document</summary><pre class="wo">${glossHTML(d.txt)}</pre></details>`);
     body = `<span class="tag y">${d.ic} ${esc(d.t)} · ${st.i + 1}/3</span>` + q.html; bind = q.bind;
   }
+  if (!body) { const r = renderListenStep(st); if (r) { body = r.body; bind = r.bind; } }
   $('#run').innerHTML = `<div class="row"><button class="btn alt sm" id="rX" style="width:auto">✕</button><b class="grow" style="text-align:center">${esc(RUN.title)}</b><span class="tag">⭐ ${RUN.g.xp}</span></div>
     <div class="pb"><i style="width:${pct}%"></i></div><div class="pbl"><span>Étape ${RUN.i + 1} / ${n}</span><span>${pct} %</span></div>${body}`;
   $('#rX').onclick = () => confirmBox('Quitter la séance ?', '<p>Tout ce que tu as déjà fait est gardé.</p>', quitRun, 'Quitter', 'red');
@@ -950,27 +1027,179 @@ function lexList() {
   box.innerHTML = h || '<p class="mut" style="text-align:center;margin-top:20px">Aucun mot trouvé.</p>';
 }
 
+
+/* ================= L3 · Écouter : 12 messages du métier, nombres & heures, dictées (voix du téléphone uniquement) ================= */
+/* q = [question, bonne réponse, faux, faux] · p = hauteur de voix (pour distinguer les personnes) */
+const AUDIOS = [
+  { id: 'a1', ic: '🦺', t: 'Briefing sécurité de 6 h', who: 'Chef d’équipe', lv: 'A2', p: .9, txt: 'Good morning, everyone. Today we are working on line two. Wear your safety glasses and your earplugs, the press is very loud. The forklift will bring new pallets at ten o’clock, so keep the aisle clear. Thank you, and have a safe shift.',
+    q: [['Sur quelle ligne travaille-t-on ?', 'La ligne 2', 'La ligne 10', 'La ligne 1'], ['Quels EPI faut-il porter ?', 'Lunettes et bouchons d’oreilles', 'Casque et gants', 'Harnais et gilet'], ['Que se passe-t-il à 10 h ?', 'Un chariot apporte des palettes', 'La presse s’arrête', 'Une réunion commence']] },
+  { id: 'a2', ic: '📞', t: 'Appel de l’équipe de nuit', who: 'Collègue', lv: 'A2', p: 1.1, txt: 'Hi, it’s Sam from the night shift. Conveyor four stopped twenty minutes ago. The operator says there is a strange noise from the gearbox. Can you come and check it? I’m at the control panel near line four.',
+    q: [['Qui appelle ?', 'Sam, de l’équipe de nuit', 'Le client', 'Le magasin d’outils'], ['Quel est le problème ?', 'Convoyeur 4 arrêté, bruit au réducteur', 'Fuite d’huile sur la ligne 2', 'Le robot ne démarre pas'], ['Où est Sam ?', 'Au pupitre près de la ligne 4', 'Au bureau maintenance', 'À l’accueil']] },
+  { id: 'a3', ic: '🏨', t: 'Accueil de l’hôtel', who: 'Réceptionniste', lv: 'A2', p: 1.15, txt: 'Good evening, and welcome to the Riverside Hotel. Your room is on the third floor, room three twelve. Breakfast is from six to ten. The elevator is on your left. Do you need a wake-up call?',
+    q: [['Quel est le numéro de chambre ?', '312', '213', '302'], ['Le petit-déjeuner, c’est quand ?', 'De 6 h à 10 h', 'De 7 h à 11 h', 'De 6 h à 9 h'], ['Où est l’ascenseur ?', 'À gauche', 'À droite', 'Au fond du couloir']] },
+  { id: 'a4', ic: '✈️', t: 'Annonce à l’aéroport', who: 'Haut-parleur', lv: 'A2', p: 1, txt: 'Attention, please. Flight four-oh-seven to Chicago is now boarding at gate twelve. Passengers in rows twenty to thirty, please go to the gate now.',
+    q: [['À quelle porte ?', '12', '20', '30'], ['Qui doit y aller maintenant ?', 'Les rangs 20 à 30', 'Tout le monde', 'Les rangs 1 à 12'], ['Le vol va à…', 'Chicago', 'Dallas', 'Atlanta']] },
+  { id: 'a5', ic: '🧰', t: 'Au magasin d’outils', who: 'Magasinier', lv: 'A2', p: .95, txt: 'Hi! You need a thirteen millimeter socket? Sorry, we only have twelve and fourteen today. Somebody borrowed the last thirteen and didn’t return it. You can try the toolbox in workshop B.',
+    q: [['Quelle douille demandes-tu ?', '13 mm', '12 mm', '30 mm'], ['Quelles tailles reste-t-il ?', '12 et 14 mm', '13 et 14 mm', '10 et 12 mm'], ['Où chercher ?', 'La caisse à outils de l’atelier B', 'Le bureau du chef', 'L’entrepôt']] },
+  { id: 'a6', ic: '🚗', t: 'Indications pour l’usine', who: 'Passant', lv: 'A2', p: 1.05, txt: 'Go straight for about two kilometers. At the second traffic light, turn right. The factory is on your left, after the gas station. Park in the visitor parking lot and go to reception.',
+    q: [['Au 2e feu, tu tournes…', 'À droite', 'À gauche', 'Tu continues tout droit'], ['L’usine est…', 'À gauche, après la station-service', 'À droite, avant le feu', 'En face de l’hôtel'], ['Où te garer ?', 'Au parking visiteurs', 'Devant l’atelier', 'Dans la rue']] },
+  { id: 'a7', ic: '🔧', t: 'L’opérateur décrit la panne', who: 'Opérateur', lv: 'B1', p: 1.1, txt: 'The machine was running normally until about two o’clock. Then I heard a loud bang, and the robot stopped in the middle of the cycle. The screen shows fault twenty-three, gripper pressure low. I didn’t touch anything after that.',
+    q: [['When did the problem start?', 'Around two o’clock', 'At twelve o’clock', 'This morning'], ['What does the screen show?', 'Fault 23, gripper pressure low', 'Fault 32, motor overload', 'No message'], ['What did the operator do after the bang?', 'Nothing', 'Reset the robot', 'Called the supplier']] },
+  { id: 'a8', ic: '📻', t: 'Appel radio de la ligne 1', who: 'Ligne 1', lv: 'B1', p: .9, txt: 'Maintenance, maintenance, this is line one. We have an oil leak under the hydraulic unit. The pressure is dropping. We stopped the line and put a barrier around the spill. Please bring absorbent pads.',
+    q: [['Where is the leak?', 'Under the hydraulic unit', 'On the compressor', 'In the warehouse'], ['What did line one do?', 'Stopped the line and put a barrier', 'Cleaned the spill', 'Restarted the pump'], ['What must maintenance bring?', 'Absorbent pads', 'A new pump', 'Earplugs']] },
+  { id: 'a9', ic: '🔒', t: 'Rappel consignation', who: 'Responsable sécurité', lv: 'B1', p: .95, txt: 'Before we start, a quick reminder about lockout. Every person who works on the machine puts their own padlock on the switch. Never use someone else’s padlock. And always try to start the machine before you begin, to verify zero energy.',
+    q: [['Who puts a padlock on the switch?', 'Every person who works on the machine', 'Only the supervisor', 'Only the operator'], ['What must you never do?', 'Use someone else’s padlock', 'Wear gloves', 'Call the operator'], ['Why do you try to start the machine?', 'To verify zero energy', 'To test the motor', 'To finish faster']] },
+  { id: 'a10', ic: '📧', t: 'Message du fournisseur', who: 'Fournisseur', lv: 'B1', p: 1.15, txt: 'Hello, this is Alex from Tri-Parts. Your order of six bearings and two seals is delayed. The bearings will arrive on Thursday, but the seals are out of stock until next week. Please call me back if this is a problem.',
+    q: [['What is delayed?', 'The order of bearings and seals', 'The meeting', 'The flight'], ['When will the bearings arrive?', 'On Thursday', 'Today', 'Next month'], ['What about the seals?', 'Out of stock until next week', 'Already delivered', 'Cancelled']] },
+  { id: 'a11', ic: '🔁', t: 'Passation de fin de poste', who: 'Collègue', lv: 'B1', p: 1, txt: 'Okay, handover for line three. The robot had two gripper faults tonight, but the reset worked. The new sensor is installed, but it still needs calibration. Oh, and the coffee machine is broken again.',
+    q: [['How many gripper faults?', 'Two', 'Three', 'None'], ['What does the new sensor still need?', 'Calibration', 'Installation', 'A new cable'], ['What else is broken?', 'The coffee machine', 'The forklift', 'The light curtain']] },
+  { id: 'a12', ic: '🏭', t: 'Visite du client', who: 'Responsable de site', lv: 'B1', p: .9, txt: 'Tomorrow the customer is visiting the plant at nine a.m. Please clean your workstation and put all tools back in the toolbox. The visitors will wear high-visibility vests and safety glasses. If they ask questions, be polite and explain your job.',
+    q: [['When is the visit?', 'Tomorrow at 9 a.m.', 'Today at 9 p.m.', 'Next week'], ['What must you do before?', 'Clean your workstation and put tools away', 'Stop the line', 'Order spare parts'], ['What will the visitors wear?', 'Hi-vis vests and safety glasses', 'Hard hats only', 'Nothing special']] }
+];
+
+/* ---------- Nombres & heures : générés au hasard (13 ↔ 30, 8:15 ↔ 8:50…) ---------- */
+const pick = a => a[Math.floor(Math.random() * a.length)];
+function makeNum() {
+  const k = Math.floor(Math.random() * 4);
+  if (k === 0) { const n = 13 + Math.floor(Math.random() * 7), ctx = pick(['Set the pressure to # bar.', 'We need # new bolts.', 'Go to gate #.', 'The part is on shelf #.', 'The line stopped for # minutes.']);
+    return { say: ctx.replace('#', n), q: 'Quel nombre entends-tu ?', o: [String(n), String((n - 10) * 10), String(n === 19 ? 18 : n + 1)] }; }
+  if (k === 1) { const h = 1 + Math.floor(Math.random() * 11), M = ['05', '15', '20', '30', '40', '45', '50'], m = pick(M), m2 = pick(M.filter(x => x !== m)), ctx = pick(['The meeting starts at #.', 'The train leaves at #.', 'My shift ends at #.', 'The truck arrives at #.']);
+    return { say: ctx.replace('#', `${h}:${m}`), q: 'Quelle heure entends-tu ?', o: [`${h}:${m}`, `${h}:${m2}`, `${h % 12 + 1}:${m}`] }; }
+  if (k === 2) { const L = [8, 10, 12, 13, 14, 17, 19, 22, 24], i = 1 + Math.floor(Math.random() * (L.length - 2)), ctx = pick(['Hand me the # millimeter socket.', 'I need a # millimeter wrench.', 'Use the # millimeter bolt.']);
+    return { say: ctx.replace('#', L[i]), q: 'Quelle taille entends-tu ?', o: [L[i] + ' mm', L[i - 1] + ' mm', L[i + 1] + ' mm'] }; }
+  const D = [['2.5', '25', '5.2'], ['0.5', '5', '0.05'], ['1.5', '15', '5.1'], ['6.4', '64', '4.6'], ['0.1', '1', '0.01']], d = pick(D), u = pick([['bar', 'The pressure is # bar.'], ['mm', 'The gap is # millimeters.']]);
+  return { say: u[1].replace('#', d[0]), q: 'Quelle valeur entends-tu ?', o: d.map(x => x + ' ' + u[0]) };
+}
+
+/* ---------- Dictée : les phrases d'exemple du vocabulaire (mots déjà vus en priorité) ---------- */
+const norm = t => t.toLowerCase().replace(/[’`]/g, "'").replace(/-/g, ' ').replace(/[^a-z0-9' ]/g, '').replace(/\s+/g, ' ').trim();
+function lev(a, b) { const d = Array.from({ length: a.length + 1 }, (_, i) => [i]); for (let j = 1; j <= b.length; j++) d[0][j] = j; for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); return d[a.length][b.length]; }
+function dictCards(n) {
+  const seenC = shuffle(CARDS.filter(c => S.cards[c.key] && S.cards[c.key].b >= 1 && wordRx(c.en).test(c.ex)));
+  const easy = shuffle(CARDS.filter(c => c.lvl === 1 && !seenC.includes(c) && wordRx(c.en).test(c.ex)));
+  return [...seenC, ...easy].slice(0, n);
+}
+
+/* ---------- Progression : la 1re bonne réponse compte plus ; nombres et dictées plafonnés par jour ---------- */
+function listenPts(p) { const t = today(); if (!S.ldDay || S.ldDay.d !== t) S.ldDay = { d: t, p: 0 }; const g = Math.max(0, Math.min(p, 30 - S.ldDay.p)); S.ldDay.p += g; return g; }
+const audioDone = a => !!(S.audios[a.id] && S.audios[a.id].done);
+function nextAudio() { const lvA = S.skills.listen >= 300 ? ['B1', 'A2'] : ['A2', 'B1']; for (const l of lvA) { const a = AUDIOS.find(x => x.lv === l && !audioDone(x)); if (a) return a; } return pick(AUDIOS); }
+const audioSteps = a => [{ t: 'audio', a }, ...a.q.map((_, i) => ({ t: 'audioQ', a, i }))];
+const dictSteps = n => dictCards(n).map(c => ({ t: 'dict', c }));
+const numSteps = n => Array.from({ length: n }, () => ({ t: 'num', g: makeNum() }));
+const listenShiftSteps = () => [...audioSteps(nextAudio()), ...dictSteps(3), ...numSteps(4)];
+const playBtns = (txt, p) => `<div class="row"><button class="btn sm" data-say="${esc(txt)}" data-pitch="${p || 1}">🔊 Écouter</button><button class="btn alt sm" data-say="${esc(txt)}" data-rate=".75" data-pitch="${p || 1}">🐢 0,75×</button></div>`;
+
+function renderListenStep(st) {
+  if (st.t === 'audio') {
+    const a = st.a, peek = RUN.peek && RUN.peek[a.id];
+    return { body: `<span class="tag y">${a.ic} ${esc(a.t)} · ${a.lv}</span>
+      <div class="card" style="text-align:center"><div class="t">${esc(a.who)}</div><div style="font-size:3rem;margin:6px 0">${a.ic}</div>${playBtns(a.txt, a.p)}
+        <p class="mut" style="margin-top:8px">Écoute 1 ou 2 fois. Tu peux réécouter pendant les questions.</p></div>
+      <details class="doc" id="peek" ${peek ? 'open' : ''}><summary>👁 Afficher le texte (les points d’écoute sont divisés par 2)</summary><pre class="wo">${glossHTML(a.txt)}</pre></details>
+      <button class="btn" id="nx" style="justify-content:center">Répondre aux questions</button>`,
+      bind: () => { setTimeout(() => say(a.txt, 1, a.p), 400); $('#peek').ontoggle = () => { if ($('#peek').open) { RUN.peek = RUN.peek || {}; RUN.peek[a.id] = true; } }; $('#nx').onclick = () => { sfx('tap'); if ('speechSynthesis' in window) speechSynthesis.cancel(); nextStep(); }; } };
+  }
+  if (st.t === 'audioQ') {
+    const a = st.a, [p, ...o] = a.q[st.i], peek = RUN.peek && RUN.peek[a.id];
+    const q = choices(esc(p), o, good => {
+      const rs = S.audios[a.id] = S.audios[a.id] || { ok: 0, done: false }, bit = 1 << st.i, first = !(rs.ok & bit), f = peek ? .5 : 1;
+      if (good) { addXP('listen', Math.round((first ? 8 : 2) * f), first ? 4 * f : 0); rs.ok |= bit; if (rs.ok === 7 && !rs.done) { rs.done = true; addXP('listen', 10, 6 * f); save(); return '✅ Message compris !'; } save(); return ''; }
+      return `Bonne réponse : <b>${esc(o[0])}</b>`;
+    }, playBtns(a.txt, a.p) + (peek ? `<details class="doc"><summary>👁 Revoir le texte</summary><pre class="wo">${glossHTML(a.txt)}</pre></details>` : ''));
+    return { body: `<span class="tag y">${a.ic} ${esc(a.t)} · ${st.i + 1}/3</span>` + q.html, bind: q.bind };
+  }
+  if (st.t === 'num') {
+    const g = st.g;
+    const q = choices(esc(g.q), g.o, good => { if (good) { addXP('listen', 3, listenPts(1)); return ''; } return `Il fallait entendre : <b>${esc(g.o[0])}</b><br><span class="mut">« ${esc(g.say)} »</span>`; }, playBtns(g.say));
+    return { body: `<span class="tag y">🔢 Nombres &amp; heures</span>` + q.html, bind: () => { q.bind(); setTimeout(() => say(g.say), 350); } };
+  }
+  if (st.t === 'dict') {
+    const c = st.c, ans = (c.ex.match(wordRx(c.en)) || [c.en])[0];
+    const hint = ans.split('').map((ch, i) => i === 0 ? ch : /[a-z]/i.test(ch) ? '_' : ch === ' ' ? '&nbsp;&nbsp;' : ch).join(' ');
+    return { body: `<span class="tag y">✍️ Dictée · ${THEMES[c.th][0]} ${esc(thName(c.th))}</span>
+      ${playBtns(c.ex)}
+      <div class="qp">${esc(c.ex).replace(wordRx(c.en), '<b class="gap">_____</b>')}</div>
+      <p class="mut">Indice : <b style="letter-spacing:.1em">${hint}</b> (${ans.replace(/[^a-z]/gi, '').length} lettres) · ${esc(c.fr)}</p>
+      <input type="text" id="dIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris le mot entendu">
+      <div class="row"><button class="btn sm" id="dOk">Valider</button><button class="btn alt sm" id="dIdk">🤷 Je ne sais pas</button></div><div id="qF"></div>`,
+      bind: () => {
+        setTimeout(() => say(c.ex), 400); let lock = false;
+        const check = idk => {
+          if (lock) return; const v = norm($('#dIn').value); if (!idk && !v) { $('#dIn').focus(); return; } lock = true;
+          const target = norm(ans), d = idk ? 99 : lev(v, target), good = d === 0 || (d === 1 && target.length >= 5);
+          RUN.g.tot++; let msg;
+          if (good) { RUN.g.ok++; sfx('ok'); buzz(15); addXP('listen', 4, listenPts(1.5)); msg = d === 0 ? '✅ Parfait !' : `✅ Presque ! Ça s’écrit : <b>${esc(ans)}</b>`; }
+          else { sfx(idk ? 'tap' : 'no'); msg = `Le mot était : <b>${esc(ans)}</b> (${esc(c.fr)})`; }
+          $('#dIn').disabled = true; $('#dIn').classList.add(good ? 'okin' : 'noin');
+          $('#qF').innerHTML = `<p class="card ${good ? 'ok' : ''}" style="margin-top:10px">${msg}<br><span class="mut">« ${esc(c.ex)} »</span></p><button class="btn" id="qN" style="justify-content:center;margin-top:10px">${T('next')}</button>`;
+          $('#qN').onclick = () => { sfx('tap'); nextStep(); }; $('#qN').scrollIntoView({ block: 'nearest' });
+        };
+        $('#dOk').onclick = () => check(false); $('#dIdk').onclick = () => check(true);
+        $('#dIn').onkeydown = e => { if (e.key === 'Enter') check(false); };
+      } };
+  }
+  return null;
+}
+
+/* ---------- Écran « Écouter » ---------- */
+let LVL = { v: 'hub' };
+RENDER.listen = () => {
+  const el = $('#listen'); let h = '';
+  const noVoice = VOICE ? '' : `<div class="card hz"><b>🔈 Aucune voix anglaise installée sur ce téléphone</b><p class="mut" style="margin-top:4px">Cette section a besoin d’une voix anglaise <b>installée</b> (pas en ligne). 3 minutes pour en ajouter une.</p><button class="btn sm" id="lsHelp" style="margin-top:8px">Comment faire ?</button></div>`;
+  const dis = VOICE ? '' : 'disabled';
+  if (LVL.v === 'hub') {
+    const done = AUDIOS.filter(audioDone).length;
+    h = `<div class="row"><button class="btn alt sm" id="lsBack" style="width:auto">← ${T('home')}</button><h2 class="grow" style="text-align:right">🎧 ${T('listen')}</h2></div>${noVoice}
+      <button class="btn" id="lsShift" ${dis}><span class="ic">▶</span><span>Shift d’écoute<span class="sub">≈ 5 min · 1 message · 3 dictées · 4 nombres</span></span></button>
+      <button class="btn alt" id="lsMsg"><span class="ic">📻</span><span>Messages du métier<span class="sub">${done} / ${AUDIOS.length} compris · briefings, appels, annonces</span></span></button>
+      <button class="btn alt" id="lsDict" ${dis}><span class="ic">✍️</span><span>Dictées<span class="sub">5 phrases · écris le mot qui manque</span></span></button>
+      <button class="btn alt" id="lsNum" ${dis}><span class="ic">🔢</span><span>Nombres &amp; heures<span class="sub">8 questions · 13 ou 30 ? 8:15 ou 8:50 ?</span></span></button>
+      <div class="card"><div class="t">Le piège n° 1 au téléphone</div>
+        <div class="pairs">${[['13', 'thir-TEEN'], ['30', 'THIR-ty'], ['14', 'four-TEEN'], ['40', 'FOR-ty']].map(([n, s]) => `<div><b>${n}</b><span>${s}</span></div>`).join('')}</div>
+        <p class="mut" style="margin-top:6px">-teen : l’accent tombe à la fin · -ty : l’accent tombe au début. Écoute la syllabe forte !</p></div>
+      <p class="mut">🐢 = vitesse 0,75×. Astuce : écoute d’abord à vitesse normale, puis lentement si besoin.</p>`;
+  } else {
+    h = `<div class="row"><button class="btn alt sm" id="lsBack" style="width:auto">← Retour</button><h2 class="grow" style="text-align:right">📻 Messages</h2></div>${noVoice}
+      <p class="mut">Écoute sans lire : c’est ce qui entraîne vraiment l’oreille. Le texte reste disponible si tu bloques.</p>
+      ${AUDIOS.map(a => { const rs = S.audios[a.id] || { ok: 0 }, n = [0, 1, 2].filter(i => rs.ok & (1 << i)).length; return `<button class="ch" data-aud="${a.id}" ${dis}>${audioDone(a) ? '✅' : n ? '◐' : '○'} ${a.ic} ${esc(a.t)} <span class="tag" style="float:right">${a.lv}</span></button>`; }).join('')}`;
+  }
+  el.innerHTML = h;
+  $('#lsBack').onclick = () => { sfx('tap'); if (LVL.v === 'hub') show('home'); else { LVL = { v: 'hub' }; RENDER.listen(); } };
+  const hp = $('#lsHelp'); if (hp) hp.onclick = testVoice;
+  const go = (id, fn) => { const b = $(id); if (b) b.onclick = fn; };
+  go('#lsShift', () => { sfx('ok'); startRun('Shift d’écoute', listenShiftSteps(), { scr: 'listen', v: 'hub' }); });
+  go('#lsMsg', () => { sfx('tap'); LVL = { v: 'msgs' }; RENDER.listen(); $('#listen').scrollTop = 0; });
+  go('#lsDict', () => { sfx('ok'); startRun('Dictées', dictSteps(5), { scr: 'listen', v: 'hub' }); });
+  go('#lsNum', () => { sfx('ok'); startRun('Nombres & heures', numSteps(8), { scr: 'listen', v: 'hub' }); });
+  $$('[data-aud]').forEach(b => b.onclick = () => { sfx('tap'); const a = AUDIOS.find(x => x.id === b.dataset.aud); startRun(a.t, audioSteps(a), { scr: 'listen', v: 'msgs' }); });
+};
+
 /* ================= Profil ================= */
 let EDIT = false;
 RENDER.onb = () => {
-  const el = $('#onb'), a = Object.assign({}, S.avatar);
+  const el = $('#onb'), a = avFix(S.avatar), LIM = { h: 6, ve: 2, s: 6, hc: 6, hs: 4, b: 4, g: 2, e: 4 };
+  const row = (k, label, list, color) => `<div class="t">${label}</div><div class="avrow">${list.map((v, i) => color
+    ? `<button class="sw" data-ak="${k}" data-av="${i}" style="background:${v}" aria-label="${label} ${i + 1}"></button>`
+    : `<button class="ch2" data-ak="${k}" data-av="${i}">${v}</button>`).join('')}</div>`;
   el.innerHTML = `<h2>${EDIT ? 'Modifier mon profil' : 'Bienvenue, technicien·ne !'}</h2>
-    <div style="text-align:center" id="oAv">${avatar(a, 110)}</div>
+    <div class="avbox"><div id="oAv"></div><button class="btn alt sm" id="oRnd" style="width:auto">🎲 Au hasard</button></div>
     <div class="t">Ton prénom ou pseudo</div>
     <input type="text" id="oName" maxlength="20" autocomplete="off" placeholder="ex. Alex" value="${esc(S.name)}">
     <p class="mut">🔒 Reste sur ce téléphone. Jamais envoyé nulle part.</p>
-    <div class="t">Couleur du casque</div><div>${HATS.map((c, i) => `<button class="sw" data-h="${i}" style="background:${c}" aria-label="casque ${i + 1}"></button>`).join('')}</div>
-    <div class="t">Teinte de peau</div><div>${SKINS.map((c, i) => `<button class="sw" data-k="${i}" style="background:${c}" aria-label="teinte ${i + 1}"></button>`).join('')}</div>
+    ${row('h', 'Casque', AV.hat, 1)}${row('ve', 'Gilet', AV.vest, 1)}${row('s', 'Peau', AV.skin, 1)}
+    ${row('hs', 'Coiffure', AV.hairS)}${row('hc', 'Couleur des cheveux et sourcils', AV.hairC, 1)}
+    ${row('b', 'Barbe', AV.beard)}${row('e', 'Yeux', AV.eye, 1)}${row('g', 'Lunettes de sécurité', AV.glass)}
     <div style="margin-top:auto"></div>
     <button class="btn" id="oGo" style="justify-content:center">${EDIT ? 'Enregistrer' : 'Continuer'}</button>
     ${EDIT ? '<button class="btn alt sm" id="oBack">Retour</button>' : ''}`;
-  const sync = () => { $('#oAv').innerHTML = avatar(a, 110); $$('[data-h]').forEach(b => b.classList.toggle('on', +b.dataset.h === a.h)); $$('[data-k]').forEach(b => b.classList.toggle('on', +b.dataset.k === a.s)); $('#oGo').disabled = !$('#oName').value.trim(); };
-  $$('[data-h]').forEach(b => b.onclick = () => { sfx('tap'); a.h = +b.dataset.h; sync(); });
-  $$('[data-k]').forEach(b => b.onclick = () => { sfx('tap'); a.s = +b.dataset.k; sync(); });
+  const sync = () => { $('#oAv').innerHTML = avatar(a, 112); $$('[data-ak]').forEach(b => b.classList.toggle('on', a[b.dataset.ak] === +b.dataset.av)); $('#oGo').disabled = !$('#oName').value.trim(); };
+  $$('[data-ak]').forEach(b => b.onclick = () => { sfx('tap'); a[b.dataset.ak] = +b.dataset.av; sync(); });
+  $('#oRnd').onclick = () => { sfx('tap'); buzz(15); for (const k in LIM) a[k] = Math.floor(Math.random() * LIM[k]); sync(); };
   $('#oName').oninput = sync; sync();
   $('#oGo').onclick = () => {
     const n = $('#oName').value.trim().slice(0, 20); if (!n) return;
-    sfx('ok'); S.name = n; S.avatar = a; save();
+    sfx('ok'); S.name = n; S.avatar = avFix(a); save();
     if (EDIT) { EDIT = false; show('opt'); } else testIntro();
   };
   if (EDIT) $('#oBack').onclick = () => { EDIT = false; show('opt'); };
@@ -1063,7 +1292,6 @@ function skRow(k) {
 
 /* ================= Accueil ================= */
 const SOON = {
-  listen: { lot: 3, ic: '🎧', body: '<p>Briefings de début de poste, consignes de sécurité, appels du chef d’équipe. Vitesse normale ou 0,75×, dictées express.</p>' },
   speak: { lot: 4, ic: '🎙', body: '<p>Tu écoutes le modèle, tu dis la phrase, tu obtiens une note.</p><p>Note automatique <b>seulement si tu l’autorises</b> ; sinon auto-note, 100 % local.</p>' },
   myst: { lot: 5, ic: '🔧', body: '<canvas class="ps2" id="ps2" width="256" height="144"></canvas><p><b>Grand Tchoum Auto 6</b> · lots 5 et 6.</p><p>Mission dans une usine à l’étranger. Ta douille de 13 a disparu. Hôtel, accueil sécurité, panne sur la ligne 3, magasin d’outils… Chaque lieu = une situation en anglais et un indice.</p><p class="mut">Les chapitres se débloquent avec l’XP gagnée dans les sections 1 à 3.</p>' }
 };
@@ -1091,11 +1319,12 @@ RENDER.home = () => {
     ${cards.join('')}
     <button class="btn" id="hRead"><span class="ic">📖</span><span>${T('read')}<span class="sub">${seenCount() ? `Shift du jour · ${dueList().length} à réviser` : 'Shift du jour · 5 min · ' + T('sRead')}</span></span></button>
     <button class="btn" data-go="speak"><span class="ic">🎙</span><span>${T('speak')}<span class="sub">${T('soon')} 4 · ${T('sSpeak')}</span></span></button>
-    <button class="btn" data-go="listen"><span class="ic">🎧</span><span>${T('listen')}<span class="sub">${T('soon')} 3 · ${T('sListen')}</span></span></button>
+    <button class="btn" id="hListen"><span class="ic">🎧</span><span>${T('listen')}<span class="sub">${VOICE ? 'Shift d’écoute · 5 min · ' + T('sListen') : '🔈 voix anglaise à installer'}</span></span></button>
     <button class="btn hz" data-go="myst"><span class="ic">🔧</span><span>${T('myst')}<span class="sub" style="color:#e8d9a8">Grand Tchoum Auto 6 · ${T('soon')} 5</span></span></button>
     <div class="hz-strip"></div>`;
   $$('#home [data-go]').forEach(b => b.onclick = () => { sfx('tap'); openSoon(b.dataset.go); });
   $('#hRead').onclick = () => { sfx('tap'); LV = { v: 'hub' }; show('learn'); };
+  $('#hListen').onclick = () => { sfx('tap'); LVL = { v: 'hub' }; show('listen'); };
   const t = $('#hTest'); if (t) t.onclick = () => { sfx('tap'); testIntro(); };
   const i = $('#hInst'); if (i) i.onclick = () => { sfx('tap'); installHelp(); };
   const e = $('#hExp'); if (e) e.onclick = () => { sfx('tap'); doExport(); };

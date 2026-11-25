@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+  <!-- TrioLingo · Écouter · L3 v0.4 · 2026-11-25 -->
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#a9a3c4"/></marker></defs>
+  <rect width="900" height="520" rx="18" fill="#0d0a1a"/>
+  <text x="30" y="44" fill="#fff" font-size="22" font-weight="900" letter-spacing="1">ÉCOUTER · LE SHIFT D’ÉCOUTE</text>
+  <text x="30" y="68" fill="#ffc21a" font-size="13" font-weight="700">L3 v0.4 · 2026-11-25 · ≈ 5 min · voix anglaise installée sur le téléphone</text>
+  <g font-size="13" text-anchor="middle">
+    <rect x="30" y="92" width="260" height="130" rx="12" fill="#e0561a"/>
+    <text x="160" y="124" font-size="26">📻</text><text x="160" y="152" fill="#fff" font-weight="900">1 MESSAGE DU MÉTIER</text>
+    <text x="160" y="174" fill="#ffe3cc">briefing, appel, radio, hôtel…</text><text x="160" y="194" fill="#ffe3cc">puis 3 questions</text>
+    <rect x="320" y="92" width="260" height="130" rx="12" fill="#e0561a"/>
+    <text x="450" y="124" font-size="26">✍️</text><text x="450" y="152" fill="#fff" font-weight="900">3 DICTÉES</text>
+    <text x="450" y="174" fill="#ffe3cc">écris le mot qui manque</text><text x="450" y="194" fill="#ffe3cc">indice : 1re lettre + longueur</text>
+    <rect x="610" y="92" width="260" height="130" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/>
+    <text x="740" y="124" font-size="26">🔢</text><text x="740" y="152" fill="#ffc21a" font-weight="900">4 NOMBRES &amp; HEURES</text>
+    <text x="740" y="174" fill="#e8d9a8">13 ou 30 ? 8:15 ou 8:50 ?</text><text x="740" y="194" fill="#e8d9a8">2.5 bar ou 25 bar ?</text>
+  </g>
+  <g stroke="#a9a3c4" stroke-width="2" marker-end="url(#a)"><path d="M290 157h27"/><path d="M580 157h27"/></g>
+  <text x="30" y="268" fill="#fff" font-size="16" font-weight="900">LES BOUTONS</text>
+  <g font-size="13">
+    <rect x="30" y="284" width="190" height="56" rx="8" fill="#e0561a"/><text x="125" y="318" text-anchor="middle" fill="#fff" font-weight="800">🔊 ÉCOUTER</text>
+    <text x="240" y="318" fill="#f4f1ff">vitesse normale, autant de fois que tu veux</text>
+    <rect x="30" y="352" width="190" height="56" rx="8" fill="#2c2450" stroke="#7c70b8"/><text x="125" y="386" text-anchor="middle" fill="#fff" font-weight="800">🐢 0,75×</text>
+    <text x="240" y="386" fill="#f4f1ff">plus lent, quand ça va trop vite</text>
+    <rect x="30" y="420" width="190" height="56" rx="8" fill="#1a1330" stroke="#ffc21a"/><text x="125" y="454" text-anchor="middle" fill="#ffc21a" font-weight="800">👁 TEXTE</text>
+    <text x="240" y="454" fill="#f4f1ff">affiche le message écrit (points d’écoute ÷ 2)</text>
+  </g>
+  <rect x="580" y="284" width="290" height="192" rx="12" fill="none" stroke="#5fd38d" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="600" y="312" fill="#5fd38d" font-size="15" font-weight="900">🔒 100 % LOCAL</text>
+  <g font-size="13" fill="#dff5e8">
+    <text x="600" y="342">✔ seules les voix INSTALLÉES</text>
+    <text x="600" y="362">    sur le téléphone sont utilisées</text>
+    <text x="600" y="390">✔ les voix « en ligne » sont</text>
+    <text x="600" y="410">    ignorées exprès</text>
+    <text x="600" y="440">🔈 pas de voix ? ⚙ Options →</text>
+    <text x="600" y="460">    Voix anglaise → Aide</text>
+  </g>
+</svg>
