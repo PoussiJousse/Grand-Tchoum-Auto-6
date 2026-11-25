@@ -702,7 +702,8 @@ function renderTitle() {
   $('#tBox').innerHTML = `<button class="btn" id="tPlay">${S.started ? '▶ Continuer' : '▶ Nouvelle partie'}</button>
     <div class="card" style="background:rgba(12,8,20,.85)">${CH.map(ch => `<div style="display:flex;justify-content:space-between;gap:8px;padding:3px 0"><span>${isDone(ch.id) ? '✅' : ch.lot ? '🚧' : unlocked(ch) ? '▶' : '🔒'} <b>${ch.n}.</b> ${esc(ch.fr)}</span><span class="mut">${isDone(ch.id) ? 'fait' : ch.lot ? 'lot 6' : unlocked(ch) ? 'ouvert' : ch.unl + ' XP'}</span></div>`).join('')}</div>
     <p class="mut">${o ? `⭐ ${xp} XP dans TrioLingo · ` : '⚠ Pas de profil TrioLingo sur ce téléphone · '}l’XP ouvre les chapitres</p>
-    <button class="btn alt" id="tBack">← Retour à TrioLingo</button>`;
+    <button class="btn alt" id="tBack">← Retour à TrioLingo</button>
+    <p class="mut" style="font-size:.7rem">Grand Tchoum Auto 6 · ${VERSION} · ${BUILD} · 100 % local, 0 traceur</p>`;
   $('#tPlay').onclick = startGame; $('#tBack').onclick = () => { location.href = './'; };
 }
 function startGame() {
