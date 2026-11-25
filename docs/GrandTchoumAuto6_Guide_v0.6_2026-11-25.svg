@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+  <!-- Grand Tchoum Auto 6 · Guide · L5 v0.6 · 2026-11-25 -->
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ffc21a"/></marker>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1442"/><stop offset=".6" stop-color="#8a2f63"/><stop offset="1" stop-color="#e0683e"/></linearGradient></defs>
+  <rect width="900" height="560" rx="18" fill="url(#sky)"/>
+  <text x="30" y="48" fill="#fff" font-size="26" font-weight="900" font-style="italic" stroke="#1a0d05" stroke-width="1">GRAND TCHOUM AUTO 6</text>
+  <rect x="30" y="60" width="210" height="24" fill="#ffc21a" stroke="#1a1206" stroke-width="2"/><text x="135" y="77" text-anchor="middle" fill="#1a1206" font-size="13" font-weight="900" letter-spacing="3">LA DOUILLE DE 13</text>
+  <text x="260" y="77" fill="#ffe3cc" font-size="13" font-weight="700">L5 v0.6 · 2026-11-25 · chapitres 1 à 3 · l’XP de TrioLingo ouvre les chapitres</text>
+  <g font-size="13" text-anchor="middle">
+    <rect x="30" y="110" width="250" height="120" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/>
+    <text x="155" y="140" fill="#ffc21a" font-weight="900">1 · ARRIVAL · 0 XP</text><text x="155" y="164" fill="#fff">🚉 Gare : panneau des départs</text><text x="155" y="184" fill="#fff">Ty Kett : demander son chemin</text><text x="155" y="210" fill="#5fd38d" font-weight="800">🔍 indice 1</text>
+    <rect x="325" y="110" width="250" height="120" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/>
+    <text x="450" y="140" fill="#ffc21a" font-weight="900">2 · CHECK-IN · 120 XP</text><text x="450" y="164" fill="#fff">🏨 Bella Night : réservation</text><text x="450" y="184" fill="#fff">Chambre 312 : pas d’eau chaude !</text><text x="450" y="210" fill="#5fd38d" font-weight="800">🔍 indice 2</text>
+    <rect x="620" y="110" width="250" height="120" rx="12" fill="#17130a" stroke="#ffc21a" stroke-width="2"/>
+    <text x="745" y="140" fill="#ffc21a" font-weight="900">3 · SAFETY · 250 XP</text><text x="745" y="164" fill="#fff">🦺 Maïté Nance : accueil sécurité</text><text x="745" y="184" fill="#fff">EPI + ordre de consignation</text><text x="745" y="210" fill="#5fd38d" font-weight="800">🔍 indice 3</text>
+  </g>
+  <g stroke="#ffc21a" stroke-width="2.5" marker-end="url(#a)"><path d="M280 170h42"/><path d="M575 170h42"/></g>
+  <text x="450" y="258" text-anchor="middle" fill="#ffe3cc" font-size="13">Chapitres 4 à 6 (panne de la ligne 3, magasin d’outils, rapport) + la vérité sur ta douille → lot 6</text>
+  <rect x="30" y="280" width="410" height="250" rx="14" fill="rgba(12,8,20,.85)"/>
+  <text x="50" y="310" fill="#fff" font-size="16" font-weight="900">🎮 LES COMMANDES</text>
+  <g font-size="13" fill="#f4f1ff">
+    <text x="50" y="340">🕹 joystick (en bas à droite) : marcher</text>
+    <text x="50" y="366">🟠 gros bouton orange : parler / agir</text>
+    <text x="50" y="392">🟡 anneau « 13 » + flèche : où aller</text>
+    <text x="50" y="418">🔊 la réplique lue en anglais (voix du téléphone)</text>
+    <text x="50" y="444">🇫🇷 la traduction de la réplique</text>
+    <text x="50" y="470">📒 carnet d’enquête · ⚙ réglages · ✕ retour</text>
+    <text x="50" y="500" fill="#a9a3c4">Clavier : flèches / ZQSD-WASD + Espace</text>
+  </g>
+  <rect x="460" y="280" width="410" height="250" rx="14" fill="rgba(12,8,20,.85)"/>
+  <text x="480" y="310" fill="#fff" font-size="16" font-weight="900">💬 RÉPONDRE EN ANGLAIS</text>
+  <g font-size="13" fill="#f4f1ff">
+    <text x="480" y="340">Choisis la bonne réplique parmi 3.</text>
+    <text x="480" y="366" fill="#5fd38d">✔ juste du 1er coup = +6 XP</text>
+    <text x="480" y="392" fill="#ff8a8a">✗ sinon : réaction drôle, tu réessaies</text>
+    <text x="480" y="418">   (+2 XP quand tu trouves) · jamais de game over</text>
+    <text x="480" y="452">⭐ Toute l’XP gagnée ici compte dans TrioLingo</text>
+    <text x="480" y="478">🔒 Chapitre fermé ? Fais un Shift du jour</text>
+    <text x="480" y="500">   dans TrioLingo (≈ 30 à 50 XP)</text>
+  </g>
+</svg>
