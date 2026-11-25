@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- TrioLingo · Industrial Edition Pro Max · L1 v0.1 · généré le 2026-11-25
+     100 % local : aucun traceur, aucun cookie, aucun compte, aucune police ni script externe.
+     Toutes les données restent dans ce téléphone (stockage local). Aucune donnée personnelle dans ce code.
+     Seule exception future (lot 4), et seulement si l'utilisateur répond Oui : la reconnaissance vocale
+     du navigateur, qui envoie la voix à Google ou Apple. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data: blob:; media-src data: blob:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TrioLingo"><meta name="theme-color" content="#120c24">
+<title>TrioLingo L1 v0.1</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
+<style>
+:root{--a:#ff7a2f;--b:#7c5cff;--hz:#ffc21a;--ok:#5fd38d;--bad:#ff6b6b;--bg:#0d0a1a;--fg:#f4f1ff;--mut:#a9a3c4;--pn:rgba(18,12,36,.92);--bd:rgba(255,255,255,.16)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#05030c;color:var(--fg);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;touch-action:manipulation}
+#app{position:relative;margin:auto;height:100vh;height:100dvh;width:min(100vw,560px);background:var(--bg);overflow:hidden}
+.scr{position:absolute;inset:0;display:none;flex-direction:column;gap:10px;padding:max(14px,env(safe-area-inset-top)) 14px calc(86px + env(safe-area-inset-bottom));overflow-y:auto;-webkit-overflow-scrolling:touch}
+.scr.on{display:flex}.scr.notab{padding-bottom:max(16px,env(safe-area-inset-bottom))}
+h1,h2,h3{margin:0;text-transform:uppercase;letter-spacing:.06em}
+h2{font-size:1rem;color:var(--a)}h3{font-size:.78rem;color:var(--mut);margin-top:6px}
+p{margin:0}
+.logo{font:900 2.2rem/1 system-ui,sans-serif;text-align:center;color:#fff;text-shadow:0 3px 0 var(--a),0 6px 0 #6b2b0a,0 0 18px rgba(255,122,47,.55)}
+.logo small{display:block;font-size:.62rem;letter-spacing:.3em;color:var(--hz);text-shadow:none;margin-top:10px;font-weight:800}
+.btn{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:10px 14px;border:2px solid #ffb27a;border-radius:6px;background:linear-gradient(#ff9a50,#e0561a);color:#fff;font:800 .95rem system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-align:left;text-shadow:0 2px 0 rgba(0,0,0,.35);box-shadow:0 4px 0 #7a2c08;cursor:pointer}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #7a2c08}
+.btn:disabled{opacity:.45;pointer-events:none}
+.btn.alt{background:linear-gradient(#4a3f7a,#2c2450);border-color:#7c70b8;box-shadow:0 4px 0 #130f28}
+.btn.hz{background:linear-gradient(#3a3018,#17130a);border-color:var(--hz);box-shadow:0 4px 0 #000;color:var(--hz)}
+.btn.red{background:linear-gradient(#a8323e,#6b1620);border-color:#ff8a8a;box-shadow:0 4px 0 #2a060b}
+.btn .ic{font-size:1.4rem;width:28px;text-align:center;flex:none}
+.btn .sub{display:block;font:600 .72rem system-ui,sans-serif;letter-spacing:.01em;text-transform:none;opacity:.88;margin-top:1px}
+.btn.sm{min-height:44px;font-size:.8rem;justify-content:center;text-align:center;padding:8px 10px}
+.card{border:1px solid var(--bd);border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.04)}
+.card.hz{border-color:var(--hz);background:rgba(255,194,26,.07)}
+.card.ok{border-color:var(--ok);background:rgba(95,211,141,.08)}
+.t{font:800 .7rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
+.big{font:800 1.1rem system-ui,sans-serif}
+.mut{color:var(--mut);font-size:.82rem}
+.row{display:flex;gap:8px;align-items:center}.row>.grow{flex:1;min-width:0}
+.pb{height:12px;border:2px solid #ffb27a;border-radius:7px;background:#1a1330;overflow:hidden}
+.pb i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff7a2f,#ffd36b);transition:width .2s}
+.pbl{display:flex;justify-content:space-between;font-size:.74rem;color:var(--mut);margin-top:4px}
+.hz-strip{height:8px;border-radius:4px;background:repeating-linear-gradient(-45deg,var(--hz) 0 10px,#1a1206 10px 20px);flex:none}
+.ch{display:block;width:100%;text-align:left;padding:12px;margin-top:8px;border-radius:10px;border:1px solid var(--bd);background:#241c42;color:var(--fg);font:600 .95rem system-ui,sans-serif;min-height:48px;cursor:pointer}
+.ch.ok{border-color:var(--ok);background:rgba(95,211,141,.2)}
+.ch.no{border-color:var(--bad);background:rgba(255,107,107,.15)}
+.ch.idk{color:var(--mut);font-style:italic}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;border:1px solid var(--bd);font-size:.74rem;font-weight:700}
+.tag.y{border-color:var(--hz);color:var(--hz)}
+input[type=text]{width:100%;min-height:50px;padding:10px 12px;border-radius:10px;border:2px solid #7c70b8;background:#1a1330;color:var(--fg);font:600 1.05rem system-ui,sans-serif}
+input[type=text]:focus{outline:none;border-color:var(--a)}
+.sw{width:46px;height:46px;border-radius:10px;border:3px solid transparent;margin:3px;padding:0;cursor:pointer;box-shadow:0 0 0 1px var(--bd)}
+.sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--a)}
+.seg{display:flex;border:2px solid #7c70b8;border-radius:10px;overflow:hidden}
+.seg button{flex:1;min-height:44px;border:0;background:#241c42;color:var(--fg);font:700 .85rem system-ui,sans-serif;cursor:pointer}
+.seg button.on{background:var(--a);color:#1a0d05}
+.opt{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:10px 0;border-top:1px solid var(--bd)}
+.opt:first-of-type{border-top:0}
+.opt .lab{flex:1;min-width:0}.opt .lab b{display:block;font-size:.95rem}
+.tg{min-width:74px;min-height:40px;border-radius:20px;border:2px solid #7c70b8;background:#241c42;color:var(--mut);font:800 .8rem system-ui,sans-serif;cursor:pointer}
+.tg.on{background:var(--ok);border-color:var(--ok);color:#06210f}
+.skrow{display:flex;align-items:center;gap:8px;font-size:.82rem;margin-top:6px}
+.skrow .n{width:104px;flex:none}.skrow .pb{flex:1;height:10px;border-width:1px}.skrow .lv{width:34px;text-align:right;color:var(--hz);font-weight:800;flex:none}
+.week{display:flex;gap:4px;margin-top:6px}.week .day{flex:1;text-align:center;font-size:.72rem;color:var(--mut)}.week .day b{display:block;font-size:1.15rem}
+pre.wo{margin:0;white-space:pre-wrap;font:600 .85rem/1.45 ui-monospace,Menlo,monospace;background:#17130a;border:1px solid var(--hz);border-left:6px solid var(--hz);border-radius:8px;padding:10px;color:#f8eccc}
+#boot{justify-content:flex-end;background:radial-gradient(circle at 50% 30%,#2a1a55,#0d0a1a 70%)}
+#boot .logo{margin:auto 0}
+#bgo{animation:bl 1.1s steps(2) infinite;margin-top:14px}
+@keyframes bl{50%{opacity:.5}}
+#tabs{position:absolute;left:0;right:0;bottom:0;display:none;background:rgba(13,10,26,.97);border-top:1px solid var(--bd);padding:0 6px env(safe-area-inset-bottom);z-index:5}
+#tabs.on{display:flex}
+#tabs button{flex:1;background:none;border:0;border-top:3px solid transparent;color:var(--mut);font:700 .72rem system-ui,sans-serif;padding:6px 0 8px;min-height:60px;cursor:pointer}
+#tabs button b{display:block;font-size:1.3rem;font-weight:400}
+#tabs button.on{color:var(--a);border-color:var(--a)}
+#modal{position:absolute;inset:0;background:rgba(5,3,12,.78);display:none;align-items:flex-end;justify-content:center;z-index:20;padding:12px max(12px,env(safe-area-inset-bottom))}
+#modal.on{display:flex}
+#modal .box{width:100%;max-height:90%;overflow:auto;background:#1a1330;border:2px solid #7c70b8;border-radius:16px;padding:16px;animation:up .2s both}
+@keyframes up{from{transform:translateY(30px);opacity:0}}
+#mT{font:900 1rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--a);margin-bottom:10px}
+#mB{font-size:.92rem;display:flex;flex-direction:column;gap:8px}
+#mB ol{margin:0;padding-left:22px}#mB li{margin:4px 0}
+#mF{display:flex;gap:8px;margin-top:14px}#mF .btn{flex:1}#mF:empty{display:none}
+#toast{position:absolute;left:50%;top:max(14px,env(safe-area-inset-top));transform:translate(-50%,-20px);opacity:0;transition:.3s;z-index:30;background:#fbf6ee;color:#1d1626;font:700 .9rem system-ui,sans-serif;padding:10px 16px;border-radius:12px;box-shadow:3px 3px 0 #000;max-width:90%;text-align:center;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+canvas.ps2{width:100%;aspect-ratio:16/9;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:10px;border:2px solid #2c2450;display:block}
+.flow{display:flex;align-items:center;gap:4px;font-size:.74rem;text-align:center}
+.flow div{flex:1;padding:8px 4px;border-radius:8px;background:#241c42;border:1px solid var(--bd)}
+.flow .x{flex:none;background:none;border:0;padding:0;color:var(--mut)}
+svg{display:block}
+</style></head>
+<body><div id="app">
+
+<!-- Démarrage -->
+<section id="boot" class="scr on notab">
+  <div class="logo">TRIOLINGO<small>INDUSTRIAL EDITION · PRO MAX</small></div>
+  <div class="hz-strip"></div>
+  <div class="pb"><i id="bI"></i></div>
+  <div class="pbl"><span id="bL">Démarrage…</span><span id="bP">0 %</span></div>
+  <button class="btn" id="bgo" style="justify-content:center;display:none">Touche pour commencer</button>
+  <p class="mut" style="text-align:center;font-size:.7rem">L1 v0.1 · 2026-11-25 · 100 % local, 0 traceur</p>
+</section>
+
+<!-- Profil (création ou modification) -->
+<section id="onb" class="scr notab"></section>
+<!-- Test de placement -->
+<section id="test" class="scr notab"></section>
+<!-- Résultat du test -->
+<section id="res" class="scr notab"></section>
+<!-- Onglets -->
+<section id="home" class="scr"></section>
+<section id="prog" class="scr"></section>
+<section id="lex" class="scr"></section>
+<section id="opt" class="scr"></section>
+
+<nav id="tabs">
+  <button data-t="home"><b>🏠</b><span data-s="home"></span></button>
+  <button data-t="prog"><b>📊</b><span data-s="prog"></span></button>
+  <button data-t="lex"><b>🗂</b><span data-s="lex"></span></button>
+  <button data-t="opt"><b>⚙</b><span data-s="opt"></span></button>
+</nav>
+<div id="modal"><div class="box"><div id="mT"></div><div id="mB"></div><div id="mF"></div></div></div>
+<div id="toast"></div>
+<input type="file" id="fileIn" accept="application/json,.json" hidden>
+</div>
+
+<script>
+'use strict';
+/* ============ TrioLingo · L1 v0.1 · 2026-11-25 · socle ============ */
+const VERSION = 'L1 v0.1', BUILD = '2026-11-25', KEY = 'tl_save_v1';
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const ymd = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const today = () => ymd(new Date());
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+/* ---------- Compétences et niveaux (CECRL) ---------- */
+const SK = [
+  { id: 'vocab', ic: '🗂', fr: 'Vocabulaire', en: 'Vocabulary' },
+  { id: 'gram', ic: '📐', fr: 'Grammaire', en: 'Grammar' },
+  { id: 'conj', ic: '⏱', fr: 'Conjugaison', en: 'Verb tenses' },
+  { id: 'synt', ic: '🧩', fr: 'Syntaxe', en: 'Word order' },
+  { id: 'read', ic: '📖', fr: 'Lecture', en: 'Reading' },
+  { id: 'listen', ic: '🎧', fr: 'Écoute', en: 'Listening' },
+  { id: 'oral', ic: '🎙', fr: 'Oral', en: 'Speaking' }];
+const BANDS = ['A1', 'A2', 'B1', 'B2', 'C1'], XP_LVL = 250;
+const cefr = sc => { const i = Math.min(4, Math.floor(sc / 200)); return BANDS[i] + (i < 4 && sc - i * 200 >= 100 ? '+' : ''); };
+const skName = k => uiEN('menu') ? k.en : k.fr;
+
+/* ---------- Sauvegarde locale (jamais envoyée) ---------- */
+function def() {
+  return {
+    v: 1, app: 'TrioLingo', created: today(), name: '', avatar: { h: 0, s: 1 }, xp: 0,
+    skills: Object.fromEntries(SK.map(k => [k.id, 0])), placed: false, tested: {}, days: {},
+    settings: { sfx: true, vib: true, ui: 'auto', sr: null }, lastExport: null, installHintOff: false
+  };
+}
+function merge(o) {
+  const d = def(), r = Object.assign(d, o);
+  r.settings = Object.assign(def().settings, o.settings || {});
+  r.skills = Object.assign(def().skills, o.skills || {});
+  r.avatar = Object.assign(def().avatar, o.avatar || {});
+  r.days = o.days && typeof o.days === 'object' ? o.days : {};
+  r.tested = o.tested && typeof o.tested === 'object' ? o.tested : {};
+  for (const k in r.skills) r.skills[k] = Math.max(0, Math.min(1000, +r.skills[k] || 0));
+  r.xp = Math.max(0, +r.xp || 0); r.name = String(r.name || '').slice(0, 20);
+  return r;
+}
+let S = def(), LOADERR = '', SAVE_LOCK = false, saveWarned = false;
+function load() {
+  let raw = null;
+  try { raw = localStorage.getItem(KEY); } catch (e) { LOADERR = 'stockage indisponible (navigation privée ?)'; return; }
+  if (!raw) return;
+  try { const o = JSON.parse(raw); if (!o || typeof o !== 'object' || !o.skills) throw new Error('format inconnu'); S = merge(o); }
+  catch (e) {
+    LOADERR = 'sauvegarde illisible : ' + (e.message || e);
+    // Leçon BigWallQuest v0.19.2 : on garde une copie AVANT tout, et on n'écrase jamais en silence.
+    try { localStorage.setItem(KEY + '_secours_' + Date.now(), raw); } catch (_) { SAVE_LOCK = true; }
+  }
+}
+function save() {
+  if (SAVE_LOCK) return;
+  try { localStorage.setItem(KEY, JSON.stringify(S)); }
+  catch (e) { if (!saveWarned) { saveWarned = true; toast('⚠ Sauvegarde impossible sur ce téléphone (stockage plein ou bloqué).'); } }
+}
+const avg = () => { const ids = SK.filter(k => k.id !== 'oral' || S.tested.oral).map(k => k.id); return ids.reduce((a, k) => a + S.skills[k], 0) / ids.length; };
+const lvl = () => 1 + Math.floor(S.xp / XP_LVL);
+function addXP(skill, n) {
+  const before = lvl();
+  if (skill) S.skills[skill] = Math.min(1000, (S.skills[skill] || 0) + n);
+  S.xp += n; S.days[today()] = (S.days[today()] || 0) + n; save();
+  if (lvl() > before) { sfx('lvl'); buzz([30, 40, 30]); toast('⭐ ' + T('lvlUp') + ' ' + lvl() + ' !'); }
+}
+
+/* ---------- Langue de l'interface : FR au début, puis bascule progressive (D5) ---------- */
+const STR = {
+  home: ['Accueil', 'Home', 'm'], prog: ['Progrès', 'Progress', 'm'], lex: ['Lexique', 'Glossary', 'm'], opt: ['Options', 'Settings', 'm'],
+  read: ['Lire & apprendre', 'Read & learn', 'm'], speak: ['Parler', 'Speak', 'm'], listen: ['Écouter', 'Listen', 'm'], myst: ['Mode mystère', 'Mystery mode', 'm'],
+  hi: ['Salut', 'Hi', 'm'], tech: ['Technicien niv.', 'Technician lvl', 'm'], lvlUp: ['Niveau', 'Level', 'm'],
+  soon: ['Arrive au lot', 'Coming in batch', 'm'], ok: ['OK', 'OK', 'm'], cancel: ['Annuler', 'Cancel', 'm'], confirm: ['Confirmer', 'Confirm', 'm'],
+  week: ['Cette semaine', 'This week', 'm'], skills: ['Mes compétences', 'My skills', 'm'], next: ['Suivant', 'Next', 'm'], close: ['Fermer', 'Close', 'm'],
+  sRead: ['vocabulaire métier', 'job vocabulary', 'm'], sSpeak: ['prononciation', 'pronunciation', 'm'], sListen: ['briefings &amp; consignes', 'briefings &amp; instructions', 'm']
+};
+function uiEN(kind) { const m = S.settings.ui; if (m === 'fr') return false; if (m === 'en') return true; return kind === 'm' || kind === 'menu' ? avg() >= 250 : avg() >= 400; }
+function T(k) { const e = STR[k]; return e ? (uiEN(e[2] || 't') ? e[1] : e[0]) : k; }
+function applyStatic() { $$('[data-s]').forEach(el => el.textContent = T(el.dataset.s)); document.documentElement.lang = uiEN('m') ? 'en' : 'fr'; }
+
+/* ---------- Son synthétisé (aucun fichier) + vibrations ---------- */
+let AC = null;
+function ac() { if (AC === null) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { AC = false; } } if (AC && AC.state === 'suspended') AC.resume().catch(() => { }); return AC; }
+function sfx(n) {
+  if (!S.settings.sfx) return; const a = ac(); if (!a) return;
+  const N = { tap: [[660, .04]], ok: [[660, .07], [990, .12]], no: [[330, .1], [262, .14]], lvl: [[523, .09], [659, .09], [784, .09], [1047, .25]] }[n] || [];
+  let t = a.currentTime;
+  N.forEach(([f, d]) => { const o = a.createOscillator(), g = a.createGain(); o.type = 'square'; o.frequency.value = f; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.06, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g).connect(a.destination); o.start(t); o.stop(t + d + .02); t += d * .9; });
+}
+function buzz(p) { if (S.settings.vib && navigator.vibrate) try { navigator.vibrate(p); } catch (e) { } }
+
+/* ---------- Voix anglaise : uniquement les voix installées sur le téléphone (localService) ---------- */
+let VOICE = null;
+function pickVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  const v = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang) && v.localService);
+  return v.find(x => /en[-_]US/i.test(x.lang)) || v[0] || null;
+}
+function initVoices() {
+  return new Promise(res => {
+    if (!('speechSynthesis' in window)) return res(null);
+    let done = false; const fin = () => { VOICE = pickVoice(); if (!done) { done = true; res(VOICE); } };
+    speechSynthesis.onvoiceschanged = fin; // les voix arrivent parfois en retard
+    if (speechSynthesis.getVoices().length) fin(); else setTimeout(fin, 1500);
+  });
+}
+function say(text, rate = 1) {
+  return new Promise(res => {
+    if (!VOICE) return res(false);
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.voice = VOICE; u.lang = VOICE.lang; u.rate = .92 * rate; u.onend = () => res(true); u.onerror = () => res(false); speechSynthesis.speak(u); }
+    catch (e) { res(false); }
+  });
+}
+
+/* ---------- Reconnaissance vocale du navigateur : sur demande, consentement explicite (D1 + D1 bis) ---------- */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+const srStatus = () => !SR ? 'Non proposée par ce navigateur → auto-note locale' : S.settings.sr === true ? 'Autorisée (la voix part chez Google / Apple)' : S.settings.sr === false ? 'Refusée → auto-note, 100 % local' : 'Pas encore demandée';
+function askSR() {
+  return new Promise(res => {
+    if (!SR) { S.settings.sr = false; save(); modal({ title: '🎙 Micro', body: '<p>Ce navigateur ne propose pas la reconnaissance vocale.</p><p>Dans « Parler », tu t’enregistreras et tu te noteras toi-même : <b>rien ne sort du téléphone</b>.</p>', btns: [[T('ok'), () => res(false)]] }); return; }
+    modal({
+      title: '🎙 Note automatique de ta prononciation ?',
+      body: `<div class="flow"><div>🎙<br>ta voix</div><span class="x">→</span><div style="border-color:var(--bad)">☁<br>Google / Apple</div><span class="x">→</span><div>📝<br>texte</div><span class="x">→</span><div>✅<br>note</div></div>
+        <p>Pour te noter tout seul, <b>ton navigateur envoie l’enregistrement de ta voix</b> aux serveurs de Google (Android, Chrome) ou d’Apple (iPhone), qui le transforment en texte.</p>
+        <p>TrioLingo ne garde rien et n’envoie rien d’autre : ni prénom, ni score.</p>
+        <p class="card ok" style="margin:0">Si tu dis <b>Non</b> : tu t’enregistres, tu compares avec le modèle, tu te notes toi-même. <b>Rien ne sort du téléphone.</b></p>
+        <p class="mut">Tu peux changer d’avis à tout moment : ⚙ Options → Micro.</p>`,
+      btns: [['Non, 100 % local', () => { S.settings.sr = false; save(); res(false); }, 'alt'], ['Oui, autoriser', () => { S.settings.sr = true; save(); res(true); }]]
+    });
+  });
+}
+
+/* ---------- Fenêtres, messages, progression ---------- */
+function modal({ title, body, btns }) {
+  $('#mT').innerHTML = title; $('#mB').innerHTML = body; const f = $('#mF'); f.innerHTML = '';
+  (btns || [[T('close')]]).forEach(([l, fn, cls]) => { const b = document.createElement('button'); b.className = 'btn sm ' + (cls || ''); b.innerHTML = l; b.onclick = () => { sfx('tap'); closeModal(); fn && fn(); }; f.appendChild(b); });
+  $('#modal').classList.add('on');
+}
+const closeModal = () => $('#modal').classList.remove('on');
+function confirmBox(title, body, yes, label, cls) { modal({ title, body, btns: [[T('cancel'), null, 'alt'], [label || T('confirm'), yes, cls]] }); }
+let tt; function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2800); }
+function progModal(title) {
+  modal({ title, body: '<div class="pb"><i id="pgI"></i></div><div class="pbl"><span id="pgL">…</span><span id="pgP">0 %</span></div>', btns: [] });
+  return (p, l) => { $('#pgI').style.width = p + '%'; $('#pgP').textContent = Math.round(p) + ' %'; if (l) $('#pgL').textContent = l; };
+}
+
+/* ---------- Dessins : radar, avatar ---------- */
+function radar(size, labels) {
+  const v = SK.map(k => Math.max(.05, Math.min(1, S.skills[k.id] / 800)));
+  const pad = labels ? 34 : 6, c = size / 2, r = c - pad, n = v.length;
+  const pt = (i, k) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [(c + Math.cos(a) * r * k).toFixed(1), (c + Math.sin(a) * r * k).toFixed(1)]; };
+  let s = `<svg viewBox="0 0 ${size} ${size}" width="100%" role="img" aria-label="Radar des compétences">`;
+  [.25, .5, .75, 1].forEach(k => s += `<polygon points="${v.map((_, i) => pt(i, k).join(',')).join(' ')}" fill="none" stroke="rgba(255,255,255,.14)"/>`);
+  v.forEach((_, i) => { const [x, y] = pt(i, 1); s += `<line x1="${c}" y1="${c}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.1)"/>`; });
+  s += `<polygon points="${v.map((k, i) => pt(i, k).join(',')).join(' ')}" fill="rgba(255,122,47,.35)" stroke="#ff7a2f" stroke-width="2" stroke-linejoin="round"/>`;
+  if (labels) SK.forEach((k, i) => { const [x, y] = pt(i, 1.24); s += `<text x="${x}" y="${+y + 4}" text-anchor="middle" fill="#a9a3c4" font-size="10.5" font-family="system-ui">${k.ic} ${esc(cefr(S.skills[k.id]))}</text>`; });
+  return s + '</svg>';
+}
+const HATS = ['#ffc21a', '#ff7a2f', '#5fd38d', '#7c5cff', '#4fc3f7', '#f4f1ff'], SKINS = ['#f3d2b3', '#d9a27a', '#a86b45', '#6b4129'];
+function avatar(a, sz = 64) {
+  const h = HATS[a.h] || HATS[0], s = SKINS[a.s] || SKINS[1];
+  return `<svg viewBox="0 0 64 64" width="${sz}" height="${sz}" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#2c2450"/><path d="M11 64q2-18 21-18t21 18z" fill="#ffc21a"/><rect x="21" y="53" width="22" height="3" fill="#c9c9d6"/><rect x="21" y="59" width="22" height="3" fill="#c9c9d6"/><rect x="28" y="41" width="8" height="7" fill="${s}"/><circle cx="32" cy="33" r="12" fill="${s}"/><circle cx="27.5" cy="34" r="1.6" fill="#1a0d05"/><circle cx="36.5" cy="34" r="1.6" fill="#1a0d05"/><path d="M28 39q4 3 8 0" stroke="#1a0d05" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M18 29q0-14 14-14t14 14z" fill="${h}"/><rect x="15" y="27" width="34" height="4" rx="2" fill="${h}"/><rect x="30" y="15" width="4" height="13" fill="rgba(0,0,0,.18)"/></svg>`;
+}
+
+/* ---------- Semaine : jamais de « série perdue » (flamme en veille) ---------- */
+function weekHTML() {
+  const d = new Date(), dow = (d.getDay() + 6) % 7, mon = new Date(d); mon.setDate(d.getDate() - dow);
+  const L = uiEN('m') ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  let h = ''; for (let i = 0; i < 7; i++) { const x = new Date(mon); x.setDate(mon.getDate() + i); const on = S.days[ymd(x)] > 0; h += `<div class="day"><b>${on ? '🔥' : i > dow ? '·' : '💤'}</b>${L[i]}</div>`; }
+  return h;
+}
+function active7() { let n = 0; for (let i = 0; i < 7; i++) { const x = new Date(); x.setDate(x.getDate() - i); if (S.days[ymd(x)] > 0) n++; } return n; }
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const daysSince = d => d ? Math.floor((new Date(today()) - new Date(d)) / 864e5) : 999;
+
+/* ---------- Navigation ---------- */
+const RENDER = {};
+function show(id) {
+  $$('.scr').forEach(s => s.classList.toggle('on', s.id === id));
+  const tab = ['home', 'prog', 'lex', 'opt'].includes(id);
+  $('#tabs').classList.toggle('on', tab);
+  $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.t === id));
+  applyStatic(); if (RENDER[id]) RENDER[id](); $('#' + id).scrollTop = 0;
+}
+$$('#tabs button').forEach(b => b.onclick = () => { sfx('tap'); show(b.dataset.t); });
+
+/* ================= Profil ================= */
+let EDIT = false;
+RENDER.onb = () => {
+  const el = $('#onb'), a = Object.assign({}, S.avatar);
+  el.innerHTML = `<h2>${EDIT ? 'Modifier mon profil' : 'Bienvenue, technicien·ne !'}</h2>
+    <div style="text-align:center" id="oAv">${avatar(a, 110)}</div>
+    <div class="t">Ton prénom ou pseudo</div>
+    <input type="text" id="oName" maxlength="20" autocomplete="off" placeholder="ex. Alex" value="${esc(S.name)}">
+    <p class="mut">🔒 Reste sur ce téléphone. Jamais envoyé nulle part.</p>
+    <div class="t">Couleur du casque</div><div>${HATS.map((c, i) => `<button class="sw" data-h="${i}" style="background:${c}" aria-label="casque ${i + 1}"></button>`).join('')}</div>
+    <div class="t">Teinte de peau</div><div>${SKINS.map((c, i) => `<button class="sw" data-k="${i}" style="background:${c}" aria-label="teinte ${i + 1}"></button>`).join('')}</div>
+    <div style="margin-top:auto"></div>
+    <button class="btn" id="oGo" style="justify-content:center">${EDIT ? 'Enregistrer' : 'Continuer'}</button>
+    ${EDIT ? '<button class="btn alt sm" id="oBack">Retour</button>' : ''}`;
+  const sync = () => { $('#oAv').innerHTML = avatar(a, 110); $$('[data-h]').forEach(b => b.classList.toggle('on', +b.dataset.h === a.h)); $$('[data-k]').forEach(b => b.classList.toggle('on', +b.dataset.k === a.s)); $('#oGo').disabled = !$('#oName').value.trim(); };
+  $$('[data-h]').forEach(b => b.onclick = () => { sfx('tap'); a.h = +b.dataset.h; sync(); });
+  $$('[data-k]').forEach(b => b.onclick = () => { sfx('tap'); a.s = +b.dataset.k; sync(); });
+  $('#oName').oninput = sync; sync();
+  $('#oGo').onclick = () => {
+    const n = $('#oName').value.trim().slice(0, 20); if (!n) return;
+    sfx('ok'); S.name = n; S.avatar = a; save();
+    if (EDIT) { EDIT = false; show('opt'); } else testIntro();
+  };
+  if (EDIT) $('#oBack').onclick = () => { EDIT = false; show('opt'); };
+};
+
+/* ================= Test de placement (D3) ================= */
+const WO = 'WORK ORDER #4521 — Line 3\nGearbox leaking oil. Priority: HIGH.\nLock out the machine before inspection.\nSpare seal: tool crib, shelf B.';
+// La 1re réponse de chaque liste est la bonne (l'ordre est mélangé à l'affichage). 3 questions par compétence : facile, moyen, difficile.
+const PT = [
+  { k: 'vocab', q: '« A wrench », c’est…', o: ['une clé (outil)', 'un tournevis', 'un marteau'] },
+  { k: 'vocab', q: '« The conveyor belt stopped. » Qu’est-ce qui s’est arrêté ?', o: ['le tapis convoyeur', 'la courroie du ventilateur', 'l’ascenseur'] },
+  { k: 'vocab', q: '« Downtime » veut dire…', o: ['le temps d’arrêt d’une machine', 'la pause café', 'les heures supplémentaires'] },
+  { k: 'gram', q: 'You ___ wear safety glasses in the workshop.', o: ['must', 'musts', 'must to'] },
+  { k: 'gram', q: 'There ___ two pumps on line 2.', o: ['are', 'is', 'be'] },
+  { k: 'gram', q: 'If the sensor fails, the line ___ stop.', o: ['will', 'would have', 'is stopping to'] },
+  { k: 'conj', q: 'Yesterday, I ___ the oil filter.', o: ['changed', 'change', 'am changing'] },
+  { k: 'conj', q: 'Look! The motor ___ smoke.', o: ['is making', 'makes', 'made'] },
+  { k: 'conj', q: 'The bearing ___ already ___ replaced.', o: ['has … been', 'is … be', 'did … been'] },
+  { k: 'synt', q: 'Quelle phrase est correcte ?', o: ['Where is the tool crib?', 'Where the tool crib is?', 'Where is it the tool crib?'] },
+  { k: 'synt', q: 'Quelle phrase est correcte ?', o: ['I don’t know where the manual is.', 'I don’t know where is the manual.', 'I not know where the manual is.'] },
+  { k: 'synt', q: 'Quelle phrase est correcte ?', o: ['The technician who fixed the pump left early.', 'The technician which he fixed the pump left early.', 'The technician fixed who the pump left early.'] },
+  { k: 'read', txt: WO, q: 'What is the problem?', o: ['The gearbox is leaking oil.', 'The conveyor is too fast.', 'The lights are off.'] },
+  { k: 'read', txt: WO, q: 'Where is the spare seal?', o: ['In the tool crib, shelf B.', 'On line 3.', 'In the office.'] },
+  { k: 'read', txt: WO, q: 'What must you do before the inspection?', o: ['Lock out the machine.', 'Call the supplier.', 'Clean the floor.'] },
+  { k: 'listen', say: 'Please bring me a ten millimeter socket.', q: 'Quel outil est demandé ?', o: ['une douille de 10 mm', 'une douille de 13 mm', 'une clé de 10 pouces'] },
+  { k: 'listen', say: 'The safety meeting starts at eight fifteen, in room two.', q: 'Quand et où est la réunion ?', o: ['8 h 15, salle 2', '8 h 50, salle 2', '8 h 15, salle 10'] },
+  { k: 'listen', say: 'Shut down line four. The hydraulic pressure is too low.', q: 'Quel est le problème ?', o: ['Ligne 4 : pression hydraulique trop basse', 'Ligne 4 : température trop haute', 'Ligne 2 : pression trop haute'] }];
+const SCORE = [60, 180, 300, 420]; // 0 → A1 · 1 → A1+ · 2 → A2+ · 3 bonnes réponses → B1
+let PTS = null;
+function testIntro() {
+  show('test');
+  $('#test').innerHTML = `<h2>Test de placement</h2>
+    <div class="card"><div class="big">5 min · ${VOICE ? 18 : 15} questions</div>
+      <p class="mut" style="margin-top:6px">Il sert à régler ton niveau de départ dans chaque compétence. Pas de piège, pas de note sur 20.</p></div>
+    <div class="card ok">🤷 <b>« Je ne sais pas »</b> est une bonne réponse : ça évite de deviner et rend le réglage plus juste.</div>
+    ${VOICE ? '' : '<div class="card hz">🔈 Aucune voix anglaise installée sur ce téléphone : les 3 questions d’écoute sont passées. Tu pourras les faire plus tard (⚙ Options → Voix).</div>'}
+    <div class="t">Ce qui est testé</div>
+    <div>${SK.filter(k => k.id !== 'oral' && (k.id !== 'listen' || VOICE)).map(k => `<span class="tag" style="margin:2px">${k.ic} ${esc(k.fr)}</span>`).join('')}</div>
+    <p class="mut">🎙 L’oral sera évalué au lot 4 (section Parler).</p>
+    <div style="margin-top:auto"></div>
+    <button class="btn" id="tGo" style="justify-content:center">Commencer le test</button>
+    <button class="btn alt sm" id="tLater">Plus tard</button>`;
+  $('#tGo').onclick = () => { sfx('ok'); PTS = { i: 0, ok: {}, list: PT.filter(q => q.k !== 'listen' || VOICE), lock: false }; renderQ(); };
+  $('#tLater').onclick = () => { sfx('tap'); show('home'); };
+}
+function renderQ() {
+  const q = PTS.list[PTS.i], n = PTS.list.length, k = SK.find(x => x.id === q.k), pct = Math.round(PTS.i / n * 100);
+  const opts = shuffle(q.o.map((t, i) => ({ t, good: i === 0 })));
+  $('#test').innerHTML = `<div class="row"><span class="tag y">${k.ic} ${esc(k.fr)}</span><span class="grow"></span><button class="btn alt sm" id="qStop" style="width:auto">✕ Arrêter</button></div>
+    <div class="pb"><i style="width:${pct}%"></i></div><div class="pbl"><span>Question ${PTS.i + 1} / ${n}</span><span>${pct} %</span></div>
+    ${q.txt ? `<pre class="wo">${esc(q.txt)}</pre>` : ''}
+    ${q.say ? `<div class="row"><button class="btn sm" id="qPlay">🔊 Écouter</button><button class="btn alt sm" id="qSlow">🐢 0,75×</button></div>` : ''}
+    <div class="big" style="margin-top:4px">${esc(q.q)}</div>
+    <div id="qO">${opts.map((o, i) => `<button class="ch" data-i="${i}">${esc(o.t)}</button>`).join('')}<button class="ch idk" data-i="-1">🤷 Je ne sais pas</button></div>`;
+  PTS.lock = false;
+  if (q.say) { $('#qPlay').onclick = () => say(q.say, 1); $('#qSlow').onclick = () => say(q.say, .75); setTimeout(() => say(q.say, 1), 350); }
+  $('#qStop').onclick = () => confirmBox('Arrêter le test ?', '<p>Rien ne sera enregistré. Tu pourras le refaire depuis l’accueil.</p>', () => { if ('speechSynthesis' in window) speechSynthesis.cancel(); PTS = null; show('home'); }, 'Arrêter', 'red');
+  $$('#qO .ch').forEach(b => b.onclick = () => {
+    if (PTS.lock) return; PTS.lock = true;
+    const i = +b.dataset.i, good = i >= 0 && opts[i].good;
+    $$('#qO .ch').forEach((x, j) => { if (j < opts.length && opts[j].good) x.classList.add('ok'); });
+    if (good) { sfx('ok'); PTS.ok[q.k] = (PTS.ok[q.k] || 0) + 1; } else { if (i >= 0) b.classList.add('no'); sfx(i < 0 ? 'tap' : 'no'); }
+    setTimeout(() => { PTS.i++; if (PTS.i < PTS.list.length) renderQ(); else endTest(); }, good ? 650 : 1100);
+  });
+}
+function endTest() {
+  const retake = S.placed, asked = new Set(PTS.list.map(q => q.k)); // seules les compétences vraiment posées comptent
+  SK.forEach(k => {
+    if (!asked.has(k.id)) return;
+    const sc = SCORE[PTS.ok[k.id] || 0];
+    S.skills[k.id] = retake ? Math.max(S.skills[k.id], sc) : sc; // un nouveau test ne fait jamais baisser
+    S.tested[k.id] = true;
+  });
+  S.placed = true; PTS = null; addXP(null, 50); sfx('lvl'); buzz([30, 40, 30]);
+  show('res');
+}
+RENDER.res = () => {
+  $('#res').innerHTML = `<h2>🎉 Test terminé · +50 XP</h2>
+    <div style="max-width:280px;margin:0 auto;width:100%">${radar(280, true)}</div>
+    <div class="card">${SK.map(k => skRow(k)).join('')}</div>
+    <p class="mut">A1 = débutant · A2 = élémentaire · B1 = autonome au travail. Le « + » veut dire : à mi-chemin du niveau suivant.</p>
+    <div style="margin-top:auto"></div>
+    <button class="btn" id="rGo" style="justify-content:center">C’est parti !</button>`;
+  $('#rGo').onclick = () => { sfx('ok'); show('home'); };
+};
+function skRow(k) {
+  const sc = S.skills[k.id], known = S.tested[k.id];
+  return `<div class="skrow"><span class="n">${k.ic} ${esc(skName(k))}</span><div class="pb"><i style="width:${Math.min(100, sc / 8)}%"></i></div><span class="lv">${known ? cefr(sc) : '?'}</span></div>`;
+}
+
+/* ================= Accueil ================= */
+const SOON = {
+  read: { lot: 2, ic: '📖', body: '<p>Cartes de vocabulaire métier (≈ 300 mots : sécurité, mécanique, électricité, automatisme…), une règle de grammaire par écran, quiz express.</p><p>Révision espacée : un mot raté revient demain, un mot su revient dans 2 semaines.</p>' },
+  listen: { lot: 3, ic: '🎧', body: '<p>Briefings de début de poste, consignes de sécurité, appels du chef d’équipe. Vitesse normale ou 0,75×, dictées express.</p>' },
+  speak: { lot: 4, ic: '🎙', body: '<p>Tu écoutes le modèle, tu dis la phrase, tu obtiens une note.</p><p>Note automatique <b>seulement si tu l’autorises</b> ; sinon auto-note, 100 % local.</p>' },
+  myst: { lot: 5, ic: '🔧', body: '<canvas class="ps2" id="ps2" width="256" height="144"></canvas><p><b>Grand Tchoum Auto 6</b> · lots 5 et 6.</p><p>Mission dans une usine à l’étranger. Ta douille de 13 a disparu. Hôtel, accueil sécurité, panne sur la ligne 3, magasin d’outils… Chaque lieu = une situation en anglais et un indice.</p><p class="mut">Les chapitres se débloquent avec l’XP gagnée dans les sections 1 à 3.</p>' }
+};
+function openSoon(id) {
+  const s = SOON[id], btns = [[T('close')]];
+  if (id === 'speak') btns.unshift(['🎙 Régler le micro', () => askSR(), 'alt']);
+  if (id === 'listen') btns.unshift(['🔊 Tester la voix', testVoice, 'alt']);
+  modal({ title: `${s.ic} ${T(id)} · ${T('soon')} ${s.lot}`, body: s.body, btns });
+  if (id === 'myst') drawPS2($('#ps2'));
+}
+RENDER.home = () => {
+  const xpIn = S.xp % XP_LVL, pct = Math.round(xpIn / XP_LVL * 100);
+  const cards = [];
+  if (!S.placed) cards.push(`<div class="card hz"><div class="row"><div class="grow"><b>🧭 Test de placement</b><div class="mut">5 min pour régler ton niveau de départ</div></div><button class="btn sm" id="hTest" style="width:auto">Go</button></div></div>`);
+  if (!isStandalone() && !S.installHintOff) cards.push(`<div class="card hz"><div class="row"><div class="grow"><b>📲 Installe l’app</b><div class="mut">Sinon l’iPhone peut effacer tes progrès après 7 jours sans visite.</div></div><button class="btn sm" id="hInst" style="width:auto">Comment ?</button></div></div>`);
+  else if (S.placed && daysSince(S.lastExport) > 7) cards.push(`<div class="card"><div class="row"><div class="grow"><b>💾 Sauvegarde</b><div class="mut">${S.lastExport ? 'Dernière il y a ' + daysSince(S.lastExport) + ' jours' : 'Jamais exportée'}</div></div><button class="btn alt sm" id="hExp" style="width:auto">Exporter</button></div></div>`);
+  $('#home').innerHTML = `<div class="row"><span class="mut grow">${T('hi')} <b style="color:var(--fg)">${esc(S.name)}</b> 👋</span><span class="tag">🔥 ${active7()}/7</span></div>
+    <div class="logo" style="font-size:1.5rem">TRIOLINGO<small style="font-size:.52rem;margin-top:7px">INDUSTRIAL EDITION · PRO MAX</small></div>
+    <div class="card row" style="gap:10px">
+      <div style="width:56px;flex:none">${avatar(S.avatar, 56)}</div>
+      <div style="width:84px;flex:none" id="hRad">${radar(84)}</div>
+      <div class="grow"><div class="t">${T('tech')} ${lvl()}</div><div class="big">${S.placed ? cefr(avg()) : '—'}</div>
+        <div class="pb" style="margin-top:4px"><i style="width:${pct}%"></i></div><div class="pbl"><span>${S.xp} XP</span><span>${pct} %</span></div></div>
+    </div>
+    ${cards.join('')}
+    <button class="btn" data-go="read"><span class="ic">📖</span><span>${T('read')}<span class="sub">${T('soon')} 2 · ${T('sRead')}</span></span></button>
+    <button class="btn" data-go="speak"><span class="ic">🎙</span><span>${T('speak')}<span class="sub">${T('soon')} 4 · ${T('sSpeak')}</span></span></button>
+    <button class="btn" data-go="listen"><span class="ic">🎧</span><span>${T('listen')}<span class="sub">${T('soon')} 3 · ${T('sListen')}</span></span></button>
+    <button class="btn hz" data-go="myst"><span class="ic">🔧</span><span>${T('myst')}<span class="sub" style="color:#e8d9a8">Grand Tchoum Auto 6 · ${T('soon')} 5</span></span></button>
+    <div class="hz-strip"></div>`;
+  $$('#home [data-go]').forEach(b => b.onclick = () => { sfx('tap'); openSoon(b.dataset.go); });
+  const t = $('#hTest'); if (t) t.onclick = () => { sfx('tap'); testIntro(); };
+  const i = $('#hInst'); if (i) i.onclick = () => { sfx('tap'); installHelp(); };
+  const e = $('#hExp'); if (e) e.onclick = () => { sfx('tap'); doExport(); };
+};
+
+/* ================= Progrès ================= */
+RENDER.prog = () => {
+  const total = Object.values(S.days).filter(v => v > 0).length;
+  $('#prog').innerHTML = `<h2>${T('skills')}</h2>
+    <div style="max-width:290px;margin:0 auto;width:100%">${radar(290, true)}</div>
+    <div class="card">${SK.map(skRow).join('')}<p class="mut" style="margin-top:8px">? = pas encore évalué.</p></div>
+    <div class="card"><div class="t">${T('week')}</div><div class="week">${weekHTML()}</div>
+      <p class="mut" style="margin-top:6px">Un jour sans = flamme en veille 💤, jamais perdue.</p></div>
+    <div class="card row"><div class="grow"><div class="t">Total</div><b>${S.xp} XP · niv. ${lvl()} · ${total} jour${total > 1 ? 's' : ''} actif${total > 1 ? 's' : ''}</b></div></div>
+    <button class="btn alt sm" id="pTest">🧭 ${S.placed ? 'Refaire le test de placement' : 'Faire le test de placement'}</button>
+    ${S.placed ? '<p class="mut">Refaire le test ne fait jamais baisser tes niveaux.</p>' : ''}`;
+  $('#pTest').onclick = () => { sfx('tap'); testIntro(); };
+};
+
+/* ================= Lexique ================= */
+RENDER.lex = () => {
+  $('#lex').innerHTML = `<h2>${T('lex')}</h2>
+    <div class="card" style="text-align:center;padding:24px 12px;margin-top:20px">
+      <svg viewBox="0 0 120 80" width="140" style="margin:0 auto" aria-hidden="true"><rect x="14" y="16" width="62" height="46" rx="6" fill="#2c2450" stroke="#7c70b8" stroke-width="2"/><rect x="24" y="8" width="62" height="46" rx="6" fill="#3b3060" stroke="#7c70b8" stroke-width="2"/><rect x="34" y="0" width="62" height="46" rx="6" fill="#e0561a" stroke="#ffb27a" stroke-width="2"/><text x="65" y="28" text-anchor="middle" font-size="13" font-weight="900" fill="#fff" font-family="system-ui">wrench</text><circle cx="98" cy="62" r="14" fill="#ffc21a"/><text x="98" y="67" text-anchor="middle" font-size="13" font-weight="900" fill="#1a0d05" font-family="system-ui">13</text></svg>
+      <div class="big" style="margin-top:12px">Ton lexique est vide… pour l’instant</div>
+      <p class="mut" style="margin-top:6px">Chaque mot appris dans « Lire &amp; apprendre » (lot 2) arrivera ici, rangé par thème : sécurité, mécanique, électricité, automatisme, déplacement pro, rapports.</p></div>`;
+};
+
+/* ================= Options ================= */
+RENDER.opt = () => {
+  const s = S.settings, vName = VOICE ? `${esc(VOICE.name)} (${esc(VOICE.lang)})` : 'aucune voix anglaise installée';
+  const seg = ['auto', 'fr', 'en'].map(m => `<button data-ui="${m}" class="${s.ui === m ? 'on' : ''}">${{ auto: 'Auto', fr: 'Français', en: 'English' }[m]}</button>`).join('');
+  $('#opt').innerHTML = `<h2>${T('opt')}</h2>
+    <div class="card"><div class="opt"><div style="flex:none">${avatar(S.avatar, 48)}</div><div class="lab"><b>${esc(S.name)}</b><span class="mut">Profil sur ce téléphone</span></div><button class="btn alt sm" id="oEdit" style="width:auto">Modifier</button></div></div>
+    <h3>Confort</h3>
+    <div class="card">
+      <div class="opt"><div class="lab"><b>🔊 Sons</b></div><button class="tg ${s.sfx ? 'on' : ''}" data-tg="sfx">${s.sfx ? 'ON' : 'OFF'}</button></div>
+      <div class="opt"><div class="lab"><b>📳 Vibrations</b></div><button class="tg ${s.vib ? 'on' : ''}" data-tg="vib">${s.vib ? 'ON' : 'OFF'}</button></div>
+      <div class="opt" style="display:block"><div class="lab"><b>🌐 Langue des menus</b><span class="mut">Auto = français au début, les menus passent en anglais quand ton niveau monte.</span></div><div class="seg" style="margin-top:8px">${seg}</div></div>
+    </div>
+    <h3>Voix &amp; micro</h3>
+    <div class="card">
+      <div class="opt"><div class="lab"><b>🗣 Voix anglaise</b><span class="mut">${vName}</span></div><button class="btn alt sm" id="oVoice" style="width:auto">${VOICE ? 'Tester' : 'Aide'}</button></div>
+      <div class="opt"><div class="lab"><b>🎙 Micro (note automatique)</b><span class="mut">${srStatus()}</span></div><button class="btn alt sm" id="oSR" style="width:auto">Changer</button></div>
+    </div>
+    <h3>Sauvegarde</h3>
+    <div class="card">
+      <p class="mut">Tes progrès sont seulement sur ce téléphone. L’export crée un fichier .json à garder (changement de téléphone, téléphone vidé).</p>
+      <p class="mut" style="margin-top:4px">Dernier export : <b>${S.lastExport || 'jamais'}</b></p>
+      <div class="row" style="margin-top:10px"><button class="btn sm" id="oExp">💾 Exporter</button><button class="btn alt sm" id="oImp">📂 Importer</button></div>
+    </div>
+    <h3>Zone rouge</h3>
+    <div class="card"><button class="btn red sm" id="oReset">🗑 Tout effacer sur ce téléphone</button></div>
+    <h3>Diagnostic</h3>
+    <div class="card mut" style="font-size:.76rem;line-height:1.6">
+      TrioLingo ${VERSION} · ${BUILD}<br>
+      Installée sur l’écran d’accueil : ${isStandalone() ? 'oui ✅' : 'non'}<br>
+      Hors-ligne : ${'serviceWorker' in navigator && navigator.serviceWorker.controller ? 'actif ✅' : 'pas encore'}<br>
+      Voix anglaise locale : ${VOICE ? 'oui ✅' : 'non'} · Reco vocale du navigateur : ${SR ? 'disponible' : 'absente'}<br>
+      Stockage : ${SAVE_LOCK ? '⚠ bloqué (copie de secours impossible)' : 'ok'}${LOADERR ? '<br><span style="color:var(--bad)">Erreur de chargement : ' + esc(LOADERR) + ' (copie de secours gardée)</span>' : ''}<br>
+      Réseau : aucun échange (verrou de sécurité de la page)
+    </div>
+    <button class="btn alt sm" id="oInst">📲 Comment installer l’app</button>
+    <p class="mut" style="text-align:center;font-size:.7rem">TrioLingo Industrial Edition Pro Max · ${VERSION} · ${BUILD}<br>0 traceur · 0 cookie · 0 compte</p>`;
+  $('#oEdit').onclick = () => { sfx('tap'); EDIT = true; show('onb'); };
+  $$('[data-tg]').forEach(b => b.onclick = () => { const k = b.dataset.tg; s[k] = !s[k]; save(); sfx('tap'); buzz(20); RENDER.opt(); });
+  $$('[data-ui]').forEach(b => b.onclick = () => { s.ui = b.dataset.ui; save(); sfx('tap'); applyStatic(); RENDER.opt(); });
+  $('#oVoice').onclick = testVoice;
+  $('#oSR').onclick = () => askSR().then(() => RENDER.opt());
+  $('#oExp').onclick = doExport;
+  $('#oImp').onclick = () => { const f = $('#fileIn'); f.value = ''; f.click(); };
+  $('#oReset').onclick = doReset;
+  $('#oInst').onclick = installHelp;
+};
+
+/* ---------- Voix : test ou guide d'installation ---------- */
+function testVoice() {
+  if (VOICE) { say('Hello! Please check the oil level on line three.'); toast('🔊 « Hello! Please check the oil level on line three. »'); return; }
+  modal({
+    title: '🗣 Installer une voix anglaise', body: `<p>Aucune voix anglaise <b>installée sur le téléphone</b> n’a été trouvée. (Les voix « en ligne » sont ignorées exprès : elles envoient le texte sur Internet.)</p>
+    <div class="card"><b>🤖 Android</b><ol><li>Ouvre <b>Paramètres</b>.</li><li>Cherche <b>« Synthèse vocale »</b> (texte-parole).</li><li>Moteur Google → ⚙ → <b>Installer les données vocales</b>.</li><li>Choisis <b>English (United States)</b> → télécharger.</li></ol></div>
+    <div class="card"><b>🍏 iPhone</b><ol><li>Ouvre <b>Réglages → Accessibilité</b>.</li><li><b>Contenu énoncé → Voix</b>.</li><li><b>Anglais (États-Unis)</b> → télécharge une voix.</li></ol></div>
+    <p>Puis ferme et rouvre TrioLingo.</p>`
+  });
+}
+
+/* ---------- Installation sur l'écran d'accueil ---------- */
+let DEFER = null;
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); DEFER = e; });
+function installHelp() {
+  if (DEFER) { DEFER.prompt(); DEFER.userChoice.finally(() => { DEFER = null; }); return; }
+  modal({
+    title: '📲 Installer TrioLingo', body: `<p>Une fois installée, l’app s’ouvre comme une vraie appli, marche sans réseau, et l’iPhone ne peut plus effacer tes progrès.</p>
+    <div class="card"><b>🍏 iPhone (Safari)</b><ol><li>Touche <b>Partager</b> (carré avec flèche ↑).</li><li>Choisis <b>« Sur l’écran d’accueil »</b>.</li><li>Touche <b>Ajouter</b>.</li></ol></div>
+    <div class="card"><b>🤖 Android (Chrome)</b><ol><li>Touche le menu <b>⋮</b> en haut à droite.</li><li>Choisis <b>« Installer l’application »</b> (ou « Ajouter à l’écran d’accueil »).</li></ol></div>`,
+    btns: [['Ne plus afficher', () => { S.installHintOff = true; save(); if ($('#home').classList.contains('on')) RENDER.home(); }, 'alt'], [T('ok')]]
+  });
+}
+
+/* ---------- Export / import / réinitialisation (avec barre de progression) ---------- */
+async function doExport() {
+  const pg = progModal('💾 Export de ta sauvegarde');
+  pg(15, 'Préparation…'); await wait(200);
+  const data = JSON.stringify({ app: 'TrioLingo', version: VERSION, exported: today(), data: S }, null, 1);
+  pg(55, 'Création du fichier…'); await wait(200);
+  try {
+    const url = URL.createObjectURL(new Blob([data], { type: 'application/json' }));
+    const a = document.createElement('a'); a.href = url; a.download = `TrioLingo_Sauvegarde_${today()}.json`;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000);
+    S.lastExport = today(); save();
+    pg(100, 'Terminé'); await wait(300);
+    modal({ title: '✅ Sauvegarde exportée', body: `<p>Fichier : <b>TrioLingo_Sauvegarde_${today()}.json</b></p><p class="mut">Il est dans tes Téléchargements (ou Fichiers sur iPhone). Garde-le au chaud : il contient ton prénom et tes progrès, rien d’autre.</p>` });
+  } catch (e) { modal({ title: '⚠ Export impossible', body: '<p>Ce navigateur a bloqué la création du fichier. Essaie depuis l’app installée ou un autre navigateur.</p>' }); }
+  if ($('#opt').classList.contains('on')) RENDER.opt(); else if ($('#home').classList.contains('on')) RENDER.home();
+}
+$('#fileIn').onchange = e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = async () => {
+    let o; try { o = JSON.parse(r.result); } catch (_) { o = null; }
+    if (!o || o.app !== 'TrioLingo' || !o.data || !o.data.skills) { modal({ title: '⚠ Fichier refusé', body: '<p>Ce fichier n’est pas une sauvegarde TrioLingo.</p>' }); return; }
+    const d = merge(o.data);
+    confirmBox('📂 Importer cette sauvegarde ?', `<p><b>${esc(d.name || '?')}</b> · ${d.xp} XP · exportée le ${esc(o.exported || '?')}</p><p>Elle <b>remplace</b> ta progression actuelle. Une copie de secours de l’actuelle est gardée dans le téléphone.</p>`, async () => {
+      const pg = progModal('📂 Import'); pg(20, 'Copie de secours…');
+      try { localStorage.setItem(KEY + '_avant_import', JSON.stringify(S)); } catch (_) { }
+      await wait(200); pg(70, 'Chargement…'); S = d; SAVE_LOCK = false; save(); await wait(200); pg(100, 'Terminé'); await wait(250);
+      closeModal(); toast('✅ Sauvegarde importée'); show('home');
+    }, 'Importer');
+  };
+  r.readAsText(f);
+};
+function doReset() {
+  confirmBox('🗑 Tout effacer ?', '<p>Profil, niveaux, XP et réglages seront effacés <b>de ce téléphone</b>.</p><p class="mut">Conseil : exporte d’abord ta sauvegarde. Une copie de secours est quand même gardée.</p>', () => {
+    try { localStorage.setItem(KEY + '_avant_effacement', JSON.stringify(S)); } catch (_) { }
+    S = def(); SAVE_LOCK = false; save(); toast('Tout est effacé.'); EDIT = false; show('onb');
+  }, 'Effacer', 'red');
+}
+
+/* ---------- Teaser « console 2000 » du mode mystère (dessin 100 % original) ---------- */
+function drawPS2(cv) {
+  if (!cv) return; const x = cv.getContext('2d'), W = 256, H = 144, HZ = 78;
+  const P = (p, c) => { x.fillStyle = c; x.beginPath(); x.moveTo(p[0], p[1]); for (let i = 2; i < p.length; i += 2) x.lineTo(p[i], p[i + 1]); x.closePath(); x.fill(); };
+  const R = (a, b, w, h, c) => { x.fillStyle = c; x.fillRect(a, b, w, h); };
+  let g = x.createLinearGradient(0, 0, 0, HZ); g.addColorStop(0, '#2a1442'); g.addColorStop(.45, '#8a2f63'); g.addColorStop(.8, '#e0683e'); g.addColorStop(1, '#ffb259'); x.fillStyle = g; x.fillRect(0, 0, W, HZ);
+  g = x.createRadialGradient(176, 62, 2, 176, 62, 40); g.addColorStop(0, 'rgba(255,240,170,1)'); g.addColorStop(.3, 'rgba(255,200,110,.85)'); g.addColorStop(1, 'rgba(255,150,80,0)'); x.fillStyle = g; x.fillRect(120, 10, 120, 70);
+  [[0, 58, 14], [14, 52, 10], [24, 62, 18], [42, 48, 8], [50, 56, 16], [66, 60, 12], [200, 54, 12], [212, 46, 8], [220, 58, 20], [240, 50, 16]].forEach(([a, b, w]) => R(a, b, w, HZ - b, '#6a3a5e'));
+  g = x.createLinearGradient(0, HZ, 0, H); g.addColorStop(0, '#8a6a58'); g.addColorStop(1, '#4a3a36'); x.fillStyle = g; x.fillRect(0, HZ, W, H - HZ);
+  P([18, HZ, 18, 52, 120, 52, 120, HZ], '#6e5260'); P([120, HZ, 120, 52, 138, 58, 138, HZ + 2], '#4a3446');
+  for (let i = 0; i < 6; i++) { P([18 + i * 17, 52, 35 + i * 17, 52, 35 + i * 17, 42], '#8a6a7a'); P([35 + i * 17, 52, 35 + i * 17, 42, 37 + i * 17, 44, 37 + i * 17, 52], '#5a4052'); }
+  for (let i = 0; i < 5; i++) R(26 + i * 19, 60, 9, 6, '#ffd27a');
+  R(60, 64, 20, HZ - 64, '#3a2a36');
+  [[40, 24], [58, 30]].forEach(([a, b]) => { P([a, 52, a, b, a + 7, b, a + 7, 52], '#5c4454'); R(a, b + 4, 7, 2, '#ff6b4a'); [[a + 3, b - 6, 7], [a + 8, b - 14, 9], [a + 15, b - 22, 11]].forEach(([u, v, r]) => { x.fillStyle = 'rgba(210,170,190,.45)'; x.beginPath(); for (let k = 0; k < 6; k++) { const t = k * Math.PI / 3; x.lineTo(u + Math.cos(t) * r, v + Math.sin(t) * r * .7); } x.fill(); }); });
+  R(150, 40, 1, HZ - 40, '#3a2a36'); R(166, 40, 1, HZ - 40, '#3a2a36'); P([146, 40, 170, 40, 168, 28, 148, 28], '#7a5a6a'); P([148, 28, 168, 28, 158, 22], '#5a4052');
+  const VX = 150; P([VX - 3, HZ, VX + 3, HZ, W + 40, H, -10, H], '#3a3240'); P([VX - 3, HZ, VX - 1, HZ, 40, H, 8, H], '#6a5a5a');
+  for (let i = 0; i < 7; i++) { const t1 = Math.pow(i / 7, 2), t2 = Math.pow((i + .5) / 7, 2), y1 = HZ + (H - HZ) * t1, y2 = HZ + (H - HZ) * t2, x1 = VX + 10 * t1, x2 = VX + 10 * t2, w1 = .5 + t1 * 3, w2 = .5 + t2 * 3; P([x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2], '#ffc21a'); }
+  const palm = (bx, by, hg, s) => { for (let i = 0; i < 6; i++) { const y0 = by - i * hg / 6, y1 = by - (i + 1) * hg / 6, o0 = i * i * .18 * s, o1 = (i + 1) * (i + 1) * .18 * s; P([bx + o0 - 2 * s, y0, bx + o0 + 2 * s, y0, bx + o1 + 1.6 * s, y1, bx + o1 - 1.6 * s, y1], i % 2 ? '#5a4030' : '#6e4e38'); } const tx = bx + 36 * .18 * s, ty = by - hg; [[-1, 0], [1, 0], [-.7, .6], [.7, .6], [0, -.6], [-.9, -.35], [.9, -.35]].forEach(([dx, dy], k) => P([tx, ty, tx + dx * 16 * s, ty + dy * 12 * s + 6 * s, tx + dx * 12 * s + dy * 3 * s, ty + dy * 12 * s + 9 * s], k % 2 ? '#2c4a2e' : '#3e6a3a')); };
+  palm(8, H - 6, 62, 1.15); palm(228, HZ + 30, 52, .9); palm(196, HZ + 6, 30, .55);
+  g = x.createLinearGradient(0, 10, 0, HZ); g.addColorStop(0, 'rgba(255,194,26,0)'); g.addColorStop(1, 'rgba(255,194,26,.55)'); x.fillStyle = g; x.fillRect(92, 10, 8, HZ - 12);
+  x.save(); x.translate(96, 54); P([-8, 0, -4, -7, 4, -7, 8, 0, 4, 7, -4, 7], '#ffc21a'); P([-5, 0, -2.5, -4.5, 2.5, -4.5, 5, 0, 2.5, 4.5, -2.5, 4.5], '#3a2a10'); x.fillStyle = '#ffc21a'; x.font = 'bold 6px system-ui'; x.textAlign = 'center'; x.fillText('13', 0, 2.4); x.restore();
+  const vx = 184, vy = 118; P([vx, vy, vx + 44, vy, vx + 44, vy - 20, vx + 8, vy - 20, vx, vy - 10], '#ddd4c6'); P([vx + 44, vy, vx + 52, vy - 4, vx + 52, vy - 22, vx + 44, vy - 20], '#a89e92'); P([vx + 8, vy - 20, vx + 44, vy - 20, vx + 52, vy - 22, vx + 16, vy - 22], '#f0e8dc');
+  P([vx + 1, vy - 10, vx + 8, vy - 19, vx + 14, vy - 19, vx + 14, vy - 10], '#2a3a5a'); R(vx, vy - 8, 44, 3, '#e0561a'); x.fillStyle = '#1a0d05'; x.font = 'bold 5px system-ui'; x.fillText('MAINT.', vx + 20, vy - 11);
+  [vx + 8, vx + 34].forEach(c => { R(c - 4, vy - 2, 9, 6, '#151018'); R(c - 1, vy, 3, 2, '#777'); });
+  const px = 118, py = H - 10; R(px - 5, py - 14, 4, 14, '#2a3a6a'); R(px + 1, py - 14, 4, 14, '#22305a'); P([px - 8, py - 14, px + 8, py - 14, px + 7, py - 30, px - 7, py - 30], '#e8e020'); R(px - 8, py - 22, 16, 2, '#c9c9d6'); R(px - 1, py - 30, 2, 16, '#c9c9d6');
+  R(px - 11, py - 29, 3, 13, '#e8e020'); R(px + 8, py - 29, 3, 13, '#c8c010'); R(px - 4, py - 37, 8, 7, '#6a4a30'); P([px - 6, py - 36, px + 6, py - 36, px + 5, py - 41, px - 5, py - 41], '#ffc21a'); R(px - 7, py - 37, 14, 2, '#e0a800');
+  const im = x.getImageData(0, 0, W, H), d = im.data, B = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  for (let yy = 0; yy < H; yy++) for (let xx = 0; xx < W; xx++) { const k = (yy * W + xx) * 4, t = (B[(yy & 3) * 4 + (xx & 3)] / 16 - .5) * 14; for (let c = 0; c < 3; c++) d[k + c] = Math.max(0, Math.min(255, Math.round((d[k + c] + t) / 20) * 20)); }
+  x.putImageData(im, 0, 0);
+}
+
+/* ---------- Mode hors-ligne : uniquement quand l'app est servie par un vrai site (https) ---------- */
+async function regSW() {
+  if (!('serviceWorker' in navigator)) return;
+  if (!(location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) return;
+  try { const r = await navigator.serviceWorker.register('sw.js'); r.update().catch(() => { }); } catch (e) { }
+}
+
+/* ================= Démarrage (barre de progression) ================= */
+async function boot() {
+  const setB = (p, l) => { $('#bI').style.width = p + '%'; $('#bP').textContent = Math.round(p) + ' %'; $('#bL').textContent = l; };
+  const steps = [['Lecture de ta sauvegarde…', async () => load()], ['Recherche d’une voix anglaise…', initVoices], ['Mode hors-ligne…', regSW], ['Préparation des écrans…', async () => applyStatic()]];
+  for (let i = 0; i < steps.length; i++) { setB(i / steps.length * 100, steps[i][0]); try { await steps[i][1](); } catch (e) { } await wait(160); }
+  setB(100, LOADERR ? '⚠ Sauvegarde abîmée : copie de secours gardée' : 'Prêt !');
+  const b = $('#bgo'); b.style.display = 'flex';
+  b.onclick = () => { ac(); sfx('ok'); if (!S.name) { EDIT = false; show('onb'); } else show('home'); };
+}
+addEventListener('pageshow', () => { if (!$('#boot').classList.contains('on') && $('#home').classList.contains('on')) RENDER.home(); });
+boot();
+/* Accès de test (lecture seule) */
+window.__TL = { get S() { return S; }, VERSION };
+</script>
+</body></html>
