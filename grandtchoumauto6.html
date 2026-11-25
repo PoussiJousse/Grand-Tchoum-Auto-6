@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
 <!-- Grand Tchoum Auto 6 · « La douille de 13 » · mode mystère de TrioLingo Industrial Edition Pro Max
-     L5 v0.7 · généré le 2026-11-25 · chapitres 1 à 3 · rendu 3D HD
+     L6 v0.8 · généré le 2026-11-25 · 6 chapitres + finale · rendu 3D HD
      Jeu 100 % original (aucun logo, police, personnage, carte ou musique d'un jeu existant).
      100 % local : aucun traceur, aucun cookie, aucune requête réseau. three.js (MIT, Copyright 2010-2023 Three.js Authors) est inclus ci-dessous.
      Moteur dérivé du « Mystère de Babylone » (même auteur). -->
@@ -9,7 +9,7 @@
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#120c24">
-<title>Grand Tchoum Auto 6 L5 v0.7</title>
+<title>Grand Tchoum Auto 6 L6 v0.8</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
 <style>
 :root{--a:#ff7a2f;--hz:#ffc21a;--ok:#5fd38d;--bad:#ff6b6b;--ink:#1d1626;--cream:#faf4e8;--mut:#a9a3c4}
@@ -129,8 +129,8 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;touch-action:manipulat
 </script>
 <script>
 'use strict';
-/* ============ Grand Tchoum Auto 6 · L5 v0.7 · 2026-11-25 · moteur (dérivé de Babylone), rendu HD + chapitres 1 à 3 ============ */
-const VERSION = 'L5 v0.7', BUILD = '2026-11-25', GKEY = 'gta6_save_v1', TKEY = 'tl_save_v1';
+/* ============ Grand Tchoum Auto 6 · L6 v0.8 · 2026-11-25 · moteur (dérivé de Babylone), rendu HD, 6 chapitres + finale ============ */
+const VERSION = 'L6 v0.8', BUILD = '2026-11-25', GKEY = 'gta6_save_v1', TKEY = 'tl_save_v1';
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), lerp = (a, b, t) => a + (b - a) * t, rand = (a, b) => a + Math.random() * (b - a);
 const pick = a => a[Math.floor(Math.random() * a.length)];
@@ -514,7 +514,7 @@ function buildWorld() {
   [[20, 12], [49, 30]].forEach(([x, w]) => { const f = mesh(new THREE.PlaneGeometry(w, 2), fenceM, x, 1, -6.5, null, true); f.material = fenceM.clone(); f.material.map = tex('fence', w / 2, 1); });
   for (let x = 14; x < 64; x += 3) if (x < 26 || x > 34) cyl(.05, .05, 2.1, 12, '#8a8f96', x, 1.05, -6.5);
   col(20, -6.5, 6, .2); col(49, -6.5, 15, .2);
-  for (let k = 0; k < 6; k++) box(1, .18, .18, k % 2 ? '#e8e4dc' : '#d63b3b', 27.5 + k, 1.1, -6.5);
+  G.barrier = new THREE.Group(); G.barrier.position.set(27, 1.1, -6.5); sc.add(G.barrier); for (let k = 0; k < 6; k++) box(1, .18, .18, k % 2 ? '#e8e4dc' : '#d63b3b', .5 + k, 0, 0, G.barrier);
   box(.5, 1.1, .5, '#c43a2a', 27, .55, -6.5);
   mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshStandardMaterial({ map: tex('concrete', 1, 1), roughness: .8 }), 36, 1.5, -9); col(36, -9, 1.5, 1.5);
   box(2.4, 1, .1, M('#1d2433', { roughness: .1, metalness: .6 }), 36, 1.9, -7.47); sign(['SECURITY'], 36, 3.3, -7.42, 2.6, .6, { fs: [26] });
@@ -533,6 +533,32 @@ function buildWorld() {
   for (let x = -52.5; x <= 60; x += 15) { cyl(.07, .1, 5, 12, '#2a2a33', x, 2.5, 14.6); box(1.2, .12, .3, '#2a2a33', x - .5, 5, 14.6); const l = box(.5, .08, .25, M('#fff2c8', { emissive: '#ffe0a0', emissiveIntensity: 2 }), x - .9, 4.92, 14.6); l.castShadow = false; }
   [[-16, -12, 7], [3, -12.5, 6.5], [-17, -24, 8], [5, -26, 7.5], [-60, 4, 7], [-48, 4, 6], [24, 16, 7], [40, 16, 6], [58, 18, 8], [-8, 18, 6.5]].forEach(a => palm(...a));
   for (let i = 0; i < 26; i++) { const a = i / 26 * Math.PI * 2, r = rand(125, 150), h = rand(14, 46), w = rand(10, 18); const b = mesh(new THREE.BoxGeometry(w, h, w), facade(pick(['#6a5a78', '#5a4a68', '#7a6a80']), 4, Math.max(2, Math.round(h / 6)), .35), Math.cos(a) * r, h / 2, Math.sin(a) * r, null, true); b.lookAt(0, h / 2, 0); }
+  // ---- Cour de l'usine (chapitres 4 à 6) : ligne 3, magasin d'outils, bureau maintenance ----
+  const yl = M('#f2c230', { roughness: .5 });
+  [-12.2, -21.8].forEach(z => { const m = box(17, .02, .14, yl, 23, .03, z); m.castShadow = false; });
+  box(14, .9, 1.6, M('#5a5f6a', { metalness: .5, roughness: .4 }), 23, .45, -18); col(23, -18, 7, .8);
+  for (let x = 16.5; x <= 29.5; x += .7) { const r = mesh(new THREE.CylinderGeometry(.09, .09, 1.5, 12), M('#b8bec6', { metalness: .8, roughness: .25 }), x, .95, -18); r.rotation.x = Math.PI / 2; }
+  for (let i = 0; i < 4; i++) box(.7, .5, .6, M('#b88a5a', { roughness: .9 }), 18.5 + i * 3.2, 1.3, -18);
+  box(2.6, 3.4, 2.4, M('#d63b3b', { roughness: .45, metalness: .3 }), 15.4, 1.7, -18); col(15.4, -18, 1.3, 1.2);
+  sign(['LINE 3'], 15.4, 3.75, -16.78, 2.2, .6, { fs: [30] });
+  cyl(.45, .45, 1.4, 20, M('#2f6fd6', { metalness: .4, roughness: .4 }), 31.9, .9, -18).rotation.z = Math.PI / 2;
+  box(1.2, 1.2, 1.3, M('#3a6a4a', { metalness: .4, roughness: .45 }), 30.5, .9, -18); col(31.2, -18, 1.5, .8);
+  G.alarm = box(.3, .3, .3, M('#ff6b4a', { emissive: '#ff2a0a', emissiveIntensity: 1.2 }), 30.5, 1.65, -18);
+  box(.8, 1.4, .6, M('#d9d2c8', { roughness: .5 }), 27, .7, -15.9); box(.6, .4, .05, M('#1d2433', { emissive: '#2a6a9a', emissiveIntensity: .8 }), 27, 1.25, -15.58); col(27, -15.9, .4, .3);
+  // magasin d'outils
+  mesh(new THREE.BoxGeometry(7, 3.4, 4.5), new THREE.MeshStandardMaterial({ map: tex('concrete', 2, 1), roughness: .85 }), 52, 1.7, -17.5); col(52, -17.5, 3.5, 2.25);
+  box(7.4, .3, 4.9, '#5a4a50', 52, 3.55, -17.5);
+  box(3, 1.4, .1, M('#1d2433', { roughness: .1, metalness: .6 }), 52, 2.1, -15.24);
+  box(3.2, .12, .6, '#7a4a30', 52, 1.15, -15.05);
+  sign(['TOOL CRIB'], 52, 3.05, -15.2, 3, .55, { bg: '#17130a', fg: '#ffc21a', fs: [30] });
+  // bureau maintenance (bâtiment modulaire)
+  box(5.5, 3, 3.4, M('#e8e2d6', { roughness: .6 }), 41.5, 1.6, -19); col(41.5, -19, 2.75, 1.7);
+  box(5.7, .2, 3.6, '#9aa0a8', 41.5, 3.2, -19);
+  box(1, 2.1, .1, M('#4a5a7a', { roughness: .4 }), 40, 1.15, -17.27); box(1.6, .9, .08, M('#1d2433', { roughness: .1, metalness: .6 }), 42.6, 1.9, -17.27);
+  sign(['MAINTENANCE OFFICE'], 41.5, 3.55, -17.22, 4.8, .6, { bg: '#1f5ea8', fg: '#fff', border: '#fff', fs: [19] });
+  makeNPC('barry', { name: 'Barry Ing', skin: '#7a4b2f', shirt: '#3a4a3a', pants: '#2a3a6a', hat: '#ffc21a', vest: '#ff6a1a' }, 24, -15.3, 0, '#7fd1ff');
+  makeNPC('cle', { name: 'Clé Mollette', skin: '#e9b99a', shirt: '#5a3a6a', pants: '#2a2a3a', hair: '#9a9a9a', apron: '#2f6fd6', glasses: true }, 52, -14.3, 0, '#ffc21a');
+  makeNPC('otto', { name: 'Otto Mate', skin: '#d29a72', shirt: '#e8e4dc', pants: '#2a2a3a', hat: '#f2efe6' }, 41.5, -16.4, 0, '#c9a6ff');
   G.bounds = { minX: -70, maxX: 70, minZ: -60, maxZ: 26 };
   // personnages non joueurs (noms inventés)
   makeNPC('ty', { name: 'Ty Kett', skin: '#d29a72', shirt: '#2f6fd6', pants: '#22305a', hair: '#1d1a19' }, -30, 16.75, 0, '#8fd0ff');
@@ -567,17 +593,21 @@ const CH = [
   { id: 'c1', n: 1, en: 'Arrival', fr: 'L’arrivée', unl: 0, steps: 2 },
   { id: 'c2', n: 2, en: 'Check-in', fr: 'L’hôtel', unl: 120, steps: 2 },
   { id: 'c3', n: 3, en: 'Safety first', fr: 'L’accueil sécurité', unl: 250, steps: 3 },
-  { id: 'c4', n: 4, en: 'Breakdown', fr: 'La panne de la ligne 3', unl: 400, lot: 6 },
-  { id: 'c5', n: 5, en: 'Tool crib', fr: 'Le magasin d’outils', unl: 550, lot: 6 },
-  { id: 'c6', n: 6, en: 'The report', fr: 'Le rapport… et la vérité', unl: 700, lot: 6 }];
+  { id: 'c4', n: 4, en: 'Breakdown', fr: 'La panne de la ligne 3', unl: 400, steps: 1 },
+  { id: 'c5', n: 5, en: 'Tool crib', fr: 'Le magasin d’outils', unl: 550, steps: 1 },
+  { id: 'c6', n: 6, en: 'The report', fr: 'Le rapport… et la vérité', unl: 700, steps: 1 }];
 const CLUES = [
   { id: 'k1', ch: 'c1', fr: 'Une étiquette de bagage déchirée, trouvée sur le quai 1.', en: '“WORKSHOP B — 13”' },
   { id: 'k2', ch: 'c2', fr: 'La caisse à outils du technicien de l’hôtel vient de l’usine 6.', en: '“PROPERTY OF PLANT 6 — WORKSHOP B”' },
   { id: 'k3', ch: 'c3', fr: 'Le registre de l’atelier B : une douille de 13 est sortie hier.', en: '“13 mm socket — OUT — signature unreadable”' },
-  { id: 'k4', ch: 'c4', fr: '???', en: '' }, { id: 'k5', ch: 'c5', fr: '???', en: '' }];
+  { id: 'k4', ch: 'c4', fr: 'Cette nuit, l’équipe de nuit a utilisé une douille de 13 sur le réducteur, puis l’a emportée au magasin.', en: '“Night shift: 13 mm socket used on the gearbox, then taken to the tool crib.”' },
+  { id: 'k5', ch: 'c5', fr: 'La 13 du magasin a été rendue ce matin… et la poche de ton gilet fait « cling, cling ».', en: '“Returned this morning.” · “clink, clink…”' }];
 const GLOSS = {
   c1: [['departure board', 'panneau des départs'], ['cancelled', 'annulé'], ['platform', 'quai'], ['turn left / right', 'tourner à gauche / droite'], ['next to', 'à côté de'], ['luggage tag', 'étiquette de bagage']],
   c2: [['reservation', 'réservation'], ['wake-up call', 'appel de réveil'], ['Could I…?', 'Pourrais-je… ?'], ['hot water', 'eau chaude'], ['Could you send someone?', 'Pourriez-vous envoyer quelqu’un ?']],
+  c4: [['grinding noise', 'bruit de grincement'], ['housing', 'carter'], ['faulty', 'défectueux'], ['to remove', 'démonter, retirer'], ['bolt', 'boulon'], ['to restart', 'redémarrer']],
+  c5: [['tool crib', 'magasin d’outils'], ['to borrow', 'emprunter'], ['inch', 'pouce (2,54 cm)'], ['bigger than', 'plus grand que'], ['signed out / returned', 'sorti / rendu']],
+  c6: [['intervention report', 'rapport d’intervention'], ['root cause', 'cause racine'], ['was replaced', 'a été remplacé'], ['realigned', 'réaligné'], ['case closed', 'affaire classée']],
   c3: [['safety induction', 'accueil sécurité'], ['PPE', 'EPI'], ['must / mustn’t', 'obligatoire / interdit'], ['lockout', 'consignation'], ['padlock', 'cadenas'], ['logbook', 'registre']]
 };
 const isDone = id => !!S.done[id];
@@ -705,25 +735,108 @@ const SCRIPT = {
     { who: 'n', en: 'The Workshop B logbook: “13 mm socket — OUT — signature unreadable”. To be continued…', fr: 'Le registre de l’atelier B : « Douille de 13 — SORTIE — signature illisible ». À suivre…' }
   ], () => giveClue('k3', () => { nextStep('c3'); finishChapter('c3'); }))
 };
+
+/* ---------- Lot 6 : chapitres 4 à 6, accusation et finale ---------- */
+const PB = (t) => `<div class="board" style="color:#9fe0ff;text-shadow:0 0 6px rgba(120,200,255,.5)">${t}</div>`;
+function accusePanel(done) {
+  const H = [
+    ['🏨', 'In the hotel technician’s toolbox', 'Dans la caisse du technicien de l’hôtel', 'The hotel technician laughs: “Still no 13 in here!”', 'Le technicien de l’hôtel rit : « Toujours pas de 13 ici ! »'],
+    ['🚉', 'In Ty Kett’s info desk', 'Dans le guichet de Ty Kett', 'Ty finds three umbrellas, a sandwich and a rubber duck. No socket.', 'Ty trouve trois parapluies, un sandwich et un canard en plastique. Pas de douille.'],
+    ['⚙️', 'Inside the gearbox of Line 3', 'Dans le réducteur de la ligne 3', 'Barry opens the gearbox again. Only oil… and a very angry look.', 'Barry rouvre le réducteur. Que de l’huile… et un regard très fâché.'],
+    ['🧰', 'On the tool crib shelf', 'Sur l’étagère du magasin d’outils', 'Clé Mollette shows you the shelf: only inch sockets.', 'Clé Mollette te montre l’étagère : que des douilles en pouces.'],
+    ['🦺', 'In your own vest pocket', 'Dans la poche de ton propre gilet', null, null]];
+  const opts = shuffle(H.map((h, k) => ({ h, k }))); let tries = 0;
+  openPanel('🔍 Where is your 13 mm socket?', el => {
+    el.innerHTML = `<p><b>Choose the hiding place.</b><br><span class="mut">Choisis la cachette. Pas de pression : tu peux te tromper autant de fois que tu veux.</span></p>`
+      + opts.map(o => `<button class="ch" data-k="${o.k}">${o.h[0]} ${esc(o.h[1])}${S.settings.fr ? `<br><small class="mut">${esc(o.h[2])}</small>` : ''}</button>`).join('') + `<p id="acM" style="min-height:2.6em;margin-top:8px"></p>`
+      + `<details style="margin-top:6px"><summary style="cursor:pointer;color:var(--hz);font-weight:800;padding:6px 0">📒 Relire mes 5 indices</summary>` + CLUES.map((c, i) => `<div class="card ok clue" style="padding:6px 10px"><b class="n" style="width:26px;height:26px;font-size:.85rem">${i + 1}</b><div><b style="font-size:.85rem">${esc(c.en)}</b><div class="mut" style="font-size:.75rem">${esc(c.fr)}</div></div></div>`).join('') + `</details>`;
+    $$('#pBody .ch').forEach(b => b.onclick = () => {
+      const h = H[+b.dataset.k]; if (b.classList.contains('no')) return;
+      if (!h[3]) { b.classList.add('ok'); sfx('clue'); addXP('read', tries ? 5 : 20); setTimeout(() => { G.panelOpen = false; $('#panel').classList.remove('on'); done(); }, 700); return; }
+      tries++; b.classList.add('no'); sfx('boing'); $('#acM').innerHTML = `${esc(h[3])}<br><span class="mut">${esc(h[4])}</span>`;
+    });
+  });
+}
+function finaleScreen() {
+  openPanel('🏆 Affaire résolue !', el => {
+    el.innerHTML = `<div style="text-align:center;font-size:3rem">🦺🔧</div><div style="text-align:center;font:900 1.4rem system-ui;color:var(--hz)">CASE CLOSED · +50 XP</div>
+      <div class="card ok"><b>“The 13 mm socket was found in my own vest pocket.”</b><div class="mut">La douille de 13 a été retrouvée dans la poche de mon propre gilet.</div></div>
+      <p style="text-align:center">🔍 5 / 5 indices · 📖 6 / 6 chapitres · ⭐ ${totalXP()} XP</p>
+      <p class="mut" style="text-align:center">Merci d’avoir joué à Grand Tchoum Auto 6 ! Tchoum City reste ouverte : promène-toi quand tu veux.</p>
+      <button class="btn" id="fOk">Continuer la balade</button><button class="btn alt" id="fTl">← Retour à TrioLingo</button>`;
+    $('#fOk').onclick = closePanel; $('#fTl').onclick = () => { save(); location.href = './'; };
+  });
+}
+Object.assign(SCRIPT, {
+  c4_0: () => dialog([
+    { who: 'Barry Ing', role: 'Operator · Line 3', p: .85, en: 'Hey! Are you the new maintenance tech? Line 3 is down. Come quick!', fr: 'Hé ! Tu es le/la nouveau·elle technicien·ne de maintenance ? La ligne 3 est en panne. Viens vite !',
+      ask: { skill: 'synt', opts: [A('What happened to the line?', 'Qu’est-ce qui est arrivé à la ligne ?', 1), A('What happens yesterday the line?', 'Qu’arrive hier la ligne ?', 0, ['Yesterday? No, it stopped twenty minutes ago!', 'Hier ? Non, elle s’est arrêtée il y a vingt minutes !']), A('Why you are stop?', 'Pourquoi tu es arrêter ?', 0, ['Me? I’m not stopped, the LINE is stopped!', 'Moi ? Je ne suis pas arrêté, c’est la LIGNE qui est arrêtée !'])] } },
+    { who: 'Barry Ing', role: 'Operator · Line 3', p: .85, en: 'The gearbox was making a loud grinding noise. Then it got very hot, and the line stopped at 2:15.', fr: 'Le réducteur faisait un gros bruit de grincement. Puis il a beaucoup chauffé, et la ligne s’est arrêtée à 14 h 15.' },
+    { who: 'Barry Ing', role: 'Operator · Line 3', p: .85, en: 'Can you repeat what happened? I need it for my logbook.', fr: 'Tu peux répéter ce qui s’est passé ? J’en ai besoin pour mon registre.',
+      ask: { skill: 'conj', opts: [A('The gearbox made a noise, got hot, and the line stopped.', 'Le réducteur a fait du bruit, a chauffé, et la ligne s’est arrêtée.', 1), A('The gearbox make a noise and the line stop.', 'Le réducteur faire du bruit et la ligne arrêter.', 0, ['In the past, please! It already happened.', 'Au passé, s’il te plaît ! C’est déjà arrivé.']), A('The gearbox will make a noise tomorrow.', 'Le réducteur fera du bruit demain.', 0, ['Tomorrow? I hope not!', 'Demain ? J’espère bien que non !'])] } },
+    { who: 'Barry Ing', role: 'Operator · Line 3', p: .85, en: 'Exactly. Here is the fault report. Can you find the faulty part?', fr: 'Exactement. Voici le relevé de panne. Tu peux trouver la pièce défectueuse ?' }
+  ], () => quizPanel('🔧 Diagnostic · Line 3', PB('LINE 3 — FAULT REPORT\nNoise ......... loud grinding\nHousing temp .. 85 °C (normal: 50)\nVibration ..... 9 mm/s (normal: 2)\nBelt .......... OK\nFuse .......... OK\nSensor signal . OK'),
+    [['Which part is probably faulty?', 'The bearing.', 'The belt.', 'The fuse.'], ['What do you need to remove the bearing cover bolts?', 'A 13 mm socket.', 'A hammer.', 'A flat screwdriver.']], 'vocab',
+    () => dialog([
+      { who: 'you', en: 'A 13 mm socket… which I don’t have anymore.', fr: 'Une douille de 13… que je n’ai plus.' },
+      { who: 'Barry Ing', role: 'Operator · Line 3', p: .85, en: 'Use mine for now. Funny: last night, the night tech used a 13 on this gearbox. Then he took it to the tool crib.', fr: 'Prends la mienne pour l’instant. C’est drôle : cette nuit, le technicien de nuit a utilisé une 13 sur ce réducteur. Puis il l’a emportée au magasin d’outils.' },
+      { who: 'n', en: 'You replace the bearing and realign the motor. The grinding noise stops. Line 3 restarts!', fr: 'Tu remplaces le roulement et tu réalignes le moteur. Le bruit s’arrête. La ligne 3 redémarre !', fx: () => { if (G.alarm) G.alarm.material = M('#5fd38d', { emissive: '#2fd37d', emissiveIntensity: 1.2 }); } }
+    ], () => giveClue('k4', () => { nextStep('c4'); finishChapter('c4'); })))),
+  c5_0: () => dialog([
+    { who: 'Clé Mollette', role: 'Tool crib', p: 1.2, en: 'Welcome to the tool crib! What do you need?', fr: 'Bienvenue au magasin d’outils ! De quoi as-tu besoin ?',
+      ask: { skill: 'gram', opts: [A('Could I borrow a 13 mm socket, please?', 'Je pourrais emprunter une douille de 13, s’il vous plaît ?', 1), A('Give socket.', 'Donne douille.', 0, ['Sockets are free here… and so is “please”!', 'Les douilles sont gratuites ici… et « s’il te plaît » aussi !']), A('I want the most big socket.', 'Je veux la plus grosse douille.', 0, ['The biggest? That’s a 46! Are you fixing a ship?', 'La plus grosse ? C’est une 46 ! Tu répares un bateau ?'])] } },
+    { who: 'Clé Mollette', role: 'Tool crib', p: 1.2, en: 'Hmm. This plant is American: our sockets are in inches. A 13 mm is about… half an inch. Let’s check you know your sizes.', fr: 'Hmm. Cette usine est américaine : nos douilles sont en pouces. Une 13 mm, c’est environ… un demi-pouce. Vérifions que tu connais tes tailles.' }
+  ], () => quizPanel('📏 Millimeters and inches', PB('1 inch = 25.4 mm\n1/2 inch = 12.7 mm\n3/4 inch = 19.05 mm'),
+    [['13 mm is about…', '1/2 inch', '1 inch', '13 inches'], ['19 mm is about…', '3/4 inch', '1/4 inch', '19 inches'], ['Which is bigger: 1/2 inch or 10 mm?', '1/2 inch', '10 mm', 'They are the same size.']], 'gram',
+    () => dialog([
+      { who: 'Clé Mollette', role: 'Tool crib', p: 1.2, en: 'Perfect. Now the logbook… 13 mm socket: signed out last night by the night shift, and returned this morning. So it’s not yours.', fr: 'Parfait. Maintenant le registre… Douille de 13 : sortie cette nuit par l’équipe de nuit, et rendue ce matin. Donc ce n’est pas la tienne.' },
+      { who: 'you', en: 'Then where is mine?!', fr: 'Mais alors, où est la mienne ?!' },
+      { who: 'Clé Mollette', role: 'Tool crib', p: 1.2, en: 'No idea. But tell me… why does your vest pocket go “clink, clink” when you walk?', fr: 'Aucune idée. Mais dis-moi… pourquoi la poche de ton gilet fait « cling, cling » quand tu marches ?' },
+      { who: 'you', en: 'Hmm? Probably my keys.', fr: 'Hein ? Sûrement mes clés.' }
+    ], () => giveClue('k5', () => { nextStep('c5'); finishChapter('c5'); })))),
+  c6_0: () => dialog([
+    { who: 'Otto Mate', role: 'Maintenance manager', p: .9, en: 'Good job on Line 3! Now the boring part: the intervention report. In English, please.', fr: 'Bon travail sur la ligne 3 ! Maintenant, la partie ennuyeuse : le rapport d’intervention. En anglais, s’il te plaît.' }
+  ], () => quizPanel('📝 Intervention report · Line 3', PB('INTERVENTION REPORT — LINE 3\nChoose the correct sentence\nfor each part of the report.'),
+    [['PROBLEM', 'The gearbox was very noisy and the line stopped.', 'The gearbox is noisy tomorrow.', 'Gearbox noise stop line yes.'],
+     ['ROOT CAUSE', 'The bearing was worn out because of misalignment.', 'The bearing wear because misalign.', 'The bearing will be worn yesterday.'],
+     ['ACTION TAKEN', 'The bearing was replaced and the motor was realigned.', 'The bearing replaced the motor.', 'We will replace something, maybe.'],
+     ['RESULT', 'The line was restarted at 4:30 p.m. Vibration is now normal.', 'The line restarts at never.', 'Result: yes.']], 'conj',
+    () => dialog([
+      { who: 'Otto Mate', role: 'Maintenance manager', p: .9, en: 'Excellent report! Sign here… Wait. Before you sign: did you find your famous 13 mm socket?', fr: 'Excellent rapport ! Signe ici… Attends. Avant de signer : tu as retrouvé ta fameuse douille de 13 ?' },
+      { who: 'you', en: 'Not yet… but I have five clues. Let me think.', fr: 'Pas encore… mais j’ai cinq indices. Laisse-moi réfléchir.' }
+    ], () => accusePanel(() => dialog([
+      { who: 'n', en: 'You put your hand in your vest pocket… clink.', fr: 'Tu mets la main dans la poche de ton gilet… cling.' },
+      { who: 'you', en: '…My 13 mm socket. It was in my pocket. Since the train!', fr: '…Ma douille de 13. Elle était dans ma poche. Depuis le train !' },
+      { who: 'n', en: 'And the luggage tag “WORKSHOP B — 13”? Yours too: your new workshop, and your favorite socket.', fr: 'Et l’étiquette « WORKSHOP B — 13 » ? À toi aussi : ton nouvel atelier, et ta douille préférée.' },
+      { who: 'Otto Mate', role: 'Maintenance manager', p: .9, en: 'Ha! The classic. Every technician loses a 13 at least once. Write it in the report!', fr: 'Ha ! Le grand classique. Tout technicien perd sa 13 au moins une fois. Écris-le dans le rapport !',
+        ask: { skill: 'conj', opts: [A('The 13 mm socket was found in my own vest pocket.', 'La douille de 13 a été retrouvée dans la poche de mon propre gilet.', 1), A('The socket finds me in the pocket.', 'La douille me trouve dans la poche.', 0, ['The socket found YOU? Spooky!', 'C’est la douille qui T’A trouvé ? Flippant !']), A('I am found the socket in pocket.', 'Je suis trouvé la douille dans poche.', 0, ['Almost! Use the passive: “The socket was found…”', 'Presque ! Utilise le passif : « The socket was found… »'])] } },
+      { who: 'Otto Mate', role: 'Maintenance manager', p: .9, en: 'Welcome to Plant 6, technician. Case closed!', fr: 'Bienvenue à l’usine 6, technicien·ne. Affaire classée !' }
+    ], () => { S.done.c6 = true; S.step.c6 = 1; save(); addXP(null, 50); sfx('chime'); refreshObjective(); finaleScreen(); })))))
+});
+
 // Points d'interaction de chaque étape (x, z = position ; r = rayon d'action)
 const SPOTS = {
   c1: [{ x: -36, z: 18.2, label: 'Lire le panneau', run: 'c1_0' }, { x: -30, z: 17.95, label: 'Parler à Ty Kett', run: 'c1_1', npc: 'ty' }],
   c2: [{ x: -6, z: -11.4, label: 'Parler à Bella Night', run: 'c2_0', npc: 'bella' }, { x: 2.3, z: -14.6, label: 'Entrer chambre 312', run: 'c2_1' }],
-  c3: [{ x: 30, z: -3.2, label: 'Parler à Maïté Nance', run: 'c3_0', npc: 'maite' }, { x: 30, z: -3.2, label: 'Consignation', run: 'c3_1', npc: 'maite' }, { x: 30, z: -3.2, label: 'Parler à Maïté Nance', run: 'c3_2', npc: 'maite' }]
+  c3: [{ x: 30, z: -3.2, label: 'Parler à Maïté Nance', run: 'c3_0', npc: 'maite' }, { x: 30, z: -3.2, label: 'Consignation', run: 'c3_1', npc: 'maite' }, { x: 30, z: -3.2, label: 'Parler à Maïté Nance', run: 'c3_2', npc: 'maite' }],
+  c4: [{ x: 24, z: -14.1, label: 'Parler à Barry Ing', run: 'c4_0', npc: 'barry' }],
+  c5: [{ x: 52, z: -13.1, label: 'Parler à Clé Mollette', run: 'c5_0', npc: 'cle' }],
+  c6: [{ x: 41.5, z: -15.2, label: 'Parler à Otto Mate', run: 'c6_0', npc: 'otto' }]
 };
-const OBJ = { c1: ['Lis le panneau des départs (quai 1).', 'Va au guichet INFO.'], c2: ['Va à la réception de l’hôtel Riverside.', 'Va à la chambre 312 (porte de côté).'], c3: ['Va au portail de l’usine 6.', 'Termine l’accueil sécurité.', 'Parle à Maïté Nance.'] };
+const OBJ = { c1: ['Lis le panneau des départs (quai 1).', 'Va au guichet INFO.'], c2: ['Va à la réception de l’hôtel Riverside.', 'Va à la chambre 312 (porte de côté).'], c3: ['Va au portail de l’usine 6.', 'Termine l’accueil sécurité.', 'Parle à Maïté Nance.'], c4: ['Ligne 3 en panne ! Va voir Barry Ing.'], c5: ['Va au magasin d’outils (TOOL CRIB).'], c6: ['Bureau maintenance : le rapport… et la vérité.'] };
 function currentSpot() { const c = curCh(); if (!c || c.lot || !unlocked(c) || !S.started) return null; return (SPOTS[c.id] || [])[stepOf(c.id)] || null; }
 function refreshObjective() {
   const c = curCh(), sp = currentSpot();
   $('#woCh').textContent = c ? `CHAP. ${c.n} · ${c.en.toUpperCase()}` : 'FIN';
   let txt;
   if (!S.started) txt = 'Lance la partie.';
-  else if (!c) txt = 'Affaire résolue !';
+  else if (!c) txt = 'Affaire résolue ! Balade libre dans Tchoum City.';
   else if (c.lot) txt = `Chapitre ${c.n} : arrive au lot 6. Promène-toi en ville !`;
   else if (!unlocked(c)) txt = `🔒 Chapitre ${c.n} : encore ${c.unl - totalXP()} XP. Fais un Shift dans TrioLingo !`;
   else txt = OBJ[c.id][stepOf(c.id)] || '';
   $('#woTxt').textContent = txt;
   G.marker.visible = !!sp; if (sp) G.marker.position.set(sp.x, 0, sp.z);
+  if (G.barrier) G.barrier.rotation.z = isDone('c3') ? 1.35 : 0;
   G.inter = sp ? [{ x: sp.x, z: sp.z, r: 2.6, label: sp.label, act: () => { const n = sp.npc && G.npcs[sp.npc]; if (n) faceEachOther(n); SCRIPT[sp.run](); } }] : [];
   hud();
 }
@@ -737,6 +850,7 @@ function hud() {
 function updArrow() {
   const sp = currentSpot(); if (!sp || !G.player) { $('#arrow').style.visibility = 'hidden'; $('#dist').textContent = ''; return; }
   const p = G.player.root.position, dx = sp.x - p.x, dz = sp.z - p.z, d = Math.hypot(dx, dz);
+  G.marker.visible = d > 3.2; // arrivé : l'anneau s'efface pour laisser lire le nom
   $('#arrow').style.visibility = 'visible'; $('#arrow').style.transform = `rotate(${Math.atan2(dx, -dz)}rad)`; $('#dist').textContent = d < 3 ? 'ici !' : Math.round(d) + ' m';
 }
 setInterval(() => { const d = new Date(); $('#clk').textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }, 1000);
@@ -839,7 +953,7 @@ function loop(now) {
   const dt = Math.min(.05, (now - last) / 1000); last = now; G.t += dt;
   movePlayer(dt); G.player.update(G.t, curSpeed);
   for (const id in G.npcs) { const n = G.npcs[id]; n.h.update(G.t + id.length, 0); n.h.body.position.y = Math.sin(G.t * 2 + id.length) * .02; }
-  if (G.marker.visible) { G.marker.children[0].rotation.y += dt * 1.5; G.marker.children[0].position.y = 2.9 + Math.sin(G.t * 3) * .2; G.marker.children[2].position.y = G.marker.children[0].position.y; }
+  if (G.marker.visible) { G.marker.children[0].rotation.y += dt * 1.5; G.marker.children[0].position.y = 3.6 + Math.sin(G.t * 3) * .2; G.marker.children[2].position.y = G.marker.children[0].position.y; }
   updSmoke(dt); updateNear(); updateCamera(dt); updOccl(dt); updArrow();
   const fp = G.camMode === 'follow' ? G.player.root.position : { x: 0, z: -10 };
   G.sun.position.set(fp.x - 34, 38, fp.z - 22); G.sun.target.position.set(fp.x, 0, fp.z);
