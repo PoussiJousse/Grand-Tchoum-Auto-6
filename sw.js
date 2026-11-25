@@ -1,8 +1,8 @@
-/* TrioLingo service worker · L3 v0.4 · 2026-11-25 : garde l'app hors-ligne. Ne contacte AUCUN autre site.
+/* TrioLingo service worker · L4 v0.5 · 2026-11-25 : garde l'app hors-ligne. Ne contacte AUCUN autre site.
    - installation : fichiers téléchargés à neuf (cache:"reload"), jamais une vieille copie
    - page de l'app : réseau d'abord (petite vérification), copie hors-ligne en secours
    - autres fichiers : copie hors-ligne d'abord */
-const CACHE = 'tl-L3-v0.4-2026-11-25', FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
+const CACHE = 'tl-L4-v0.5-2026-11-25', FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: 'reload' })))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('tl-') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {

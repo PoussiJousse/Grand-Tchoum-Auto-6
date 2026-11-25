@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+  <!-- TrioLingo · Parler · L4 v0.5 · 2026-11-25 -->
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#a9a3c4"/></marker></defs>
+  <rect width="900" height="540" rx="18" fill="#0d0a1a"/>
+  <text x="30" y="44" fill="#fff" font-size="22" font-weight="900" letter-spacing="1">PARLER · 2 MODES, TU CHOISIS</text>
+  <text x="30" y="68" fill="#ffc21a" font-size="13" font-weight="700">L4 v0.5 · 2026-11-25 · la question est posée 1 fois, modifiable dans ⚙ Options → Micro</text>
+  <g font-size="13" text-anchor="middle">
+    <rect x="30" y="92" width="200" height="70" rx="12" fill="#e0561a"/><text x="130" y="122" fill="#fff" font-weight="900">🔊 1. ÉCOUTE</text><text x="130" y="144" fill="#ffe3cc">le modèle (ou 🐢 0,75×)</text>
+    <rect x="262" y="92" width="200" height="70" rx="12" fill="#e0561a"/><text x="362" y="122" fill="#fff" font-weight="900">🎙 2. DIS LA PHRASE</text><text x="362" y="144" fill="#ffe3cc">touche le gros micro</text>
+  </g>
+  <path d="M230 127h29" stroke="#a9a3c4" stroke-width="2" marker-end="url(#a)"/>
+  <path d="M462 127 C500 127 500 215 535 215" stroke="#ff8a8a" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <path d="M462 127 C500 127 500 355 535 355" stroke="#5fd38d" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <rect x="540" y="170" width="330" height="110" rx="12" fill="#2a0f18" stroke="#ff6b6b" stroke-width="2"/>
+  <text x="560" y="198" fill="#ff8a8a" font-size="15" font-weight="900">🤖 NOTE AUTOMATIQUE (si tu as dit Oui)</text>
+  <g font-size="13" fill="#ffd0d0"><text x="560" y="224">☁ ta voix part chez Google / Apple</text><text x="560" y="246">→ score en % + mots <tspan fill="#5fd38d" font-weight="800">verts</tspan> / <tspan fill="#ff8a8a" font-weight="800">rouges</tspan></text><text x="560" y="268">réessaie autant que tu veux : le meilleur compte</text></g>
+  <rect x="540" y="310" width="330" height="110" rx="12" fill="#0f2418" stroke="#5fd38d" stroke-width="2"/>
+  <text x="560" y="338" fill="#5fd38d" font-size="15" font-weight="900">🔒 AUTO-NOTE LOCALE (si tu as dit Non)</text>
+  <g font-size="13" fill="#dff5e8"><text x="560" y="364">⏺ tu t’enregistres (8 s max)</text><text x="560" y="386">▶ ta voix  vs  🔊 le modèle → 😬 / 🙂 / 💪</text><text x="560" y="408">effacé dès l’étape suivante, rien ne sort</text></g>
+  <text x="30" y="214" fill="#fff" font-size="16" font-weight="900">CE QU’IL Y A À DIRE</text>
+  <g font-size="13" fill="#f4f1ff">
+    <text x="30" y="242">🆘 10 phrases de survie</text><text x="56" y="260" fill="#a9a3c4">Could you repeat that, please?</text>
+    <text x="30" y="288">🔧 10 phrases d’atelier</text><text x="56" y="306" fill="#a9a3c4">I need a thirteen millimeter socket.</text>
+    <text x="30" y="334">✈️ 10 phrases de déplacement</text><text x="56" y="352" fill="#a9a3c4">I have a reservation for three nights.</text>
+    <text x="30" y="380">🗣 tes mots appris, en phrases</text>
+    <text x="30" y="408">👄 5 sons difficiles : th · h · -ed · i/ee · -teen/-ty</text>
+  </g>
+  <rect x="30" y="448" width="840" height="66" rx="12" fill="none" stroke="#a9a3c4" stroke-dasharray="5 5"/>
+  <text x="50" y="476" fill="#f4f1ff" font-size="13">😬 Bof = 1 · 🙂 Ça va = 2 · 💪 Top = 3   →   la compétence Oral monte (30 points max par jour, pour rester honnête)</text>
+  <text x="50" y="500" fill="#ffc21a" font-size="13">💡 « Shadowing » : écoute le modèle 🔊 puis répète tout de suite, en imitant la mélodie.</text>
+</svg>

@@ -2,10 +2,11 @@
 
 Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**. Une seule page HTML installable sur téléphone : hors-ligne, **zéro traceur, zéro cookie, zéro compte**.
 
-- **Version courante :** L3 v0.4 · 2026-11-25
+- **Version courante :** L4 v0.5 · 2026-11-25
 - **Pour installer (ami·e, utilisateur·rice) :** [`docs/TrioLingo_Installation_v0.1_2026-11-25.md`](docs/TrioLingo_Installation_v0.1_2026-11-25.md)
 - **Pour apprendre :** [`docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md`](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md)
 - **Pour écouter :** [`docs/TrioLingo_Ecouter_v0.4_2026-11-25.md`](docs/TrioLingo_Ecouter_v0.4_2026-11-25.md)
+- **Pour parler :** [`docs/TrioLingo_Parler_v0.5_2026-11-25.md`](docs/TrioLingo_Parler_v0.5_2026-11-25.md)
 
 ![Installer en 4 étapes](docs/TrioLingo_Installation_v0.1_2026-11-25.svg)
 
@@ -14,12 +15,28 @@ Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**.
 |---|---|---|
 | 📖 | Lire & apprendre : vocabulaire métier, grammaire, révision espacée | L2 ✅ |
 | 🎧 | Écouter : briefings, consignes, appels (voix installée sur le téléphone uniquement) | L3 ✅ |
-| 🎙 | Parler : modèle, enregistrement, note automatique **sur demande** ou auto-note | L4 |
+| 🎙 | Parler : modèle, enregistrement, note automatique **sur demande** ou auto-note | L4 ✅ |
 | 🔧 | Mode mystère **Grand Tchoum Auto 6** : retrouver la douille de 13 (jeu 3D, style console années 2000, 100 % original) | L5–L6 |
 
 ---
 
 ## Notes de version
+
+### L4 v0.5 · 2026-11-25 · Parler
+![Les 2 modes du micro](docs/TrioLingo_Parler_v0.5_2026-11-25.svg)
+- 🎙 **2 modes, choisis par l'utilisateur** (question posée au 1er essai, modifiable à tout moment) :
+  - 🤖 **Note automatique** (seulement si « Oui ») : la reconnaissance vocale du navigateur (voix envoyée à Google / Apple) donne un score en %, les mots reconnus en **vert**, les manqués en **rouge**. Essais illimités, le meilleur compte. Les nombres dits en chiffres, les contractions (don't = do not) et une faute d'une lettre sur un mot long sont acceptés.
+  - 🔒 **Auto-note locale** (« Non ») : enregistrement sur le téléphone (8 s max), ▶ Ma voix / 🔊 Le modèle, puis 😬 Bof · 🙂 Ça va · 💪 Top. **Rien ne sort du téléphone, l'enregistrement est effacé dès l'étape suivante.** Sans micro : on dit la phrase à voix haute et on se note.
+- ▶ **Shift de parole** (≈ 3 min) : 5 phrases, les moins réussies d'abord.
+- 🗣 **30 phrases du terrain** en 3 séries : 🆘 survie (« Could you repeat that, please? »), 🔧 atelier (« I need a thirteen millimeter socket. »), ✈️ déplacement (« I have a reservation for three nights. »). Plus **Mes mots en phrases** (exemples des mots appris).
+- 👄 **5 sons difficiles** pour les francophones, avec une astuce chacun : th, h, -ed, i/ee, -teen/-ty.
+- 🛟 Messages clairs si le micro est refusé, s'il n'y a pas de réseau ou si rien n'a été entendu. L'auto-note est alors proposée.
+- 📈 La compétence **Oral** est enfin évaluée (« ? » jusqu'au 1er essai). 30 points max par jour pour rester honnête.
+- 🔒 Micro coupé et enregistrement effacé à chaque changement d'étape, à la sortie et à la fin de la séance.
+
+**Testé** (Chromium, écran 390 × 844, micro simulé, reconnaissance vocale simulée pour ne rien envoyer pendant les tests) : notation (nombres, contractions, phrase partielle, phrase fausse, faute d'une lettre), question du consentement, enregistrement local (en cours, en mémoire, effacé ensuite), Shift de parole complet, note automatique (71 % puis 100 %), cas sans réseau (auto-note proposée), retour sur Parler, sons difficiles, plafond du jour, sauvegarde après rechargement, puis tous les tests L1, L2, personnage et L3. Résultat : 0 erreur, **0 requête vers un autre site**.
+
+**Limites connues** : la vraie reconnaissance vocale (Google / Apple) et le vrai micro restent à essayer sur un téléphone ; la reconnaissance peut être absente sur certains navigateurs (l'auto-note prend alors le relais).
 
 ### L3 v0.4 · 2026-11-25 · Écouter
 ![Le Shift d'écoute](docs/TrioLingo_Ecouter_v0.4_2026-11-25.svg)
