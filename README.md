@@ -2,7 +2,7 @@
 
 Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**. Une seule page HTML installable sur téléphone : hors-ligne, **zéro traceur, zéro cookie, zéro compte**.
 
-- **Version courante :** L5 v0.6 · 2026-11-25
+- **Version courante :** L5 v0.7 · 2026-11-25
 - **Pour installer (ami·e, utilisateur·rice) :** [`docs/TrioLingo_Installation_v0.1_2026-11-25.md`](docs/TrioLingo_Installation_v0.1_2026-11-25.md)
 - **Pour apprendre :** [`docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md`](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md)
 - **Pour écouter :** [`docs/TrioLingo_Ecouter_v0.4_2026-11-25.md`](docs/TrioLingo_Ecouter_v0.4_2026-11-25.md)
@@ -22,6 +22,20 @@ Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**.
 ---
 
 ## Notes de version
+
+### L5 v0.7 · 2026-11-25 · Grand Tchoum Auto 6 en haute définition
+- 🖼 **Rendu 3D HD** : pleine résolution de l'écran (×2 sur iPhone), bords lissés. L'image n'est plus pixelisée.
+- ☀️ **Lumière du soir réaliste** : soleil bas, **ombres portées**, couleurs façon cinéma, brume légère.
+- 🧱 **Matières dessinées en code** (aucun fichier image) : bitume fissuré, trottoirs pavés, quai, tôle ondulée, façades avec fenêtres qui reflètent le ciel ou sont allumées, grillage, rails.
+- 👷 **Personnages plus détaillés** : corps arrondis, visage (yeux, nez, sourcils, bouche), casque brillant avec visière, gilet fluo avec bandes réfléchissantes.
+- 🌴 Palmiers avec de vraies palmes recourbées, train, auvent avec néons, camionnette, château d'eau, ville au loin éclairée.
+- 👀 La caméra est plus proche. Les décors qui cachent le personnage (palmiers, train, auvent, poteaux) deviennent transparents. Ty Kett se tient maintenant devant son guichet.
+- ⚡ **Qualité réglée toute seule** : si le téléphone peine, l'image passe en qualité moyenne puis économie (ombres coupées). Rien à régler.
+- 🕹 Le style rétro (gros pixels) reste disponible dans ⚙ Réglages.
+- 🔢 La version est affichée sur l'écran titre du jeu.
+- Rendu 100 % original : ambiance de jeu de ville moderne, sans rien reprendre d'un jeu existant.
+
+**Testé** (Chromium, écran 390 × 844 ×2, rendu 3D logiciel sans carte graphique) : captures des 6 vues, partie complète des chapitres 1 à 3, XP, sauvegarde, retour à l'app. Résultat : 0 erreur, **0 requête vers un autre site**. La fluidité réelle reste à vérifier sur ton téléphone (l'ordinateur de test n'a pas de carte graphique).
 
 ### L5 v0.6 · 2026-11-25 · Grand Tchoum Auto 6, chapitres 1 à 3
 ![Guide du jeu](docs/GrandTchoumAuto6_Guide_v0.6_2026-11-25.svg)
