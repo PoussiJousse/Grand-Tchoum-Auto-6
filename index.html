@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- TrioLingo · Industrial Edition Pro Max · L2 v0.3 · généré le 2026-11-25
+<!-- TrioLingo · Industrial Edition Pro Max · L3 v0.4 · généré le 2026-11-25
      100 % local : aucun traceur, aucun cookie, aucun compte, aucune police ni script externe.
      Toutes les données restent dans ce téléphone (stockage local). Aucune donnée personnelle dans ce code.
      Seule exception future (lot 4), et seulement si l'utilisateur répond Oui : la reconnaissance vocale
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TrioLingo"><meta name="theme-color" content="#120c24">
-<title>TrioLingo L2 v0.3</title>
+<title>TrioLingo L3 v0.4</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
 <style>
 :root{--a:#ff7a2f;--b:#7c5cff;--hz:#ffc21a;--ok:#5fd38d;--bad:#ff6b6b;--bg:#0d0a1a;--fg:#f4f1ff;--mut:#a9a3c4;--pn:rgba(18,12,36,.92);--bd:rgba(255,255,255,.16)}
@@ -90,11 +90,14 @@ canvas.ps2{width:100%;aspect-ratio:16/9;image-rendering:pixelated;image-renderin
 .flow div{flex:1;padding:8px 4px;border-radius:8px;background:#241c42;border:1px solid var(--bd)}
 .flow .x{flex:none;background:none;border:0;padding:0;color:var(--mut)}
 svg{display:block}
-/* L2 v0.3 · avatar réaliste */
+/* L3 v0.4 · avatar réaliste */
 .avbox{display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 0;position:sticky;top:-14px;z-index:3;background:linear-gradient(var(--bg) 85%,rgba(13,10,26,0))}.avbox svg{filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
 .avrow{display:flex;flex-wrap:wrap;gap:4px}
 .ch2{min-height:42px;padding:6px 14px;border-radius:21px;border:1px solid var(--bd);background:#241c42;color:var(--fg);font:600 .85rem system-ui,sans-serif;cursor:pointer}
 .ch2.on{background:var(--a);color:#1a0d05;border-color:var(--a)}
+/* L3 · Écouter */
+.pairs{display:flex;gap:6px;margin-top:8px;text-align:center}.pairs>div{flex:1;background:#241c42;border-radius:8px;padding:6px 2px}.pairs b{display:block;font-size:1.3rem;color:var(--hz)}.pairs span{font-size:.7rem;color:var(--mut)}
+input.okin{border-color:var(--ok)}input.noin{border-color:var(--bad)}
 /* L2 · Lire & apprendre */
 .flash{padding:16px}.word{font:900 2rem/1.15 system-ui,sans-serif;margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .fr{font:700 1.15rem system-ui,sans-serif;color:var(--hz);margin-top:4px}.uk{font-size:.8rem;color:var(--mut);margin-top:6px}
@@ -120,7 +123,7 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
   <div class="pb"><i id="bI"></i></div>
   <div class="pbl"><span id="bL">Démarrage…</span><span id="bP">0 %</span></div>
   <button class="btn" id="bgo" style="justify-content:center;display:none">Touche pour commencer</button>
-  <p class="mut" style="text-align:center;font-size:.7rem">L2 v0.3 · 2026-11-25 · 100 % local, 0 traceur</p>
+  <p class="mut" style="text-align:center;font-size:.7rem">L3 v0.4 · 2026-11-25 · 100 % local, 0 traceur</p>
 </section>
 
 <!-- Profil (création ou modification) -->
@@ -132,6 +135,7 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
 <!-- L2 : Lire & apprendre + lanceur de séance -->
 <section id="learn" class="scr notab"></section>
 <section id="run" class="scr notab"></section>
+<section id="listen" class="scr notab"></section>
 <!-- Onglets -->
 <section id="home" class="scr"></section>
 <section id="prog" class="scr"></section>
@@ -151,8 +155,8 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
 
 <script>
 'use strict';
-/* ============ TrioLingo · L2 v0.3 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) ============ */
-const VERSION = 'L2 v0.3', BUILD = '2026-11-25', KEY = 'tl_save_v1';
+/* ============ TrioLingo · L3 v0.4 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) + Écouter (L3) ============ */
+const VERSION = 'L3 v0.4', BUILD = '2026-11-25', KEY = 'tl_save_v1';
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -179,7 +183,7 @@ function def() {
     v: 1, app: 'TrioLingo', created: today(), name: '', avatar: { v: 2, h: 0, ve: 0, s: 1, hc: 1, hs: 0, b: 0, g: 0, e: 0 }, xp: 0,
     skills: Object.fromEntries(SK.map(k => [k.id, 0])), placed: false, tested: {}, days: {},
     settings: { sfx: true, vib: true, ui: 'auto', sr: null }, lastExport: null, installHintOff: false,
-    cards: {}, rules: {}, reads: {}, focus: 'saf'
+    cards: {}, rules: {}, reads: {}, focus: 'saf', audios: {}, ldDay: null
   };
 }
 function merge(o) {
@@ -189,7 +193,7 @@ function merge(o) {
   r.avatar = avFix(o.avatar);
   r.days = o.days && typeof o.days === 'object' ? o.days : {};
   r.tested = o.tested && typeof o.tested === 'object' ? o.tested : {};
-  ['cards', 'rules', 'reads'].forEach(k => { r[k] = o[k] && typeof o[k] === 'object' ? o[k] : {}; });
+  ['cards', 'rules', 'reads', 'audios'].forEach(k => { r[k] = o[k] && typeof o[k] === 'object' ? o[k] : {}; });
   if (!['saf', 'mec', 'ele', 'aut', 'flu', 'too', 'pro', 'tra'].includes(r.focus)) r.focus = 'saf';
   for (const k in r.skills) r.skills[k] = Math.max(0, Math.min(1000, +r.skills[k] || 0));
   r.xp = Math.max(0, +r.xp || 0); r.name = String(r.name || '').slice(0, 20);
@@ -255,15 +259,16 @@ function pickVoice() {
 function initVoices() {
   return new Promise(res => {
     if (!('speechSynthesis' in window)) return res(null);
-    let done = false; const fin = () => { VOICE = pickVoice(); if (!done) { done = true; res(VOICE); } };
+    let done = false; const fin = () => { const v = pickVoice(); if (v || !VOICE) VOICE = v; // une liste vide ne doit jamais effacer une voix déjà trouvée
+    if (!done) { done = true; res(VOICE); } };
     speechSynthesis.onvoiceschanged = fin; // les voix arrivent parfois en retard
     if (speechSynthesis.getVoices().length) fin(); else setTimeout(fin, 1500);
   });
 }
-function say(text, rate = 1) {
+function say(text, rate = 1, pitch = 1) {
   return new Promise(res => {
     if (!VOICE) return res(false);
-    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.voice = VOICE; u.lang = VOICE.lang; u.rate = .92 * rate; u.onend = () => res(true); u.onerror = () => res(false); speechSynthesis.speak(u); }
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.voice = VOICE; u.lang = VOICE.lang; u.rate = .92 * rate; u.pitch = pitch; u.onend = () => res(true); u.onerror = () => res(false); speechSynthesis.speak(u); }
     catch (e) { res(false); }
   });
 }
@@ -312,7 +317,7 @@ function radar(size, labels) {
   if (labels) SK.forEach((k, i) => { const [x, y] = pt(i, 1.24); s += `<text x="${x}" y="${+y + 4}" text-anchor="middle" fill="#a9a3c4" font-size="10.5" font-family="system-ui">${k.ic} ${esc(cefr(S.skills[k.id]))}</text>`; });
   return s + '</svg>';
 }
-/* ---------- Avatar réaliste v2 (L2 v0.3) : technicien·ne en EPI, 100 % dessiné en code ---------- */
+/* ---------- Avatar réaliste v2 (L3 v0.4) : technicien·ne en EPI, 100 % dessiné en code ---------- */
 const AV = {
   hat: ['#ffc21a', '#f2efe6', '#ff7a2f', '#2f6fd6', '#3aa655', '#d63b3b'],
   vest: ['#d4ef1f', '#ff6a1a'],
@@ -860,7 +865,7 @@ function glossHTML(txt) {
   return esc(t).replace(/\u0001(\d+)\u0002/g, (_, i) => { const [m, c] = keep[+i]; return `<span class="w" data-en="${esc(c.en)}" data-fr="${esc(c.fr)}">${esc(m)}</span>`; });
 }
 document.addEventListener('click', e => {
-  const s = e.target.closest('[data-say]'); if (s) { e.stopPropagation(); say(s.dataset.say, s.dataset.rate ? +s.dataset.rate : 1); return; }
+  const s = e.target.closest('[data-say]'); if (s) { e.stopPropagation(); say(s.dataset.say, s.dataset.rate ? +s.dataset.rate : 1, s.dataset.pitch ? +s.dataset.pitch : 1); return; }
   const w = e.target.closest('.w'); if (w) { toast(`${w.dataset.en} = ${w.dataset.fr}`); say(w.dataset.en); }
 });
 
@@ -872,7 +877,7 @@ function startRun(title, steps, back) {
   show('run'); renderStep();
 }
 function nextStep() { RUN.i++; if (RUN.i < RUN.steps.length) renderStep(); else endRun(); }
-function quitRun() { if ('speechSynthesis' in window) speechSynthesis.cancel(); const b = RUN.back; RUN = null; LV = b; show('learn'); }
+function quitRun() { if ('speechSynthesis' in window) speechSynthesis.cancel(); const b = RUN.back; RUN = null; if (b.scr === 'listen') { LVL = b; show('listen'); } else { LV = b; show('learn'); } }
 function choices(prompt, opts, onAnswer, extra) {
   const o = shuffle(opts.map((t, i) => ({ t, good: i === 0 })));
   return { html: `<div class="qp">${prompt}</div>${extra || ''}<div id="qO">${o.map((x, i) => `<button class="ch" data-i="${i}">${esc(x.t)}</button>`).join('')}<button class="ch idk" data-i="-1">🤷 Je ne sais pas</button></div><div id="qF"></div>`,
@@ -941,6 +946,7 @@ function renderStep() {
     }, `<details class="doc"><summary>📄 Revoir le document</summary><pre class="wo">${glossHTML(d.txt)}</pre></details>`);
     body = `<span class="tag y">${d.ic} ${esc(d.t)} · ${st.i + 1}/3</span>` + q.html; bind = q.bind;
   }
+  if (!body) { const r = renderListenStep(st); if (r) { body = r.body; bind = r.bind; } }
   $('#run').innerHTML = `<div class="row"><button class="btn alt sm" id="rX" style="width:auto">✕</button><b class="grow" style="text-align:center">${esc(RUN.title)}</b><span class="tag">⭐ ${RUN.g.xp}</span></div>
     <div class="pb"><i style="width:${pct}%"></i></div><div class="pbl"><span>Étape ${RUN.i + 1} / ${n}</span><span>${pct} %</span></div>${body}`;
   $('#rX').onclick = () => confirmBox('Quitter la séance ?', '<p>Tout ce que tu as déjà fait est gardé.</p>', quitRun, 'Quitter', 'red');
@@ -1020,6 +1026,154 @@ function lexList() {
   }).join('');
   box.innerHTML = h || '<p class="mut" style="text-align:center;margin-top:20px">Aucun mot trouvé.</p>';
 }
+
+
+/* ================= L3 · Écouter : 12 messages du métier, nombres & heures, dictées (voix du téléphone uniquement) ================= */
+/* q = [question, bonne réponse, faux, faux] · p = hauteur de voix (pour distinguer les personnes) */
+const AUDIOS = [
+  { id: 'a1', ic: '🦺', t: 'Briefing sécurité de 6 h', who: 'Chef d’équipe', lv: 'A2', p: .9, txt: 'Good morning, everyone. Today we are working on line two. Wear your safety glasses and your earplugs, the press is very loud. The forklift will bring new pallets at ten o’clock, so keep the aisle clear. Thank you, and have a safe shift.',
+    q: [['Sur quelle ligne travaille-t-on ?', 'La ligne 2', 'La ligne 10', 'La ligne 1'], ['Quels EPI faut-il porter ?', 'Lunettes et bouchons d’oreilles', 'Casque et gants', 'Harnais et gilet'], ['Que se passe-t-il à 10 h ?', 'Un chariot apporte des palettes', 'La presse s’arrête', 'Une réunion commence']] },
+  { id: 'a2', ic: '📞', t: 'Appel de l’équipe de nuit', who: 'Collègue', lv: 'A2', p: 1.1, txt: 'Hi, it’s Sam from the night shift. Conveyor four stopped twenty minutes ago. The operator says there is a strange noise from the gearbox. Can you come and check it? I’m at the control panel near line four.',
+    q: [['Qui appelle ?', 'Sam, de l’équipe de nuit', 'Le client', 'Le magasin d’outils'], ['Quel est le problème ?', 'Convoyeur 4 arrêté, bruit au réducteur', 'Fuite d’huile sur la ligne 2', 'Le robot ne démarre pas'], ['Où est Sam ?', 'Au pupitre près de la ligne 4', 'Au bureau maintenance', 'À l’accueil']] },
+  { id: 'a3', ic: '🏨', t: 'Accueil de l’hôtel', who: 'Réceptionniste', lv: 'A2', p: 1.15, txt: 'Good evening, and welcome to the Riverside Hotel. Your room is on the third floor, room three twelve. Breakfast is from six to ten. The elevator is on your left. Do you need a wake-up call?',
+    q: [['Quel est le numéro de chambre ?', '312', '213', '302'], ['Le petit-déjeuner, c’est quand ?', 'De 6 h à 10 h', 'De 7 h à 11 h', 'De 6 h à 9 h'], ['Où est l’ascenseur ?', 'À gauche', 'À droite', 'Au fond du couloir']] },
+  { id: 'a4', ic: '✈️', t: 'Annonce à l’aéroport', who: 'Haut-parleur', lv: 'A2', p: 1, txt: 'Attention, please. Flight four-oh-seven to Chicago is now boarding at gate twelve. Passengers in rows twenty to thirty, please go to the gate now.',
+    q: [['À quelle porte ?', '12', '20', '30'], ['Qui doit y aller maintenant ?', 'Les rangs 20 à 30', 'Tout le monde', 'Les rangs 1 à 12'], ['Le vol va à…', 'Chicago', 'Dallas', 'Atlanta']] },
+  { id: 'a5', ic: '🧰', t: 'Au magasin d’outils', who: 'Magasinier', lv: 'A2', p: .95, txt: 'Hi! You need a thirteen millimeter socket? Sorry, we only have twelve and fourteen today. Somebody borrowed the last thirteen and didn’t return it. You can try the toolbox in workshop B.',
+    q: [['Quelle douille demandes-tu ?', '13 mm', '12 mm', '30 mm'], ['Quelles tailles reste-t-il ?', '12 et 14 mm', '13 et 14 mm', '10 et 12 mm'], ['Où chercher ?', 'La caisse à outils de l’atelier B', 'Le bureau du chef', 'L’entrepôt']] },
+  { id: 'a6', ic: '🚗', t: 'Indications pour l’usine', who: 'Passant', lv: 'A2', p: 1.05, txt: 'Go straight for about two kilometers. At the second traffic light, turn right. The factory is on your left, after the gas station. Park in the visitor parking lot and go to reception.',
+    q: [['Au 2e feu, tu tournes…', 'À droite', 'À gauche', 'Tu continues tout droit'], ['L’usine est…', 'À gauche, après la station-service', 'À droite, avant le feu', 'En face de l’hôtel'], ['Où te garer ?', 'Au parking visiteurs', 'Devant l’atelier', 'Dans la rue']] },
+  { id: 'a7', ic: '🔧', t: 'L’opérateur décrit la panne', who: 'Opérateur', lv: 'B1', p: 1.1, txt: 'The machine was running normally until about two o’clock. Then I heard a loud bang, and the robot stopped in the middle of the cycle. The screen shows fault twenty-three, gripper pressure low. I didn’t touch anything after that.',
+    q: [['When did the problem start?', 'Around two o’clock', 'At twelve o’clock', 'This morning'], ['What does the screen show?', 'Fault 23, gripper pressure low', 'Fault 32, motor overload', 'No message'], ['What did the operator do after the bang?', 'Nothing', 'Reset the robot', 'Called the supplier']] },
+  { id: 'a8', ic: '📻', t: 'Appel radio de la ligne 1', who: 'Ligne 1', lv: 'B1', p: .9, txt: 'Maintenance, maintenance, this is line one. We have an oil leak under the hydraulic unit. The pressure is dropping. We stopped the line and put a barrier around the spill. Please bring absorbent pads.',
+    q: [['Where is the leak?', 'Under the hydraulic unit', 'On the compressor', 'In the warehouse'], ['What did line one do?', 'Stopped the line and put a barrier', 'Cleaned the spill', 'Restarted the pump'], ['What must maintenance bring?', 'Absorbent pads', 'A new pump', 'Earplugs']] },
+  { id: 'a9', ic: '🔒', t: 'Rappel consignation', who: 'Responsable sécurité', lv: 'B1', p: .95, txt: 'Before we start, a quick reminder about lockout. Every person who works on the machine puts their own padlock on the switch. Never use someone else’s padlock. And always try to start the machine before you begin, to verify zero energy.',
+    q: [['Who puts a padlock on the switch?', 'Every person who works on the machine', 'Only the supervisor', 'Only the operator'], ['What must you never do?', 'Use someone else’s padlock', 'Wear gloves', 'Call the operator'], ['Why do you try to start the machine?', 'To verify zero energy', 'To test the motor', 'To finish faster']] },
+  { id: 'a10', ic: '📧', t: 'Message du fournisseur', who: 'Fournisseur', lv: 'B1', p: 1.15, txt: 'Hello, this is Alex from Tri-Parts. Your order of six bearings and two seals is delayed. The bearings will arrive on Thursday, but the seals are out of stock until next week. Please call me back if this is a problem.',
+    q: [['What is delayed?', 'The order of bearings and seals', 'The meeting', 'The flight'], ['When will the bearings arrive?', 'On Thursday', 'Today', 'Next month'], ['What about the seals?', 'Out of stock until next week', 'Already delivered', 'Cancelled']] },
+  { id: 'a11', ic: '🔁', t: 'Passation de fin de poste', who: 'Collègue', lv: 'B1', p: 1, txt: 'Okay, handover for line three. The robot had two gripper faults tonight, but the reset worked. The new sensor is installed, but it still needs calibration. Oh, and the coffee machine is broken again.',
+    q: [['How many gripper faults?', 'Two', 'Three', 'None'], ['What does the new sensor still need?', 'Calibration', 'Installation', 'A new cable'], ['What else is broken?', 'The coffee machine', 'The forklift', 'The light curtain']] },
+  { id: 'a12', ic: '🏭', t: 'Visite du client', who: 'Responsable de site', lv: 'B1', p: .9, txt: 'Tomorrow the customer is visiting the plant at nine a.m. Please clean your workstation and put all tools back in the toolbox. The visitors will wear high-visibility vests and safety glasses. If they ask questions, be polite and explain your job.',
+    q: [['When is the visit?', 'Tomorrow at 9 a.m.', 'Today at 9 p.m.', 'Next week'], ['What must you do before?', 'Clean your workstation and put tools away', 'Stop the line', 'Order spare parts'], ['What will the visitors wear?', 'Hi-vis vests and safety glasses', 'Hard hats only', 'Nothing special']] }
+];
+
+/* ---------- Nombres & heures : générés au hasard (13 ↔ 30, 8:15 ↔ 8:50…) ---------- */
+const pick = a => a[Math.floor(Math.random() * a.length)];
+function makeNum() {
+  const k = Math.floor(Math.random() * 4);
+  if (k === 0) { const n = 13 + Math.floor(Math.random() * 7), ctx = pick(['Set the pressure to # bar.', 'We need # new bolts.', 'Go to gate #.', 'The part is on shelf #.', 'The line stopped for # minutes.']);
+    return { say: ctx.replace('#', n), q: 'Quel nombre entends-tu ?', o: [String(n), String((n - 10) * 10), String(n === 19 ? 18 : n + 1)] }; }
+  if (k === 1) { const h = 1 + Math.floor(Math.random() * 11), M = ['05', '15', '20', '30', '40', '45', '50'], m = pick(M), m2 = pick(M.filter(x => x !== m)), ctx = pick(['The meeting starts at #.', 'The train leaves at #.', 'My shift ends at #.', 'The truck arrives at #.']);
+    return { say: ctx.replace('#', `${h}:${m}`), q: 'Quelle heure entends-tu ?', o: [`${h}:${m}`, `${h}:${m2}`, `${h % 12 + 1}:${m}`] }; }
+  if (k === 2) { const L = [8, 10, 12, 13, 14, 17, 19, 22, 24], i = 1 + Math.floor(Math.random() * (L.length - 2)), ctx = pick(['Hand me the # millimeter socket.', 'I need a # millimeter wrench.', 'Use the # millimeter bolt.']);
+    return { say: ctx.replace('#', L[i]), q: 'Quelle taille entends-tu ?', o: [L[i] + ' mm', L[i - 1] + ' mm', L[i + 1] + ' mm'] }; }
+  const D = [['2.5', '25', '5.2'], ['0.5', '5', '0.05'], ['1.5', '15', '5.1'], ['6.4', '64', '4.6'], ['0.1', '1', '0.01']], d = pick(D), u = pick([['bar', 'The pressure is # bar.'], ['mm', 'The gap is # millimeters.']]);
+  return { say: u[1].replace('#', d[0]), q: 'Quelle valeur entends-tu ?', o: d.map(x => x + ' ' + u[0]) };
+}
+
+/* ---------- Dictée : les phrases d'exemple du vocabulaire (mots déjà vus en priorité) ---------- */
+const norm = t => t.toLowerCase().replace(/[’`]/g, "'").replace(/-/g, ' ').replace(/[^a-z0-9' ]/g, '').replace(/\s+/g, ' ').trim();
+function lev(a, b) { const d = Array.from({ length: a.length + 1 }, (_, i) => [i]); for (let j = 1; j <= b.length; j++) d[0][j] = j; for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); return d[a.length][b.length]; }
+function dictCards(n) {
+  const seenC = shuffle(CARDS.filter(c => S.cards[c.key] && S.cards[c.key].b >= 1 && wordRx(c.en).test(c.ex)));
+  const easy = shuffle(CARDS.filter(c => c.lvl === 1 && !seenC.includes(c) && wordRx(c.en).test(c.ex)));
+  return [...seenC, ...easy].slice(0, n);
+}
+
+/* ---------- Progression : la 1re bonne réponse compte plus ; nombres et dictées plafonnés par jour ---------- */
+function listenPts(p) { const t = today(); if (!S.ldDay || S.ldDay.d !== t) S.ldDay = { d: t, p: 0 }; const g = Math.max(0, Math.min(p, 30 - S.ldDay.p)); S.ldDay.p += g; return g; }
+const audioDone = a => !!(S.audios[a.id] && S.audios[a.id].done);
+function nextAudio() { const lvA = S.skills.listen >= 300 ? ['B1', 'A2'] : ['A2', 'B1']; for (const l of lvA) { const a = AUDIOS.find(x => x.lv === l && !audioDone(x)); if (a) return a; } return pick(AUDIOS); }
+const audioSteps = a => [{ t: 'audio', a }, ...a.q.map((_, i) => ({ t: 'audioQ', a, i }))];
+const dictSteps = n => dictCards(n).map(c => ({ t: 'dict', c }));
+const numSteps = n => Array.from({ length: n }, () => ({ t: 'num', g: makeNum() }));
+const listenShiftSteps = () => [...audioSteps(nextAudio()), ...dictSteps(3), ...numSteps(4)];
+const playBtns = (txt, p) => `<div class="row"><button class="btn sm" data-say="${esc(txt)}" data-pitch="${p || 1}">🔊 Écouter</button><button class="btn alt sm" data-say="${esc(txt)}" data-rate=".75" data-pitch="${p || 1}">🐢 0,75×</button></div>`;
+
+function renderListenStep(st) {
+  if (st.t === 'audio') {
+    const a = st.a, peek = RUN.peek && RUN.peek[a.id];
+    return { body: `<span class="tag y">${a.ic} ${esc(a.t)} · ${a.lv}</span>
+      <div class="card" style="text-align:center"><div class="t">${esc(a.who)}</div><div style="font-size:3rem;margin:6px 0">${a.ic}</div>${playBtns(a.txt, a.p)}
+        <p class="mut" style="margin-top:8px">Écoute 1 ou 2 fois. Tu peux réécouter pendant les questions.</p></div>
+      <details class="doc" id="peek" ${peek ? 'open' : ''}><summary>👁 Afficher le texte (les points d’écoute sont divisés par 2)</summary><pre class="wo">${glossHTML(a.txt)}</pre></details>
+      <button class="btn" id="nx" style="justify-content:center">Répondre aux questions</button>`,
+      bind: () => { setTimeout(() => say(a.txt, 1, a.p), 400); $('#peek').ontoggle = () => { if ($('#peek').open) { RUN.peek = RUN.peek || {}; RUN.peek[a.id] = true; } }; $('#nx').onclick = () => { sfx('tap'); if ('speechSynthesis' in window) speechSynthesis.cancel(); nextStep(); }; } };
+  }
+  if (st.t === 'audioQ') {
+    const a = st.a, [p, ...o] = a.q[st.i], peek = RUN.peek && RUN.peek[a.id];
+    const q = choices(esc(p), o, good => {
+      const rs = S.audios[a.id] = S.audios[a.id] || { ok: 0, done: false }, bit = 1 << st.i, first = !(rs.ok & bit), f = peek ? .5 : 1;
+      if (good) { addXP('listen', Math.round((first ? 8 : 2) * f), first ? 4 * f : 0); rs.ok |= bit; if (rs.ok === 7 && !rs.done) { rs.done = true; addXP('listen', 10, 6 * f); save(); return '✅ Message compris !'; } save(); return ''; }
+      return `Bonne réponse : <b>${esc(o[0])}</b>`;
+    }, playBtns(a.txt, a.p) + (peek ? `<details class="doc"><summary>👁 Revoir le texte</summary><pre class="wo">${glossHTML(a.txt)}</pre></details>` : ''));
+    return { body: `<span class="tag y">${a.ic} ${esc(a.t)} · ${st.i + 1}/3</span>` + q.html, bind: q.bind };
+  }
+  if (st.t === 'num') {
+    const g = st.g;
+    const q = choices(esc(g.q), g.o, good => { if (good) { addXP('listen', 3, listenPts(1)); return ''; } return `Il fallait entendre : <b>${esc(g.o[0])}</b><br><span class="mut">« ${esc(g.say)} »</span>`; }, playBtns(g.say));
+    return { body: `<span class="tag y">🔢 Nombres &amp; heures</span>` + q.html, bind: () => { q.bind(); setTimeout(() => say(g.say), 350); } };
+  }
+  if (st.t === 'dict') {
+    const c = st.c, ans = (c.ex.match(wordRx(c.en)) || [c.en])[0];
+    const hint = ans.split('').map((ch, i) => i === 0 ? ch : /[a-z]/i.test(ch) ? '_' : ch === ' ' ? '&nbsp;&nbsp;' : ch).join(' ');
+    return { body: `<span class="tag y">✍️ Dictée · ${THEMES[c.th][0]} ${esc(thName(c.th))}</span>
+      ${playBtns(c.ex)}
+      <div class="qp">${esc(c.ex).replace(wordRx(c.en), '<b class="gap">_____</b>')}</div>
+      <p class="mut">Indice : <b style="letter-spacing:.1em">${hint}</b> (${ans.replace(/[^a-z]/gi, '').length} lettres) · ${esc(c.fr)}</p>
+      <input type="text" id="dIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris le mot entendu">
+      <div class="row"><button class="btn sm" id="dOk">Valider</button><button class="btn alt sm" id="dIdk">🤷 Je ne sais pas</button></div><div id="qF"></div>`,
+      bind: () => {
+        setTimeout(() => say(c.ex), 400); let lock = false;
+        const check = idk => {
+          if (lock) return; const v = norm($('#dIn').value); if (!idk && !v) { $('#dIn').focus(); return; } lock = true;
+          const target = norm(ans), d = idk ? 99 : lev(v, target), good = d === 0 || (d === 1 && target.length >= 5);
+          RUN.g.tot++; let msg;
+          if (good) { RUN.g.ok++; sfx('ok'); buzz(15); addXP('listen', 4, listenPts(1.5)); msg = d === 0 ? '✅ Parfait !' : `✅ Presque ! Ça s’écrit : <b>${esc(ans)}</b>`; }
+          else { sfx(idk ? 'tap' : 'no'); msg = `Le mot était : <b>${esc(ans)}</b> (${esc(c.fr)})`; }
+          $('#dIn').disabled = true; $('#dIn').classList.add(good ? 'okin' : 'noin');
+          $('#qF').innerHTML = `<p class="card ${good ? 'ok' : ''}" style="margin-top:10px">${msg}<br><span class="mut">« ${esc(c.ex)} »</span></p><button class="btn" id="qN" style="justify-content:center;margin-top:10px">${T('next')}</button>`;
+          $('#qN').onclick = () => { sfx('tap'); nextStep(); }; $('#qN').scrollIntoView({ block: 'nearest' });
+        };
+        $('#dOk').onclick = () => check(false); $('#dIdk').onclick = () => check(true);
+        $('#dIn').onkeydown = e => { if (e.key === 'Enter') check(false); };
+      } };
+  }
+  return null;
+}
+
+/* ---------- Écran « Écouter » ---------- */
+let LVL = { v: 'hub' };
+RENDER.listen = () => {
+  const el = $('#listen'); let h = '';
+  const noVoice = VOICE ? '' : `<div class="card hz"><b>🔈 Aucune voix anglaise installée sur ce téléphone</b><p class="mut" style="margin-top:4px">Cette section a besoin d’une voix anglaise <b>installée</b> (pas en ligne). 3 minutes pour en ajouter une.</p><button class="btn sm" id="lsHelp" style="margin-top:8px">Comment faire ?</button></div>`;
+  const dis = VOICE ? '' : 'disabled';
+  if (LVL.v === 'hub') {
+    const done = AUDIOS.filter(audioDone).length;
+    h = `<div class="row"><button class="btn alt sm" id="lsBack" style="width:auto">← ${T('home')}</button><h2 class="grow" style="text-align:right">🎧 ${T('listen')}</h2></div>${noVoice}
+      <button class="btn" id="lsShift" ${dis}><span class="ic">▶</span><span>Shift d’écoute<span class="sub">≈ 5 min · 1 message · 3 dictées · 4 nombres</span></span></button>
+      <button class="btn alt" id="lsMsg"><span class="ic">📻</span><span>Messages du métier<span class="sub">${done} / ${AUDIOS.length} compris · briefings, appels, annonces</span></span></button>
+      <button class="btn alt" id="lsDict" ${dis}><span class="ic">✍️</span><span>Dictées<span class="sub">5 phrases · écris le mot qui manque</span></span></button>
+      <button class="btn alt" id="lsNum" ${dis}><span class="ic">🔢</span><span>Nombres &amp; heures<span class="sub">8 questions · 13 ou 30 ? 8:15 ou 8:50 ?</span></span></button>
+      <div class="card"><div class="t">Le piège n° 1 au téléphone</div>
+        <div class="pairs">${[['13', 'thir-TEEN'], ['30', 'THIR-ty'], ['14', 'four-TEEN'], ['40', 'FOR-ty']].map(([n, s]) => `<div><b>${n}</b><span>${s}</span></div>`).join('')}</div>
+        <p class="mut" style="margin-top:6px">-teen : l’accent tombe à la fin · -ty : l’accent tombe au début. Écoute la syllabe forte !</p></div>
+      <p class="mut">🐢 = vitesse 0,75×. Astuce : écoute d’abord à vitesse normale, puis lentement si besoin.</p>`;
+  } else {
+    h = `<div class="row"><button class="btn alt sm" id="lsBack" style="width:auto">← Retour</button><h2 class="grow" style="text-align:right">📻 Messages</h2></div>${noVoice}
+      <p class="mut">Écoute sans lire : c’est ce qui entraîne vraiment l’oreille. Le texte reste disponible si tu bloques.</p>
+      ${AUDIOS.map(a => { const rs = S.audios[a.id] || { ok: 0 }, n = [0, 1, 2].filter(i => rs.ok & (1 << i)).length; return `<button class="ch" data-aud="${a.id}" ${dis}>${audioDone(a) ? '✅' : n ? '◐' : '○'} ${a.ic} ${esc(a.t)} <span class="tag" style="float:right">${a.lv}</span></button>`; }).join('')}`;
+  }
+  el.innerHTML = h;
+  $('#lsBack').onclick = () => { sfx('tap'); if (LVL.v === 'hub') show('home'); else { LVL = { v: 'hub' }; RENDER.listen(); } };
+  const hp = $('#lsHelp'); if (hp) hp.onclick = testVoice;
+  const go = (id, fn) => { const b = $(id); if (b) b.onclick = fn; };
+  go('#lsShift', () => { sfx('ok'); startRun('Shift d’écoute', listenShiftSteps(), { scr: 'listen', v: 'hub' }); });
+  go('#lsMsg', () => { sfx('tap'); LVL = { v: 'msgs' }; RENDER.listen(); $('#listen').scrollTop = 0; });
+  go('#lsDict', () => { sfx('ok'); startRun('Dictées', dictSteps(5), { scr: 'listen', v: 'hub' }); });
+  go('#lsNum', () => { sfx('ok'); startRun('Nombres & heures', numSteps(8), { scr: 'listen', v: 'hub' }); });
+  $$('[data-aud]').forEach(b => b.onclick = () => { sfx('tap'); const a = AUDIOS.find(x => x.id === b.dataset.aud); startRun(a.t, audioSteps(a), { scr: 'listen', v: 'msgs' }); });
+};
 
 /* ================= Profil ================= */
 let EDIT = false;
@@ -1138,7 +1292,6 @@ function skRow(k) {
 
 /* ================= Accueil ================= */
 const SOON = {
-  listen: { lot: 3, ic: '🎧', body: '<p>Briefings de début de poste, consignes de sécurité, appels du chef d’équipe. Vitesse normale ou 0,75×, dictées express.</p>' },
   speak: { lot: 4, ic: '🎙', body: '<p>Tu écoutes le modèle, tu dis la phrase, tu obtiens une note.</p><p>Note automatique <b>seulement si tu l’autorises</b> ; sinon auto-note, 100 % local.</p>' },
   myst: { lot: 5, ic: '🔧', body: '<canvas class="ps2" id="ps2" width="256" height="144"></canvas><p><b>Grand Tchoum Auto 6</b> · lots 5 et 6.</p><p>Mission dans une usine à l’étranger. Ta douille de 13 a disparu. Hôtel, accueil sécurité, panne sur la ligne 3, magasin d’outils… Chaque lieu = une situation en anglais et un indice.</p><p class="mut">Les chapitres se débloquent avec l’XP gagnée dans les sections 1 à 3.</p>' }
 };
@@ -1166,11 +1319,12 @@ RENDER.home = () => {
     ${cards.join('')}
     <button class="btn" id="hRead"><span class="ic">📖</span><span>${T('read')}<span class="sub">${seenCount() ? `Shift du jour · ${dueList().length} à réviser` : 'Shift du jour · 5 min · ' + T('sRead')}</span></span></button>
     <button class="btn" data-go="speak"><span class="ic">🎙</span><span>${T('speak')}<span class="sub">${T('soon')} 4 · ${T('sSpeak')}</span></span></button>
-    <button class="btn" data-go="listen"><span class="ic">🎧</span><span>${T('listen')}<span class="sub">${T('soon')} 3 · ${T('sListen')}</span></span></button>
+    <button class="btn" id="hListen"><span class="ic">🎧</span><span>${T('listen')}<span class="sub">${VOICE ? 'Shift d’écoute · 5 min · ' + T('sListen') : '🔈 voix anglaise à installer'}</span></span></button>
     <button class="btn hz" data-go="myst"><span class="ic">🔧</span><span>${T('myst')}<span class="sub" style="color:#e8d9a8">Grand Tchoum Auto 6 · ${T('soon')} 5</span></span></button>
     <div class="hz-strip"></div>`;
   $$('#home [data-go]').forEach(b => b.onclick = () => { sfx('tap'); openSoon(b.dataset.go); });
   $('#hRead').onclick = () => { sfx('tap'); LV = { v: 'hub' }; show('learn'); };
+  $('#hListen').onclick = () => { sfx('tap'); LVL = { v: 'hub' }; show('listen'); };
   const t = $('#hTest'); if (t) t.onclick = () => { sfx('tap'); testIntro(); };
   const i = $('#hInst'); if (i) i.onclick = () => { sfx('tap'); installHelp(); };
   const e = $('#hExp'); if (e) e.onclick = () => { sfx('tap'); doExport(); };

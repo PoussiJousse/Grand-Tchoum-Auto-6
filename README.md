@@ -2,9 +2,10 @@
 
 Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**. Une seule page HTML installable sur téléphone : hors-ligne, **zéro traceur, zéro cookie, zéro compte**.
 
-- **Version courante :** L2 v0.3 · 2026-11-25
+- **Version courante :** L3 v0.4 · 2026-11-25
 - **Pour installer (ami·e, utilisateur·rice) :** [`docs/TrioLingo_Installation_v0.1_2026-11-25.md`](docs/TrioLingo_Installation_v0.1_2026-11-25.md)
 - **Pour apprendre :** [`docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md`](docs/TrioLingo_LireApprendre_v0.2_2026-11-25.md)
+- **Pour écouter :** [`docs/TrioLingo_Ecouter_v0.4_2026-11-25.md`](docs/TrioLingo_Ecouter_v0.4_2026-11-25.md)
 
 ![Installer en 4 étapes](docs/TrioLingo_Installation_v0.1_2026-11-25.svg)
 
@@ -12,13 +13,28 @@ Apprendre l'anglais d'un **technicien de maintenance en chaîne de production**.
 | | Section | Lot |
 |---|---|---|
 | 📖 | Lire & apprendre : vocabulaire métier, grammaire, révision espacée | L2 ✅ |
-| 🎧 | Écouter : briefings, consignes, appels (voix installée sur le téléphone uniquement) | L3 |
+| 🎧 | Écouter : briefings, consignes, appels (voix installée sur le téléphone uniquement) | L3 ✅ |
 | 🎙 | Parler : modèle, enregistrement, note automatique **sur demande** ou auto-note | L4 |
 | 🔧 | Mode mystère **Grand Tchoum Auto 6** : retrouver la douille de 13 (jeu 3D, style console années 2000, 100 % original) | L5–L6 |
 
 ---
 
 ## Notes de version
+
+### L3 v0.4 · 2026-11-25 · Écouter
+![Le Shift d'écoute](docs/TrioLingo_Ecouter_v0.4_2026-11-25.svg)
+- ▶ **Shift d'écoute** (≈ 5 min, 1 bouton) : 1 message du métier + 3 questions, 3 dictées, 4 nombres & heures. Barre « Étape X / N · % ».
+- 📻 **12 messages du métier** (6 niveau A2, 6 niveau B1) : briefing sécurité, appel de l'équipe de nuit, accueil de l'hôtel, annonce à l'aéroport, magasin d'outils (la douille de 13…), indications pour l'usine, opérateur qui décrit une panne, appel radio, rappel consignation, message du fournisseur, passation de fin de poste, visite du client. Hauteur de voix différente selon la personne qui parle.
+- ✍️ **Dictées** à partir des 240 phrases d'exemple, en priorité avec les mots déjà appris. Indice (1re lettre + nombre de lettres + traduction). 1 lettre d'écart sur un mot de 5 lettres ou plus = juste (« Presque ! »).
+- 🔢 **Nombres & heures** tirés au hasard sur les pièges du terrain : 13 / 30, 8:15 / 8:50, 2.5 / 25 bar, tailles de douilles.
+- 👁 **Texte du message** disponible si tu bloques, avec les mots du lexique soulignés. Les points d'écoute sont alors divisés par 2 (jamais de perte).
+- 📈 La compétence **Écoute** monte enfin avec le travail réel. Nombres et dictées sont plafonnés à 30 points par jour, pour que le niveau reste honnête. L'XP, elle, n'est pas plafonnée.
+- 🔒 Toujours **uniquement les voix installées** sur le téléphone. Sans voix : encadré jaune + guide d'installation, boutons grisés.
+- 🐞 Correctif : si le téléphone relance la recherche des voix et reçoit une liste vide, la voix déjà trouvée n'est plus effacée.
+
+**Testé** (Chromium, écran 390 × 844, voix anglaise simulée car l'appareil de test n'en a pas) : écran sans voix, Shift d'écoute complet (message, dictée juste, à 1 lettre près, « je ne sais pas », nombres), retour sur Écouter, message avec texte affiché (points ÷ 2 vérifiés), 500 tirages de nombres sans doublon, plafond du jour, sauvegarde après rechargement, puis tous les tests L1, L2 et personnage. Résultat : 0 erreur, **0 requête vers un autre site**.
+
+**Limites connues** : la vraie voix n'a pas pu être écoutée par l'appareil de test (à vérifier sur ton téléphone) ; la qualité de la voix dépend de celle installée sur le téléphone.
 
 ### L2 v0.3 · 2026-11-25 · Personnage réaliste
 - 👷 **Nouveau personnage plus réaliste** : visage proportionné, yeux détaillés, nez, oreilles, casque de chantier en volume (nervure, visière, reflet, autocollant « 13 »), chemise de travail et gilet haute visibilité avec bandes réfléchissantes.
