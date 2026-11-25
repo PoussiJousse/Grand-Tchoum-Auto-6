@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- TrioLingo · Industrial Edition Pro Max · L3 v0.4 · généré le 2026-11-25
+<!-- TrioLingo · Industrial Edition Pro Max · L4 v0.5 · généré le 2026-11-25
      100 % local : aucun traceur, aucun cookie, aucun compte, aucune police ni script externe.
      Toutes les données restent dans ce téléphone (stockage local). Aucune donnée personnelle dans ce code.
      Seule exception future (lot 4), et seulement si l'utilisateur répond Oui : la reconnaissance vocale
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TrioLingo"><meta name="theme-color" content="#120c24">
-<title>TrioLingo L3 v0.4</title>
+<title>TrioLingo L4 v0.5</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
 <style>
 :root{--a:#ff7a2f;--b:#7c5cff;--hz:#ffc21a;--ok:#5fd38d;--bad:#ff6b6b;--bg:#0d0a1a;--fg:#f4f1ff;--mut:#a9a3c4;--pn:rgba(18,12,36,.92);--bd:rgba(255,255,255,.16)}
@@ -90,11 +90,19 @@ canvas.ps2{width:100%;aspect-ratio:16/9;image-rendering:pixelated;image-renderin
 .flow div{flex:1;padding:8px 4px;border-radius:8px;background:#241c42;border:1px solid var(--bd)}
 .flow .x{flex:none;background:none;border:0;padding:0;color:var(--mut)}
 svg{display:block}
-/* L3 v0.4 · avatar réaliste */
+/* L4 v0.5 · avatar réaliste */
 .avbox{display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 0;position:sticky;top:-14px;z-index:3;background:linear-gradient(var(--bg) 85%,rgba(13,10,26,0))}.avbox svg{filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
 .avrow{display:flex;flex-wrap:wrap;gap:4px}
 .ch2{min-height:42px;padding:6px 14px;border-radius:21px;border:1px solid var(--bd);background:#241c42;color:var(--fg);font:600 .85rem system-ui,sans-serif;cursor:pointer}
 .ch2.on{background:var(--a);color:#1a0d05;border-color:var(--a)}
+/* L4 · Parler */
+.mic{display:grid;place-items:center;width:104px;height:104px;margin:8px auto 0;border-radius:50%;font-size:2.6rem;color:#fff;background:radial-gradient(circle,#ff9a50,#e0561a);border:3px solid #ffb27a;box-shadow:0 0 0 10px rgba(255,122,47,.15),0 0 0 22px rgba(255,122,47,.07);cursor:pointer;flex:none}
+.mic.on{background:radial-gradient(circle,#ff6b6b,#a8323e);animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 18px rgba(255,107,107,.25),0 0 0 34px rgba(255,107,107,.1)}}
+.said{margin-top:6px;font-size:1.02rem;line-height:1.7}.said .g{color:var(--ok);font-weight:700}.said .m{color:var(--bad);text-decoration:underline wavy}
+.snd{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--bd);color:var(--fg);padding:10px 2px;cursor:pointer;flex-wrap:wrap;font:inherit}.snd:first-child{border-top:0}
+.snd span{font-size:1.3rem;width:26px}.snd b{font-size:.92rem}.snd small{width:100%;color:var(--mut);padding-left:34px;font-size:.78rem}
+.btn.sm.on{outline:3px solid #fff;outline-offset:1px}
 /* L3 · Écouter */
 .pairs{display:flex;gap:6px;margin-top:8px;text-align:center}.pairs>div{flex:1;background:#241c42;border-radius:8px;padding:6px 2px}.pairs b{display:block;font-size:1.3rem;color:var(--hz)}.pairs span{font-size:.7rem;color:var(--mut)}
 input.okin{border-color:var(--ok)}input.noin{border-color:var(--bad)}
@@ -123,7 +131,7 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
   <div class="pb"><i id="bI"></i></div>
   <div class="pbl"><span id="bL">Démarrage…</span><span id="bP">0 %</span></div>
   <button class="btn" id="bgo" style="justify-content:center;display:none">Touche pour commencer</button>
-  <p class="mut" style="text-align:center;font-size:.7rem">L3 v0.4 · 2026-11-25 · 100 % local, 0 traceur</p>
+  <p class="mut" style="text-align:center;font-size:.7rem">L4 v0.5 · 2026-11-25 · 100 % local, 0 traceur</p>
 </section>
 
 <!-- Profil (création ou modification) -->
@@ -136,6 +144,7 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
 <section id="learn" class="scr notab"></section>
 <section id="run" class="scr notab"></section>
 <section id="listen" class="scr notab"></section>
+<section id="speak" class="scr notab"></section>
 <!-- Onglets -->
 <section id="home" class="scr"></section>
 <section id="prog" class="scr"></section>
@@ -155,8 +164,8 @@ details.doc{margin-top:8px}details.doc summary{cursor:pointer;color:var(--hz);fo
 
 <script>
 'use strict';
-/* ============ TrioLingo · L3 v0.4 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) + Écouter (L3) ============ */
-const VERSION = 'L3 v0.4', BUILD = '2026-11-25', KEY = 'tl_save_v1';
+/* ============ TrioLingo · L4 v0.5 · 2026-11-25 · socle (L1) + Lire & apprendre (L2) + Écouter (L3) + Parler (L4) ============ */
+const VERSION = 'L4 v0.5', BUILD = '2026-11-25', KEY = 'tl_save_v1';
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -183,7 +192,7 @@ function def() {
     v: 1, app: 'TrioLingo', created: today(), name: '', avatar: { v: 2, h: 0, ve: 0, s: 1, hc: 1, hs: 0, b: 0, g: 0, e: 0 }, xp: 0,
     skills: Object.fromEntries(SK.map(k => [k.id, 0])), placed: false, tested: {}, days: {},
     settings: { sfx: true, vib: true, ui: 'auto', sr: null }, lastExport: null, installHintOff: false,
-    cards: {}, rules: {}, reads: {}, focus: 'saf', audios: {}, ldDay: null
+    cards: {}, rules: {}, reads: {}, focus: 'saf', audios: {}, ldDay: null, phr: {}, orDay: null
   };
 }
 function merge(o) {
@@ -193,7 +202,7 @@ function merge(o) {
   r.avatar = avFix(o.avatar);
   r.days = o.days && typeof o.days === 'object' ? o.days : {};
   r.tested = o.tested && typeof o.tested === 'object' ? o.tested : {};
-  ['cards', 'rules', 'reads', 'audios'].forEach(k => { r[k] = o[k] && typeof o[k] === 'object' ? o[k] : {}; });
+  ['cards', 'rules', 'reads', 'audios', 'phr'].forEach(k => { r[k] = o[k] && typeof o[k] === 'object' ? o[k] : {}; });
   if (!['saf', 'mec', 'ele', 'aut', 'flu', 'too', 'pro', 'tra'].includes(r.focus)) r.focus = 'saf';
   for (const k in r.skills) r.skills[k] = Math.max(0, Math.min(1000, +r.skills[k] || 0));
   r.xp = Math.max(0, +r.xp || 0); r.name = String(r.name || '').slice(0, 20);
@@ -317,7 +326,7 @@ function radar(size, labels) {
   if (labels) SK.forEach((k, i) => { const [x, y] = pt(i, 1.24); s += `<text x="${x}" y="${+y + 4}" text-anchor="middle" fill="#a9a3c4" font-size="10.5" font-family="system-ui">${k.ic} ${esc(cefr(S.skills[k.id]))}</text>`; });
   return s + '</svg>';
 }
-/* ---------- Avatar réaliste v2 (L3 v0.4) : technicien·ne en EPI, 100 % dessiné en code ---------- */
+/* ---------- Avatar réaliste v2 (L4 v0.5) : technicien·ne en EPI, 100 % dessiné en code ---------- */
 const AV = {
   hat: ['#ffc21a', '#f2efe6', '#ff7a2f', '#2f6fd6', '#3aa655', '#d63b3b'],
   vest: ['#d4ef1f', '#ff6a1a'],
@@ -877,7 +886,7 @@ function startRun(title, steps, back) {
   show('run'); renderStep();
 }
 function nextStep() { RUN.i++; if (RUN.i < RUN.steps.length) renderStep(); else endRun(); }
-function quitRun() { if ('speechSynthesis' in window) speechSynthesis.cancel(); const b = RUN.back; RUN = null; if (b.scr === 'listen') { LVL = b; show('listen'); } else { LV = b; show('learn'); } }
+function quitRun() { speakCleanup(); if ('speechSynthesis' in window) speechSynthesis.cancel(); const b = RUN.back; RUN = null; if (b.scr === 'listen') { LVL = b; show('listen'); } else if (b.scr === 'speak') { LVS = b; show('speak'); } else { LV = b; show('learn'); } }
 function choices(prompt, opts, onAnswer, extra) {
   const o = shuffle(opts.map((t, i) => ({ t, good: i === 0 })));
   return { html: `<div class="qp">${prompt}</div>${extra || ''}<div id="qO">${o.map((x, i) => `<button class="ch" data-i="${i}">${esc(x.t)}</button>`).join('')}<button class="ch idk" data-i="-1">🤷 Je ne sais pas</button></div><div id="qF"></div>`,
@@ -891,6 +900,7 @@ function choices(prompt, opts, onAnswer, extra) {
     }); } };
 }
 function renderStep() {
+  speakCleanup(); // micro coupé et enregistrement effacé à chaque changement d’étape
   const st = RUN.steps[RUN.i], n = RUN.steps.length, pct = Math.round(RUN.i / n * 100);
   let body = '', bind = null;
   if (st.t === 'intro') {
@@ -946,13 +956,14 @@ function renderStep() {
     }, `<details class="doc"><summary>📄 Revoir le document</summary><pre class="wo">${glossHTML(d.txt)}</pre></details>`);
     body = `<span class="tag y">${d.ic} ${esc(d.t)} · ${st.i + 1}/3</span>` + q.html; bind = q.bind;
   }
-  if (!body) { const r = renderListenStep(st); if (r) { body = r.body; bind = r.bind; } }
+  if (!body) { const r = renderListenStep(st) || renderSpeakStep(st); if (r) { body = r.body; bind = r.bind; } }
   $('#run').innerHTML = `<div class="row"><button class="btn alt sm" id="rX" style="width:auto">✕</button><b class="grow" style="text-align:center">${esc(RUN.title)}</b><span class="tag">⭐ ${RUN.g.xp}</span></div>
     <div class="pb"><i style="width:${pct}%"></i></div><div class="pbl"><span>Étape ${RUN.i + 1} / ${n}</span><span>${pct} %</span></div>${body}`;
   $('#rX').onclick = () => confirmBox('Quitter la séance ?', '<p>Tout ce que tu as déjà fait est gardé.</p>', quitRun, 'Quitter', 'red');
   if (bind) bind(); $('#run').scrollTop = 0;
 }
 function endRun() {
+  speakCleanup();
   const g = RUN.g; sfx('lvl'); buzz([30, 40, 30]);
   $('#run').innerHTML = `<div class="pb"><i style="width:100%"></i></div><div class="pbl"><span>Terminé</span><span>100 %</span></div>
     <div style="text-align:center;font-size:3rem;margin-top:10px">🎉</div><h2 style="text-align:center">${esc(RUN.title)} : terminé</h2>
@@ -1175,6 +1186,182 @@ RENDER.listen = () => {
   $$('[data-aud]').forEach(b => b.onclick = () => { sfx('tap'); const a = AUDIOS.find(x => x.id === b.dataset.aud); startRun(a.t, audioSteps(a), { scr: 'listen', v: 'msgs' }); });
 };
 
+
+/* ================= L4 · Parler : 30 phrases du terrain, 5 sons difficiles, micro avec consentement (D1 + D1 bis) ================= */
+const PHR_SETS = [
+  ['srv', '🆘', 'Phrases de survie', [
+    ['Could you repeat that, please?', 'Tu peux répéter, s’il te plaît ?'],
+    ['Can you speak more slowly, please?', 'Tu peux parler plus lentement, s’il te plaît ?'],
+    ['What does this word mean?', 'Que veut dire ce mot ?'],
+    ['How do you say this in English?', 'Comment dit-on ça en anglais ?'],
+    ['I don’t understand. Can you write it down?', 'Je ne comprends pas. Tu peux l’écrire ?'],
+    ['Sorry, my English is not perfect.', 'Désolé·e, mon anglais n’est pas parfait.'],
+    ['Can you show me, please?', 'Tu peux me montrer, s’il te plaît ?'],
+    ['Who is the supervisor on this shift?', 'Qui est le chef d’équipe sur ce poste ?'],
+    ['Thank you for your help.', 'Merci pour ton aide.'],
+    ['Have a safe shift!', 'Bon poste, en sécurité !']]],
+  ['wrk', '🔧', 'À l’atelier', [
+    ['I’m the new maintenance technician.', 'Je suis le/la nouveau·elle technicien·ne de maintenance.'],
+    ['I need a thirteen millimeter socket.', 'J’ai besoin d’une douille de 13 mm.'],
+    ['The bearing is overheating on line three.', 'Le roulement chauffe sur la ligne 3.'],
+    ['There is an oil leak under the press.', 'Il y a une fuite d’huile sous la presse.'],
+    ['Please don’t start the machine. It’s locked out.', 'Ne démarre pas la machine, s’il te plaît. Elle est consignée.'],
+    ['I need to stop the line for ten minutes.', 'Je dois arrêter la ligne pendant dix minutes.'],
+    ['How long will the repair take?', 'Combien de temps va durer la réparation ?'],
+    ['I think the root cause is misalignment.', 'Je pense que la cause racine est un désalignement.'],
+    ['I replaced the seal and tested the pump.', 'J’ai remplacé le joint et testé la pompe.'],
+    ['Everything is working now.', 'Tout fonctionne maintenant.']]],
+  ['trv', '✈️', 'En déplacement', [
+    ['I have a reservation for three nights.', 'J’ai une réservation pour trois nuits.'],
+    ['What time is breakfast?', 'À quelle heure est le petit-déjeuner ?'],
+    ['Can I have a receipt, please?', 'Je peux avoir un reçu, s’il te plaît ?'],
+    ['Where is the visitor parking lot?', 'Où est le parking visiteurs ?'],
+    ['How do I get to the factory?', 'Comment je vais à l’usine ?'],
+    ['Sorry, I’m late. The train was delayed.', 'Désolé·e, je suis en retard. Le train avait du retard.'],
+    ['I’m here for the maintenance job on line two.', 'Je suis là pour l’intervention sur la ligne 2.'],
+    ['Can I borrow a hard hat?', 'Je peux emprunter un casque ?'],
+    ['What time does the shift start?', 'À quelle heure commence le poste ?'],
+    ['See you tomorrow!', 'À demain !']]]
+];
+const PHRASES = []; PHR_SETS.forEach(([set, ic, , list]) => list.forEach(([en, fr], i) => PHRASES.push({ id: set + (i + 1), set, ic, en, fr })));
+const SOUNDS = [
+  { id: 'th', ic: '👅', t: 'Le « th »', en: 'Thank you, the three thermometers are there.', fr: 'Merci, les trois thermomètres sont là.', tip: 'Langue entre les dents et souffle doux. Ni « z », ni « f », ni « s ».' },
+  { id: 'h', ic: '💨', t: 'Le « h » qui s’entend', en: 'Hold the hammer, the hose is hot.', fr: 'Tiens le marteau, le flexible est chaud.', tip: 'Souffle comme pour faire de la buée sur des lunettes : le « h » s’entend en anglais.' },
+  { id: 'ed', ic: '⏮', t: 'Les finales en -ed', en: 'We checked, cleaned and replaced the filter.', fr: 'On a contrôlé, nettoyé et remplacé le filtre.', tip: '« t » après k, s, p (checked, replaced) · « d » après un son voyelle ou doux (cleaned) · « id » après t ou d (started).' },
+  { id: 'ii', ic: '↔️', t: 'i court / ee long', en: 'Fill the tank, then feel the heat.', fr: 'Remplis le réservoir, puis sens la chaleur.', tip: 'i court et sec (fill, ship) ≠ ee long et souriant (feel, sheep).' },
+  { id: 'ty', ic: '🔢', t: '-teen ou -ty', en: 'Thirteen, not thirty. Fourteen, not forty.', fr: '13, pas 30. 14, pas 40.', tip: '-teen : la syllabe forte à la fin (thir-TEEN) · -ty : au début (THIR-ty).' }
+];
+
+/* ---------- Comparaison de ce qui a été entendu avec la phrase (mots, nombres en lettres) ---------- */
+const NUMW = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'], TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+const n2w = n => n < 20 ? NUMW[n] : n < 100 ? TENS[Math.floor(n / 10)] + (n % 10 ? ' ' + NUMW[n % 10] : '') : n < 1000 ? NUMW[Math.floor(n / 100)] + ' hundred' + (n % 100 ? ' ' + n2w(n % 100) : '') : String(n);
+const words = t => norm(t.replace(/\b\d{1,3}\b/g, m => n2w(+m)).replace(/n[’']t\b/gi, ' not').replace(/[’']m\b/gi, ' am').replace(/[’']s\b/gi, ' is').replace(/[’']ll\b/gi, ' will').replace(/[’']re\b/gi, ' are')).split(' ').filter(Boolean);
+function lcsMatch(a, b) { // indices des mots de a retrouvés dans b, dans l'ordre
+  const d = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+  for (let i = a.length - 1; i >= 0; i--) for (let j = b.length - 1; j >= 0; j--) d[i][j] = a[i] === b[j] || lev(a[i], b[j]) <= (a[i].length >= 6 ? 1 : 0) ? d[i + 1][j + 1] + 1 : Math.max(d[i + 1][j], d[i][j + 1]);
+  const hit = new Set(); let i = 0, j = 0;
+  while (i < a.length && j < b.length) { if ((a[i] === b[j] || lev(a[i], b[j]) <= (a[i].length >= 6 ? 1 : 0)) && d[i][j] === d[i + 1][j + 1] + 1) { hit.add(i); i++; j++; } else if (d[i + 1][j] >= d[i][j + 1]) i++; else j++; }
+  return hit;
+}
+function scoreSpeech(target, alts) {
+  const tw = words(target); let best = { pct: 0, hit: new Set(), heard: alts[0] || '' };
+  alts.forEach(h => { const hit = lcsMatch(tw, words(h)), pct = Math.round(hit.size / tw.length * 100); if (pct > best.pct) best = { pct, hit, heard: h }; });
+  best.tw = tw; best.lvl = best.pct >= 85 ? 3 : best.pct >= 60 ? 2 : best.pct > 0 ? 1 : 0;
+  return best;
+}
+
+/* ---------- Micro : reconnaissance du navigateur (si autorisée) OU enregistrement local ---------- */
+let SRI = null, REC = null, RECURL = null;
+function recognize() {
+  return new Promise(res => {
+    let done = false; const fin = v => { if (!done) { done = true; SRI = null; res(v); } };
+    try {
+      const r = new SR(); SRI = r; r.lang = 'en-US'; r.interimResults = false; r.maxAlternatives = 3; r.continuous = false;
+      r.onresult = e => fin({ ok: true, alts: [...e.results[0]].map(a => a.transcript) });
+      r.onerror = e => fin({ ok: false, err: e.error || 'erreur' }); r.onend = () => fin({ ok: false, err: 'no-speech' });
+      r.start(); setTimeout(() => { try { r.stop(); } catch (_) { } }, 9000);
+    } catch (e) { fin({ ok: false, err: 'start' }); }
+  });
+}
+async function recStart() {
+  const st = await navigator.mediaDevices.getUserMedia({ audio: true });
+  const mr = new MediaRecorder(st), ch = [];
+  mr.ondataavailable = e => { if (e.data && e.data.size) ch.push(e.data); };
+  const p = new Promise(r => mr.onstop = () => { st.getTracks().forEach(t => t.stop()); r(URL.createObjectURL(new Blob(ch, { type: mr.mimeType || 'audio/webm' }))); });
+  mr.start(); REC = { mr, p, t: setTimeout(recStop, 8000) };
+}
+function recStop() { if (!REC) return null; clearTimeout(REC.t); const p = REC.p; try { REC.mr.stop(); } catch (_) { } REC = null; return p; }
+function speakCleanup() { // rien n'est gardé : l'enregistrement est effacé dès qu'on change d'étape
+  if (SRI) { try { SRI.abort(); } catch (_) { } SRI = null; }
+  if (REC) { try { REC.mr.stop(); } catch (_) { } REC = null; }
+  if (RECURL) { URL.revokeObjectURL(RECURL); RECURL = null; }
+}
+const srOn = () => !!SR && S.settings.sr === true;
+const canRec = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+function oralPts(p) { const t = today(); if (!S.orDay || S.orDay.d !== t) S.orDay = { d: t, p: 0 }; const g = Math.max(0, Math.min(p, 30 - S.orDay.p)); S.orDay.p += g; return g; }
+const SRERR = { 'not-allowed': 'Le micro est refusé. Autorise-le dans les réglages du navigateur pour ce site.', 'service-not-allowed': 'La reconnaissance vocale est bloquée sur ce téléphone.', network: 'Pas de réseau : la note automatique a besoin d’Internet. Passe en auto-note.', 'no-speech': 'Je n’ai rien entendu. Rapproche le téléphone et réessaie.', 'audio-capture': 'Aucun micro trouvé.' };
+
+/* ---------- Étape « dire une phrase » ---------- */
+function renderSpeakStep(st) {
+  if (st.t !== 'speak') return null;
+  const it = st.it, mode = srOn() ? 'auto' : canRec() ? 'rec' : 'free', LBL = ['—', '😬 Bof', '🙂 Ça va', '💪 Top'];
+  st.best = st.best || 0;
+  const body = `<span class="tag y">${it.ic} ${esc(it.t || PHR_SETS.find(x => x[0] === it.set)?.[2] || 'Mes mots')}</span>
+    <div class="card"><div class="t">Dis cette phrase</div><div class="big" style="margin-top:4px;font-size:1.15rem">« ${esc(it.en)} »</div><div class="mut" style="margin-top:4px">${esc(it.fr)}</div>${it.tip ? `<p class="card hz" style="margin-top:8px;font-size:.85rem">💡 ${esc(it.tip)}</p>` : ''}</div>
+    ${playBtns(it.en)}
+    <button class="mic" id="mic" aria-label="micro">🎙</button>
+    <p class="mut" id="micS" style="text-align:center">${mode === 'auto' ? 'Touche le micro, dis la phrase. La note arrive toute seule.' : mode === 'rec' ? 'Touche pour t’enregistrer, retouche pour arrêter (8 s max). Ta voix reste sur le téléphone.' : 'Dis la phrase à voix haute, puis note-toi.'}</p>
+    <div id="spR"></div>
+    <div class="row" id="spSelf" style="${mode === 'auto' ? 'display:none' : ''}"><button class="btn alt sm" data-sc="1">😬 Bof</button><button class="btn alt sm" data-sc="2">🙂 Ça va</button><button class="btn sm" data-sc="3">💪 Top</button></div>
+    <button class="btn" id="spN" style="justify-content:center;display:none">${T('next')}</button>
+    <p class="mut" style="text-align:center;font-size:.72rem">${mode === 'auto' ? '☁ Note automatique : ta voix part chez Google / Apple (réglable dans ⚙ Options → Micro).' : '🔒 100 % local : rien ne sort du téléphone.'}</p>`;
+  const bind = () => {
+    const mic = $('#mic'), msg = $('#micS'), res = $('#spR');
+    const showNext = () => { $('#spN').style.display = 'flex'; };
+    const finish = () => {
+      const s = st.best; RUN.g.tot++; if (s >= 2) RUN.g.ok++;
+      addXP('oral', [1, 2, 5, 8][s], oralPts([0, .5, 2, 3][s])); S.tested.oral = true;
+      if (it.id) { S.phr[it.id] = Math.max(S.phr[it.id] || 0, s); } save(); nextStep();
+    };
+    $('#spN').onclick = () => { sfx('tap'); finish(); };
+    $$('[data-sc]').forEach(b => b.onclick = () => { sfx('tap'); st.best = Math.max(st.best, +b.dataset.sc); $$('[data-sc]').forEach(x => x.classList.toggle('on', x === b)); showNext(); });
+    mic.onclick = async () => {
+      if (mode === 'auto') {
+        if (SRI) return; if ('speechSynthesis' in window) speechSynthesis.cancel();
+        mic.classList.add('on'); msg.textContent = '🎙 Je t’écoute… parle maintenant.'; buzz(20);
+        const r = await recognize(); mic.classList.remove('on');
+        if (!r.ok) {
+          msg.textContent = SRERR[r.err] || 'La reconnaissance n’a pas marché. Réessaie, ou note-toi toi-même.';
+          $('#spSelf').style.display = 'flex'; return;
+        }
+        const sc = scoreSpeech(it.en, r.alts); st.best = Math.max(st.best, sc.lvl);
+        sfx(sc.lvl >= 2 ? 'ok' : 'no'); if (sc.lvl >= 2) buzz(15);
+        res.innerHTML = `<div class="card ${sc.lvl >= 2 ? 'ok' : ''}"><div class="big">${LBL[sc.lvl]} · ${sc.pct} %</div>
+          <div class="said">${sc.tw.map((w, i) => `<span class="${sc.hit.has(i) ? 'g' : 'm'}">${esc(w)}</span>`).join(' ')}</div>
+          <div class="mut" style="margin-top:6px">Entendu : « ${esc(sc.heard)} »</div>${sc.lvl < 3 ? '<div class="mut">Les mots en rouge n’ont pas été reconnus. Réécoute le modèle 🔊 et réessaie.</div>' : ''}</div>`;
+        msg.textContent = sc.lvl < 3 ? 'Touche le micro pour réessayer (le meilleur essai compte).' : 'Bravo !';
+        showNext(); return;
+      }
+      if (mode === 'rec') {
+        if (REC) { const p = recStop(); mic.classList.remove('on'); msg.textContent = 'Écoute-toi, puis compare avec le modèle.'; RECURL && URL.revokeObjectURL(RECURL); RECURL = await p;
+          res.innerHTML = `<div class="row"><button class="btn sm" id="mine">▶ Ma voix</button><button class="btn alt sm" data-say="${esc(it.en)}">🔊 Le modèle</button></div><p class="mut" style="text-align:center">Puis note-toi ci-dessous. L’enregistrement est effacé dès l’étape suivante.</p>`;
+          $('#mine').onclick = () => { try { new Audio(RECURL).play(); } catch (_) { } }; return; }
+        try { if ('speechSynthesis' in window) speechSynthesis.cancel(); await recStart(); mic.classList.add('on'); msg.textContent = '⏺ Enregistrement… retouche le micro pour arrêter.'; buzz(20); }
+        catch (e) { msg.textContent = 'Micro indisponible ou refusé : dis la phrase à voix haute, puis note-toi.'; }
+        return;
+      }
+      msg.textContent = 'Dis la phrase à voix haute, puis note-toi ci-dessous.';
+    };
+  };
+  return { body, bind };
+}
+
+/* ---------- Écran « Parler » ---------- */
+const phrDone = set => PHRASES.filter(p => p.set === set && (S.phr[p.id] || 0) >= 2).length;
+function nextPhrases(n) { const order = PHRASES.slice().sort((a, b) => (S.phr[a.id] || 0) - (S.phr[b.id] || 0)); return order.slice(0, n); }
+const speakSteps = list => list.map(it => ({ t: 'speak', it }));
+function myWordsSteps(n) { const c = shuffle(CARDS.filter(c => S.cards[c.key] && S.cards[c.key].b >= 1)).slice(0, n); return c.map(x => ({ t: 'speak', it: { ic: THEMES[x.th][0], t: 'Mes mots', en: x.ex, fr: x.fr + ' (' + x.en + ')' } })); }
+let LVS = { v: 'hub' };
+RENDER.speak = () => {
+  const el = $('#speak'), mode = srOn() ? '🤖 Note automatique' : '🔒 Auto-note locale';
+  let h = `<div class="row"><button class="btn alt sm" id="spBack" style="width:auto">← ${T('home')}</button><h2 class="grow" style="text-align:right">🎙 ${T('speak')}</h2></div>
+    <div class="card row"><div class="grow"><div class="t">Mode</div><b>${mode}</b><div class="mut" style="font-size:.75rem">${srOn() ? 'ta voix part chez Google / Apple pour être notée' : 'rien ne sort du téléphone'}</div></div><button class="btn alt sm" id="spMode" style="width:auto">Changer</button></div>
+    <button class="btn" id="spShift"><span class="ic">▶</span><span>Shift de parole<span class="sub">≈ 3 min · 5 phrases du terrain</span></span></button>
+    ${PHR_SETS.map(([set, ic, name]) => `<button class="btn alt" data-pset="${set}"><span class="ic">${ic}</span><span>${name}<span class="sub">${phrDone(set)} / 10 réussies</span></span></button>`).join('')}
+    <button class="btn alt" id="spWords" ${seenCount() ? '' : 'disabled'}><span class="ic">🗣</span><span>Mes mots en phrases<span class="sub">${seenCount() ? '5 phrases avec tes mots appris' : 'apprends d’abord des mots dans Lire &amp; apprendre'}</span></span></button>
+    <h3>👄 Sons difficiles pour un francophone</h3>
+    <div class="card">${SOUNDS.map(s => `<button class="snd" data-snd="${s.id}"><span>${s.ic}</span><b>${esc(s.t)}</b><small>${esc(s.en)}</small></button>`).join('')}</div>
+    <p class="mut">Astuce : écoute le modèle 🔊, puis dis la phrase tout de suite après (« shadowing »). C’est la méthode la plus rapide pour l’accent.</p>`;
+  el.innerHTML = h;
+  $('#spBack').onclick = () => { sfx('tap'); show('home'); };
+  $('#spMode').onclick = () => askSR().then(() => RENDER.speak());
+  const run = (title, steps) => { const go = () => { sfx('ok'); startRun(title, steps, { scr: 'speak', v: 'hub' }); }; if (S.settings.sr === null && SR) askSR().then(go); else go(); };
+  $('#spShift').onclick = () => run('Shift de parole', speakSteps(nextPhrases(5)));
+  $$('[data-pset]').forEach(b => b.onclick = () => { const s = PHR_SETS.find(x => x[0] === b.dataset.pset); run(s[2], speakSteps(PHRASES.filter(p => p.set === s[0]))); });
+  $('#spWords').onclick = () => run('Mes mots en phrases', myWordsSteps(5));
+  $$('[data-snd]').forEach(b => b.onclick = () => { const s = SOUNDS.find(x => x.id === b.dataset.snd); run(s.t, [{ t: 'speak', it: s }]); });
+};
+
 /* ================= Profil ================= */
 let EDIT = false;
 RENDER.onb = () => {
@@ -1292,13 +1479,10 @@ function skRow(k) {
 
 /* ================= Accueil ================= */
 const SOON = {
-  speak: { lot: 4, ic: '🎙', body: '<p>Tu écoutes le modèle, tu dis la phrase, tu obtiens une note.</p><p>Note automatique <b>seulement si tu l’autorises</b> ; sinon auto-note, 100 % local.</p>' },
   myst: { lot: 5, ic: '🔧', body: '<canvas class="ps2" id="ps2" width="256" height="144"></canvas><p><b>Grand Tchoum Auto 6</b> · lots 5 et 6.</p><p>Mission dans une usine à l’étranger. Ta douille de 13 a disparu. Hôtel, accueil sécurité, panne sur la ligne 3, magasin d’outils… Chaque lieu = une situation en anglais et un indice.</p><p class="mut">Les chapitres se débloquent avec l’XP gagnée dans les sections 1 à 3.</p>' }
 };
 function openSoon(id) {
   const s = SOON[id], btns = [[T('close')]];
-  if (id === 'speak') btns.unshift(['🎙 Régler le micro', () => askSR(), 'alt']);
-  if (id === 'listen') btns.unshift(['🔊 Tester la voix', testVoice, 'alt']);
   modal({ title: `${s.ic} ${T(id)} · ${T('soon')} ${s.lot}`, body: s.body, btns });
   if (id === 'myst') drawPS2($('#ps2'));
 }
@@ -1318,13 +1502,14 @@ RENDER.home = () => {
     </div>
     ${cards.join('')}
     <button class="btn" id="hRead"><span class="ic">📖</span><span>${T('read')}<span class="sub">${seenCount() ? `Shift du jour · ${dueList().length} à réviser` : 'Shift du jour · 5 min · ' + T('sRead')}</span></span></button>
-    <button class="btn" data-go="speak"><span class="ic">🎙</span><span>${T('speak')}<span class="sub">${T('soon')} 4 · ${T('sSpeak')}</span></span></button>
+    <button class="btn" id="hSpeak"><span class="ic">🎙</span><span>${T('speak')}<span class="sub">Shift de parole · 3 min · ${srOn() ? 'note automatique' : 'auto-note locale'}</span></span></button>
     <button class="btn" id="hListen"><span class="ic">🎧</span><span>${T('listen')}<span class="sub">${VOICE ? 'Shift d’écoute · 5 min · ' + T('sListen') : '🔈 voix anglaise à installer'}</span></span></button>
     <button class="btn hz" data-go="myst"><span class="ic">🔧</span><span>${T('myst')}<span class="sub" style="color:#e8d9a8">Grand Tchoum Auto 6 · ${T('soon')} 5</span></span></button>
     <div class="hz-strip"></div>`;
   $$('#home [data-go]').forEach(b => b.onclick = () => { sfx('tap'); openSoon(b.dataset.go); });
   $('#hRead').onclick = () => { sfx('tap'); LV = { v: 'hub' }; show('learn'); };
   $('#hListen').onclick = () => { sfx('tap'); LVL = { v: 'hub' }; show('listen'); };
+  $('#hSpeak').onclick = () => { sfx('tap'); LVS = { v: 'hub' }; show('speak'); };
   const t = $('#hTest'); if (t) t.onclick = () => { sfx('tap'); testIntro(); };
   const i = $('#hInst'); if (i) i.onclick = () => { sfx('tap'); installHelp(); };
   const e = $('#hExp'); if (e) e.onclick = () => { sfx('tap'); doExport(); };
